@@ -49,19 +49,29 @@ public class StubDatabase implements addReceipt {
         data.add(receipt.rid,receipt);
         return results;
     }
-    public String deleteReceipt(int rid){
+    public String deleteReceipt(Receipt receipt){
         String results = null;
-
+        if(data.get(receipt.rid) != receipt){
+            results = "Item not in stub database";
+        }
+        else{
+            data.remove(receipt.rid);
+        }
         return results;
     }
-    public String updateReceipt(int rid){
+    public String updateReceipt(Receipt receipt){
         String results = null;
-
+        if(data.get(receipt.rid) != receipt){
+            results = "Item not in stub database";
+        }
+        else{
+            data.remove(receipt.rid);
+            data.add(receipt.rid,receipt);
+        }
         return results;
     }
-    public String getReceipt(int rid){
-        String results = null;
-
+    public Receipt getReceipt(int rid){
+        Receipt results = data.get(rid);
         return results;
     }
     public ArrayList<Receipt> getAllReceipts(){

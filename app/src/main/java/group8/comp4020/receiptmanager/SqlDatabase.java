@@ -15,18 +15,18 @@ public class SqlDatabase  implements addReceipt {
 
         return results;
     }
-    public String deleteReceipt(int rid){
+    public String deleteReceipt(Receipt receipt){
         String results = null;
 
         return results;
     }
-    public String updateReceipt(int rid){
+    public String updateReceipt(Receipt receipt){
         String results = null;
 
         return results;
     }
-    public String getReceipt(int rid){
-        String results = null;
+    public Receipt getReceipt(int rid){
+        Receipt results = null;
 
         return results;
     }

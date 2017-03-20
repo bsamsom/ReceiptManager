@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 public interface addReceipt {
     public String insertReceipt(Receipt receipt);
-    public String deleteReceipt(int rid);
-    public String updateReceipt(int rid);
-    public String getReceipt(int rid);
+    public String deleteReceipt(Receipt receipt);
+    public String updateReceipt(Receipt receipt);
+    public Receipt getReceipt(int rid);
     public ArrayList<Receipt> getAllReceipts();
 }
