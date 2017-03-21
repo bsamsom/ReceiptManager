@@ -34,7 +34,8 @@
             android:id="@+id/buttonConfig1"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:text="Gui Confgi 1"
+            android:onClick="buttonOneClick"
+            android:text="Gui Config 1"
             tools:layout_editor_absoluteX="-63dp"
             tools:layout_editor_absoluteY="76dp" />
 
@@ -42,6 +43,7 @@
             android:id="@+id/buttonConfig2"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:onClick="buttonTwoClick"
             android:text="Gui Config 2"
             tools:layout_editor_absoluteX="66dp"
             tools:layout_editor_absoluteY="193dp" />

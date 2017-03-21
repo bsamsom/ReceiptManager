@@ -7,9 +7,9 @@ import java.util.ArrayList;
  */
 
 public interface addReceipt {
-    public String insertReceipt(Receipt receipt);
-    public String deleteReceipt(Receipt receipt);
-    public String updateReceipt(Receipt receipt);
-    public Receipt getReceipt(int rid);
-    public ArrayList<Receipt> getAllReceipts();
+    String insertReceipt(Receipt receipt);
+    String deleteReceipt(Receipt receipt);
+    String updateReceipt(Receipt receipt);
+    Receipt getReceipt(int rid);
+    ArrayList<Receipt> getAllReceipts();
 }
