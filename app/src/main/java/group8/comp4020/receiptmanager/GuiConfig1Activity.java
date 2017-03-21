@@ -1,7 +1,9 @@
 package group8.comp4020.receiptmanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListAdapter;
@@ -16,12 +18,14 @@ public class GuiConfig1Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gui_config1);
         StubDatabase stub = new StubDatabase();
-        
+
         ArrayList<Receipt> data = stub.getAllReceipts();
         List<String> listDataHeader = new ArrayList<String>();
         HashMap<String, List<String>> listDataChild = new HashMap<String, List<String>>();
 
         listDataHeader.add("Current Receipts");
+        System.out.println("TEST");
+        Log.w("tag","Trying to find test data ");
         if (data != null){
             List<String> storeNames = new ArrayList<String>();
             for(int i = 0; i < data.size();i++){
@@ -40,13 +44,21 @@ public class GuiConfig1Activity extends AppCompatActivity {
 
     }
     public void buttonHomeClick(View view) {
-        setContentView(R.layout.activity_main_screen);
+        Intent intent = new Intent(this, MainActivityScreen.class);
+        //intent.putExtra("", "");
+        startActivity(intent);
+        Log.w("tag","Trying to find test data ");
+       // setContentView(R.layout.activity_main_screen);
     }
     public void buttonEditClick(View view) {
-        setContentView(R.layout.activity_main_screen);
+        Intent intent = new Intent(this, MainActivityScreen.class);
+        //intent.putExtra("", "");
+        startActivity(intent);
     }
     public void buttonNewClick(View view) {
-        setContentView(R.layout.activity_main_screen);
+        Intent intent = new Intent(this, MainActivityScreen.class);
+        //intent.putExtra("", "");
+        startActivity(intent);
     }
 }
 
