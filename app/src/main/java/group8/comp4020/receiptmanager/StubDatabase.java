@@ -75,6 +75,12 @@ public class StubDatabase implements addReceipt {
         return results;
     }
     public ArrayList<Receipt> getAllReceipts(){
-        return data;
+        if (data.size() > 0){
+            return data;
+        }
+        else{
+            return null;
+        }
+
     }
 }

@@ -12,7 +12,7 @@ public class MainActivityScreen extends AppCompatActivity{
 
     }
     public void buttonOneClick(View view) {
-        setContentView(R.layout.activity_gui_config2);
+        setContentView(R.layout.activity_gui_config1);
     }
     public void buttonTwoClick(View view) {
         setContentView(R.layout.activity_gui_config2);

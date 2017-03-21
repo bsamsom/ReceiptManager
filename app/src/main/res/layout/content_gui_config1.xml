@@ -25,14 +25,43 @@
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="5dp" />
 
-        <Button
-            android:id="@+id/buttonHome1"
+        <ExpandableListView
+            android:id="@+id/ListReceipts"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="buttonOneClick"
-            android:text="Home"
-            tools:layout_editor_absoluteX="7dp"
-            tools:layout_editor_absoluteY="443dp" />
+            android:layout_height="377dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="98dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/buttonHome1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.73"
+                android:onClick="buttonHomeClick"
+                android:text="Home"
+                tools:layout_editor_absoluteX="7dp"
+                tools:layout_editor_absoluteY="443dp" />
+
+            <Button
+                android:id="@+id/buttonEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="buttonEditClick"
+                android:text="Edit" />
+
+            <Button
+                android:id="@+id/buttonNew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="buttonNewClick"
+                android:text="New Receipt" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
