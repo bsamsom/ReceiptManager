@@ -11,14 +11,14 @@ import android.util.Log;
  * Created by ben on 20-Mar-17.
  */
 
-public class Receipt {
+public class Receipt implements Comparable <Receipt> {
     private int rid;
     private String store;
     private double purchaseAmount;
     private Image image;
     private Date purchaseDate;
     private Date returnDate;
-    private Date warentyDate;
+    private Date warrantyDate;
     private ArrayList<String> tags;
     public Receipt(int rid,String store, double purchaseAmount,Image image, String purchaseDate, String returnDate, String warentyDate){
         this.rid = rid;
@@ -28,7 +28,7 @@ public class Receipt {
         SetImage(image);
         SetPurchaseDate(purchaseDate);
         SetReturnDate(returnDate);
-        SetWarentyDate(warentyDate);
+        SetWarrantyDate(warentyDate);
         tags = new ArrayList<>();
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Getters
@@ -39,7 +39,7 @@ public class Receipt {
     public Image getImage(){return image;}
     public Date getPurchaseDate(){return purchaseDate;}
     public Date getReturnDate(){return returnDate;}
-    public Date getWarentyDate(){return warentyDate;}
+    public Date getWarrantyDate(){return warrantyDate;}
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Setters
     public String SetRid(int newRid){
         String results = null;
@@ -112,17 +112,14 @@ public class Receipt {
         }
         return results;
     }
-    public String SetWarentyDate(String date){
+    public String SetWarrantyDate(String date){
         String results = null;
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        if(date == null){
-            results = "Warenty date cannot be null";
-        }
-        else {
+        if(date != null){
             try {
                 SimpleDateFormat format = new SimpleDateFormat(dateFormat);
                 Date d = format.parse(date);
-                warentyDate = d;
+                warrantyDate = d;
             } catch (ParseException e) {
                 results = "Warenty date does not have the format: " + dateFormat;
                 Log.w("tag", results);
@@ -149,4 +146,14 @@ public class Receipt {
     public boolean hasTag(String tag){
         return tags.contains(tag);
     }
+    @Override
+    public String toString() {
+        return getRid() + " " + getStore() + " " + getPurchaseAmount() + " " + getPurchaseDate() + " " + getReturnDate() + " " + getWarrantyDate() + "\n";
+    }
+
+    @Override
+    public int compareTo(Receipt o) {
+        return this.getPurchaseDate().compareTo(o.purchaseDate);
+    }
+
 }

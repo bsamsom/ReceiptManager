@@ -33,7 +33,9 @@ public class SqlDatabase  implements AddReceipt {
     public ArrayList<Receipt> getAllReceipts(){
         return null;
     }
-    public ArrayList<Receipt> getReceiptsByPurchseDate(String startDate, String endDate){return null;}
-    public ArrayList<Receipt> getReceiptsByWarentyDate(String startDate, String endDate){return null;}
+    public ArrayList<Receipt> getReceiptsByPurchaseDate(String startDate, String endDate){return null;}
+    public ArrayList<Receipt> getReceiptsByWarrantyDate(String startDate, String endDate){return null;}
     public ArrayList<Receipt> getReceiptsWithTag(String tag){return null;}
+    public ArrayList<Receipt> getReceiptsWithWarranty(){return null;}
+    public ArrayList<Receipt> getReceiptsWithOutWarranty(){return null;}
 }

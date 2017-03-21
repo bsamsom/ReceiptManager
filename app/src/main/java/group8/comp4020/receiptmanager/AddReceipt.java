@@ -11,8 +11,10 @@ public interface AddReceipt {
     String deleteReceipt(Receipt receipt);
     String updateReceipt(Receipt receipt);
     Receipt getReceipt(int rid);
-    ArrayList<Receipt> getReceiptsByPurchseDate(String startDate, String endDate);
-    ArrayList<Receipt> getReceiptsByWarentyDate(String startDate, String endDate);
+    ArrayList<Receipt> getReceiptsByPurchaseDate(String startDate, String endDate);
+    ArrayList<Receipt> getReceiptsByWarrantyDate(String startDate, String endDate);
     ArrayList<Receipt> getAllReceipts();
     ArrayList<Receipt> getReceiptsWithTag(String tag);
+    ArrayList<Receipt> getReceiptsWithWarranty();
+    ArrayList<Receipt> getReceiptsWithOutWarranty();
 }

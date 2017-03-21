@@ -20,18 +20,18 @@ public class StubDatabase implements AddReceipt {
 
         String purchaseDate = "2016-12-31 18:35:24";
         String returnDate = "2017-01-30 18:35:24";
-        String warentyDate = "2021-12-31 18:35:24";
-        data.add(0 , new Receipt(0 , "Super Store      ", 50.00 , null, purchaseDate, returnDate, warentyDate));
-        data.add(1 , new Receipt(1 , "Walmart          ", 15.98 , null, purchaseDate, returnDate, warentyDate));
-        data.add(2 , new Receipt(2 , "Memory Express   ", 150.24, null, purchaseDate, returnDate, warentyDate));
-        data.add(3 , new Receipt(3 , "Canadian Tire    ", 49.83 , null, purchaseDate, returnDate, warentyDate));
-        data.add(4 , new Receipt(4 , "U of M Book Store", 365.87, null, purchaseDate, returnDate, warentyDate));
-        data.add(5 , new Receipt(5 , "Shell            ", 56.65 , null, purchaseDate, returnDate, warentyDate));
-        data.add(6 , new Receipt(6 , "Chapters         ", 12.43 , null, purchaseDate, returnDate, warentyDate));
-        data.add(7 , new Receipt(7 , "Rona             ", 78/89 , null, purchaseDate, returnDate, warentyDate));
-        data.add(8 , new Receipt(8 , "Home Depot       ", 43.32 , null, purchaseDate, returnDate, warentyDate));
-        data.add(9 , new Receipt(9 , "Benjamin More    ", 89.43 , null, purchaseDate, returnDate, warentyDate));
-        data.add(10, new Receipt(10, "Foodfare         ", 12.95 , null, purchaseDate, returnDate, warentyDate));
+        String warrantyDate = "2021-12-31 18:35:24";
+        data.add(0 , new Receipt(0 , "Super Store      ", 50.00 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(1 , new Receipt(1 , "Walmart          ", 15.98 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(2 , new Receipt(2 , "Memory Express   ", 150.24, null, purchaseDate, returnDate, warrantyDate));
+        data.add(3 , new Receipt(3 , "Canadian Tire    ", 49.83 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(4 , new Receipt(4 , "U of M Book Store", 365.87, null, purchaseDate, returnDate, warrantyDate));
+        data.add(5 , new Receipt(5 , "Shell            ", 56.65 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(6 , new Receipt(6 , "Chapters         ", 12.43 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(7 , new Receipt(7 , "Rona             ", 78/89 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(8 , new Receipt(8 , "Home Depot       ", 43.32 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(9 , new Receipt(9 , "Benjamin More    ", 89.43 , null, purchaseDate, returnDate, warrantyDate));
+        data.add(10, new Receipt(10, "Foodfare         ", 12.95 , null, purchaseDate, returnDate, warrantyDate));
 
     }
 
@@ -75,10 +75,10 @@ public class StubDatabase implements AddReceipt {
             return null;
         }
     }
-    public ArrayList<Receipt> getReceiptsByPurchseDate(String startDate, String endDate){
+    public ArrayList<Receipt> getReceiptsByPurchaseDate(String startDate, String endDate){
         return dateRangeHelper(startDate, endDate, true);
     }
-    public ArrayList<Receipt> getReceiptsByWarentyDate(String startDate, String endDate){
+    public ArrayList<Receipt> getReceiptsByWarrantyDate(String startDate, String endDate){
         return dateRangeHelper(startDate, endDate, false);
     }
     private ArrayList<Receipt> dateRangeHelper(String startDate, String endDate, boolean purchase) {
@@ -106,7 +106,7 @@ public class StubDatabase implements AddReceipt {
                         }
                     }
                     else {
-                        if (start.before(temp.getWarentyDate()) && end.after(temp.getWarentyDate())) {
+                        if (start.before(temp.getWarrantyDate()) && end.after(temp.getWarrantyDate())) {
                             results.add(temp.getRid(), temp);
                         }
                     }
@@ -132,6 +132,26 @@ public class StubDatabase implements AddReceipt {
         else{
             print = "looking for empty and null tags";
             Log.w("tag", print);
+        }
+        return result;
+    }
+    public ArrayList<Receipt> getReceiptsWithWarranty(){
+        ArrayList<Receipt> result = null;
+        for (int i = 0; i < data.size();i++){
+            Receipt temp = data.get(i);
+            if(temp.getWarrantyDate() != null){
+                result.add(temp.getRid(),temp);
+            }
+        }
+        return result;
+    }
+    public ArrayList<Receipt> getReceiptsWithOutWarranty(){
+        ArrayList<Receipt> result = null;
+        for (int i = 0; i < data.size();i++){
+            Receipt temp = data.get(i);
+            if(temp.getWarrantyDate() == null){
+                result.add(temp.getRid(),temp);
+            }
         }
         return result;
     }
