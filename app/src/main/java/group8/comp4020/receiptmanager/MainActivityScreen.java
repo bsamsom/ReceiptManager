@@ -26,9 +26,4 @@ public class MainActivityScreen extends AppCompatActivity{
         //intent.putExtra("", "");
         startActivity(intent);
     }
-    /*public void buttonHomeClick(View view) {
-        Log.w("tag","Trying to find test data ");
-        // setContentView(R.layout.activity_main_screen);
-    }
-    */
 }
