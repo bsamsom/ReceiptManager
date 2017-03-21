@@ -3,6 +3,7 @@ package group8.comp4020.receiptmanager;
 import android.media.Image;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.text.ParseException;
 import android.util.Log;
@@ -18,6 +19,7 @@ public class Receipt {
     private Date purchaseDate;
     private Date returnDate;
     private Date warentyDate;
+    private ArrayList<String> tags;
     public Receipt(int rid,String store, double purchaseAmount,Image image, String purchaseDate, String returnDate, String warentyDate){
         this.rid = rid;
         SetRid(rid);
@@ -27,9 +29,11 @@ public class Receipt {
         SetPurchaseDate(purchaseDate);
         SetReturnDate(returnDate);
         SetWarentyDate(warentyDate);
+        tags = new ArrayList<>();
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Getters
     public int getRid(){return rid;}
+    public ArrayList<String> getTags(){return tags;}
     public String getStore(){return store;}
     public Double getPurchaseAmount(){return purchaseAmount;}
     public Image getImage(){return image;}
@@ -126,8 +130,23 @@ public class Receipt {
         }
         return results;
     }
-
-
-
-
+    public String addTag(String tag){
+        String result = null;
+        if(tag.length() > 0 && tag != null){
+            if(tags.contains(tag)){
+                result = "tag already exists";
+            }
+            else{
+                tags.add(tag);
+            }
+        }
+        else{
+            result = "Empty and null tags not allowed";
+        }
+        return result;
+    }
+    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    public boolean hasTag(String tag){
+        return tags.contains(tag);
+    }
 }

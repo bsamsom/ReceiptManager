@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by ben on 20-Mar-17.
  */
 
-public class SqlDatabase  implements addReceipt {
+public class SqlDatabase  implements AddReceipt {
     public SqlDatabase(){
 
     }
@@ -33,4 +33,7 @@ public class SqlDatabase  implements addReceipt {
     public ArrayList<Receipt> getAllReceipts(){
         return null;
     }
+    public ArrayList<Receipt> getReceiptsByPurchseDate(String startDate, String endDate){return null;}
+    public ArrayList<Receipt> getReceiptsByWarentyDate(String startDate, String endDate){return null;}
+    public ArrayList<Receipt> getReceiptsWithTag(String tag){return null;}
 }

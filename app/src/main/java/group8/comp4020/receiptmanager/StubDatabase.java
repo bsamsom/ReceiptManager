@@ -1,16 +1,16 @@
 package group8.comp4020.receiptmanager;
+import android.util.Log;
 
-
-
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by ben on 20-Mar-17.
  */
 
-public class StubDatabase implements addReceipt {
+public class StubDatabase implements AddReceipt {
 
 
     ArrayList<Receipt> data = new ArrayList();
@@ -74,6 +74,65 @@ public class StubDatabase implements addReceipt {
         else{
             return null;
         }
-
+    }
+    public ArrayList<Receipt> getReceiptsByPurchseDate(String startDate, String endDate){
+        return dateRangeHelper(startDate, endDate, true);
+    }
+    public ArrayList<Receipt> getReceiptsByWarentyDate(String startDate, String endDate){
+        return dateRangeHelper(startDate, endDate, false);
+    }
+    private ArrayList<Receipt> dateRangeHelper(String startDate, String endDate, boolean purchase) {
+        ArrayList<Receipt> results = new ArrayList<Receipt>();
+        String print = "";
+        String dateFormat = "yyyy-mm-dd hh:mm:ss";
+        if(startDate == null){
+            print = "Start date cannot be null";
+            Log.w("tag", print);
+        }
+        else if(endDate == null){
+            print = "End date cannot be null";
+            Log.w("tag", print);
+        }
+        else {
+            try {
+                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+                Date start = format.parse(startDate);
+                Date end = format.parse(startDate);
+                for(int i = 0; i < data.size();i++){
+                    Receipt temp = data.get(i);
+                    if(purchase) {
+                        if (start.before(temp.getPurchaseDate()) && end.after(temp.getPurchaseDate())) {
+                            results.add(temp.getRid(), temp);
+                        }
+                    }
+                    else {
+                        if (start.before(temp.getWarentyDate()) && end.after(temp.getWarentyDate())) {
+                            results.add(temp.getRid(), temp);
+                        }
+                    }
+                }
+            } catch (ParseException e) {
+                print = "Return date does not have the format: " + dateFormat;
+                Log.w("tag", print);
+            }
+        }
+        return results;
+    }
+    public ArrayList<Receipt> getReceiptsWithTag(String tag){
+        ArrayList<Receipt> result = null;
+        String print = "";
+        if(tag.length() > 0 && tag != null){
+            for (int i = 0; i < data.size();i++){
+                Receipt temp = data.get(i);
+                if(temp.hasTag(tag)){
+                    result.add(temp.getRid(),temp);
+                }
+            }
+        }
+        else{
+            print = "looking for empty and null tags";
+            Log.w("tag", print);
+        }
+        return result;
     }
 }
