@@ -18,20 +18,29 @@ public class StubDatabase implements AddReceipt {
 
     public StubDatabase(){
 
-        String purchaseDate = "2016-12-31 18:35:24";
-        String returnDate = "2017-01-30 18:35:24";
-        String warrantyDate = "2021-12-31 18:35:24";
-        data.add(0 , new Receipt(0 , "Super Store      ", 50.00 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(1 , new Receipt(1 , "Walmart          ", 15.98 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(2 , new Receipt(2 , "Memory Express   ", 150.24, null, purchaseDate, returnDate, warrantyDate));
-        data.add(3 , new Receipt(3 , "Canadian Tire    ", 49.83 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(4 , new Receipt(4 , "U of M Book Store", 365.87, null, purchaseDate, returnDate, warrantyDate));
-        data.add(5 , new Receipt(5 , "Shell            ", 56.65 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(6 , new Receipt(6 , "Chapters         ", 12.43 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(7 , new Receipt(7 , "Rona             ", 78/89 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(8 , new Receipt(8 , "Home Depot       ", 43.32 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(9 , new Receipt(9 , "Benjamin More    ", 89.43 , null, purchaseDate, returnDate, warrantyDate));
-        data.add(10, new Receipt(10, "Foodfare         ", 12.95 , null, purchaseDate, returnDate, warrantyDate));
+
+        data.add(0 , new Receipt(0 , "Super Store      ", 50.00 , null, "1980-12-31 18:35:24", "2017-01-30 18:35:24", null));
+        data.add(1 , new Receipt(1 , "Walmart          ", 15.98 , null, "2016-05-15 18:35:24", "2017-01-30 18:35:24", "1993-10-05 18:35:24"));
+        data.add(2 , new Receipt(2 , "Memory Express   ", 150.24, null, "2010-04-23 18:35:24", "2017-01-30 18:35:24", "1998-02-09 18:35:24"));
+        data.add(3 , new Receipt(3 , "Canadian Tire    ", 49.83 , null, "2012-10-26 18:35:24", "2017-01-30 18:35:24", "2011-09-04 18:35:24"));
+        data.add(4 , new Receipt(4 , "U of M Book Store", 365.87, null, "2013-01-24 18:35:24", "2017-01-30 18:35:24", "2001-05-01 18:35:24"));
+        data.add(5 , new Receipt(5 , "Shell            ", 56.65 , null, "2014-10-16 18:35:24", "2017-01-30 18:35:24", null));
+        data.add(6 , new Receipt(6 , "Chapters         ", 12.43 , null, "2003-07-06 18:35:24", "2017-01-30 18:35:24", "2020-04-15 18:35:24"));
+        data.add(7 , new Receipt(7 , "Rona             ", 78/89 , null, "2009-12-09 18:35:24", "2017-01-30 18:35:24", "2002-12-19 18:35:24"));
+        data.add(8 , new Receipt(8 , "Home Depot       ", 43.32 , null, "2016-04-12 18:35:24", "2017-01-30 18:35:24", "1960-02-12 18:35:24"));
+        data.add(9 , new Receipt(9 , "Benjamin More    ", 89.43 , null, "1994-09-04 18:35:24", "2017-01-30 18:35:24", null));
+        data.add(10, new Receipt(10, "Foodfare         ", 12.95 , null, "1990-03-01 18:35:24", "2017-01-30 18:35:24", "2021-06-23 18:35:24"));
+
+        data.get(5).setTags("waffle");
+        data.get(2).setTags("waffle");
+        data.get(1).setTags("waffle");
+
+        data.get(1).setTags("cheese");
+        data.get(5).setTags("cheese");
+        data.get(6).setTags("cheese");
+        data.get(9).setTags("cheese");
+        data.get(8).setTags("cheese");
+
 
     }
 
@@ -82,7 +91,7 @@ public class StubDatabase implements AddReceipt {
         return dateRangeHelper(startDate, endDate, false);
     }
     private ArrayList<Receipt> dateRangeHelper(String startDate, String endDate, boolean purchase) {
-        ArrayList<Receipt> results = new ArrayList<Receipt>();
+        ArrayList<Receipt> results = new ArrayList<>();
         String print = "";
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
         if(startDate == null){
@@ -97,17 +106,17 @@ public class StubDatabase implements AddReceipt {
             try {
                 SimpleDateFormat format = new SimpleDateFormat(dateFormat);
                 Date start = format.parse(startDate);
-                Date end = format.parse(startDate);
+                Date end = format.parse(endDate);
                 for(int i = 0; i < data.size();i++){
                     Receipt temp = data.get(i);
                     if(purchase) {
                         if (start.before(temp.getPurchaseDate()) && end.after(temp.getPurchaseDate())) {
-                            results.add(temp.getRid(), temp);
+                            results.add(temp);
                         }
                     }
                     else {
                         if (start.before(temp.getWarrantyDate()) && end.after(temp.getWarrantyDate())) {
-                            results.add(temp.getRid(), temp);
+                            results.add(temp);
                         }
                     }
                 }
@@ -119,13 +128,13 @@ public class StubDatabase implements AddReceipt {
         return results;
     }
     public ArrayList<Receipt> getReceiptsWithTag(String tag){
-        ArrayList<Receipt> result = null;
+        ArrayList<Receipt> result = new ArrayList();
         String print = "";
         if(tag.length() > 0 && tag != null){
             for (int i = 0; i < data.size();i++){
                 Receipt temp = data.get(i);
                 if(temp.hasTag(tag)){
-                    result.add(temp.getRid(),temp);
+                    result.add(temp);
                 }
             }
         }
@@ -136,22 +145,32 @@ public class StubDatabase implements AddReceipt {
         return result;
     }
     public ArrayList<Receipt> getReceiptsWithWarranty(){
-        ArrayList<Receipt> result = null;
+        ArrayList<Receipt> result = new ArrayList();
         for (int i = 0; i < data.size();i++){
             Receipt temp = data.get(i);
-            if(temp.getWarrantyDate() != null){
-                result.add(temp.getRid(),temp);
-            }
+            String dateFormat = "yyyy-mm-dd hh:mm:ss";
+            try {
+                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+                Date d = format.parse("0000-00-00 00:00:00");
+                if(temp.getWarrantyDate().after(d)){
+                    result.add(temp);
+                }
+            }catch (ParseException e) {}
         }
         return result;
     }
     public ArrayList<Receipt> getReceiptsWithOutWarranty(){
-        ArrayList<Receipt> result = null;
+        ArrayList<Receipt> result = new ArrayList();
         for (int i = 0; i < data.size();i++){
             Receipt temp = data.get(i);
-            if(temp.getWarrantyDate() == null){
-                result.add(temp.getRid(),temp);
-            }
+            String dateFormat = "yyyy-mm-dd hh:mm:ss";
+            try {
+                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+                Date d = format.parse("0000-00-00 00:00:00");
+                if(temp.getWarrantyDate().compareTo(d) == 0){
+                    result.add(temp);
+                }
+            }catch (ParseException e) {}
         }
         return result;
     }

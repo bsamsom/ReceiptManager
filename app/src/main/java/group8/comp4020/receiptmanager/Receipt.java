@@ -20,7 +20,8 @@ public class Receipt implements Comparable <Receipt> {
     private Date returnDate;
     private Date warrantyDate;
     private ArrayList<String> tags;
-    public Receipt(int rid,String store, double purchaseAmount,Image image, String purchaseDate, String returnDate, String warentyDate){
+
+    public Receipt(int rid, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
         this.rid = rid;
         SetRid(rid);
         SetStore(store);
@@ -31,58 +32,83 @@ public class Receipt implements Comparable <Receipt> {
         SetWarrantyDate(warentyDate);
         tags = new ArrayList<>();
     }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Getters
-    public int getRid(){return rid;}
-    public ArrayList<String> getTags(){return tags;}
-    public String getStore(){return store;}
-    public Double getPurchaseAmount(){return purchaseAmount;}
-    public Image getImage(){return image;}
-    public Date getPurchaseDate(){return purchaseDate;}
-    public Date getReturnDate(){return returnDate;}
-    public Date getWarrantyDate(){return warrantyDate;}
+    public int getRid() {
+        return rid;
+    }
+
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public String getStore() {
+        return store;
+    }
+
+    public Double getPurchaseAmount() {
+        return purchaseAmount;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public Date getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public Date getReturnDate() {
+        return returnDate;
+    }
+
+    public Date getWarrantyDate() {
+        return warrantyDate;
+    }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Setters
-    public String SetRid(int newRid){
+    public String SetRid(int newRid) {
         String results = null;
-        if(newRid < 0){
+        if (newRid < 0) {
             results = "Negative values are not allowed";
-        }
-        else{
+        } else {
             rid = newRid;
         }
         return results;
     }
-    public String SetStore(String newStore){
+
+    public String SetStore(String newStore) {
         String results = null;
-        if(newStore.length() > 0 && newStore != null){
+        if (newStore.length() > 0 && newStore != null) {
             store = newStore;
-        }
-        else{
+        } else {
             results = "Empty store or null store not allowed";
         }
         return results;
     }
-    public String SetPurchaseAmount(double cost){
+
+    public String SetPurchaseAmount(double cost) {
         String results = null;
-        if(cost > 0){
+        if (cost > 0) {
             purchaseAmount = cost;
-        }
-        else{
+        } else {
             results = "Cannot be a negative money amount";
         }
         return results;
     }
-    public String SetImage(Image img){
+
+    public String SetImage(Image img) {
         String results = null;
         image = img;
         return results;
     }
-    public String SetPurchaseDate(String date){
+
+    public String SetPurchaseDate(String date) {
         String results = null;
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        if(date == null){
+        if (date == null) {
             results = "Purchase date cannot be null";
-        }
-        else {
+        } else {
             try {
                 SimpleDateFormat format = new SimpleDateFormat(dateFormat);
                 Date d = format.parse(date);
@@ -94,13 +120,13 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
-    public String SetReturnDate(String date){
+
+    public String SetReturnDate(String date) {
         String results = null;
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        if(date == null){
+        if (date == null) {
             results = "Return date cannot be null";
-        }
-        else {
+        } else {
             try {
                 SimpleDateFormat format = new SimpleDateFormat(dateFormat);
                 Date d = format.parse(date);
@@ -112,48 +138,51 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
-    public String SetWarrantyDate(String date){
+
+    public String SetWarrantyDate(String date) {
         String results = null;
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        if(date != null){
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-                Date d = format.parse(date);
-                warrantyDate = d;
-            } catch (ParseException e) {
-                results = "Warenty date does not have the format: " + dateFormat;
-                Log.w("tag", results);
-            }
-        }
-        return results;
-    }
-    public String addTag(String tag){
-        String result = null;
-        if(tag.length() > 0 && tag != null){
-            if(tags.contains(tag)){
-                result = "tag already exists";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            Date d;
+            if (date != null) {
+                d = format.parse(date);
             }
             else{
-                tags.add(tag);
+                d = format.parse("0000-00-00 00:00:00");
             }
+                warrantyDate = d;
+        } catch (ParseException e) {
+            results = "Return date does not have the format: " + dateFormat;
+            Log.w("tag", results);
+        }
+
+
+        return results;
+    }
+    public String setTags(String tag){
+        String result = null;
+        if (tags.contains(tag)){
+            result = "Already has tag";
         }
         else{
-            result = "Empty and null tags not allowed";
+            tags.add(tag);
         }
         return result;
     }
-    //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    public boolean hasTag(String tag){
-        return tags.contains(tag);
-    }
+
+
     @Override
     public String toString() {
-        return getRid() + " " + getStore() + " " + getPurchaseAmount() + " " + getPurchaseDate() + " " + getReturnDate() + " " + getWarrantyDate() + "\n";
+        return "";
     }
 
     @Override
     public int compareTo(Receipt o) {
-        return this.getPurchaseDate().compareTo(o.purchaseDate);
+        return this.getPurchaseDate().compareTo(o.getPurchaseDate());
     }
 
+    public boolean hasTag(String tag){
+        return tags.contains(tag);
+    }
 }
