@@ -3,8 +3,14 @@ package group8.comp4020.receiptmanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.LinearLayoutManager;
+
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.ArrayAdapter;
+
 import java.util.ArrayList;
 
 public class GuiConfig1Activity extends AppCompatActivity {
@@ -13,6 +19,27 @@ public class GuiConfig1Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gui_config1);
+        ListView list = (ListView) findViewById(R.id.ListView);
+        RecyclerView list1 = (RecyclerView) findViewById(R.id.RecyclerView);
+        String[] data = {"test","test1"};
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+        //mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        list1.setLayoutManager(layoutManager);
+      //  myRecyclerViewAdapter = new RecyclerViewAdapter(this);
+       // list1.setAdapter(new RecyclerViewAdapter(data));
+        /*
+        need a RecyclerViewAdapter to add data but dont know how to build one.
+         */
+
+
+
+
+        ArrayAdapter itemsAdapter = new ArrayAdapter<String>(this, R.layout.activity_listview,data);
+        list.setAdapter(itemsAdapter);
+
+
+
         //testStub();
 
 
