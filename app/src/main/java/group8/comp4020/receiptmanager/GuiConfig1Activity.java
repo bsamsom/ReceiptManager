@@ -1,50 +1,130 @@
 package group8.comp4020.receiptmanager;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.LinearLayoutManager;
-
 import android.util.Log;
 import android.view.View;
-import android.widget.ListView;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.Spinner;
+
 
 import java.util.ArrayList;
 
-public class GuiConfig1Activity extends AppCompatActivity {
+public class GuiConfig1Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    public final StubDatabase stub = new StubDatabase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gui_config1);
-        ListView list = (ListView) findViewById(R.id.ListView);
-        RecyclerView list1 = (RecyclerView) findViewById(R.id.RecyclerView);
-        String[] data = {"test","test1"};
+        Spinner spin = (Spinner) findViewById(R.id.spinner);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
-        //mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        list1.setLayoutManager(layoutManager);
-      //  myRecyclerViewAdapter = new RecyclerViewAdapter(this);
-       // list1.setAdapter(new RecyclerViewAdapter(data));
-        /*
-        need a RecyclerViewAdapter to add data but dont know how to build one.
-         */
+        String[] items = new String[]{"All", "With Warranty", "Without Warranty", "With Tags"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        ArrayList<Receipt> receipts = stub.getAllReceipts();
+        addreceipts(receipts);
 
-
-
-        ArrayAdapter itemsAdapter = new ArrayAdapter<String>(this, R.layout.activity_listview,data);
-        list.setAdapter(itemsAdapter);
-
-
+        spin.setAdapter(adapter);
+        spin.setOnItemSelectedListener(this);
 
         //testStub();
+    }
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Log.w("tag", "Get item at: " + position);
+        if(position == 0){
+            ArrayList<Receipt> receipts = stub.getAllReceipts();
+            addreceipts(receipts);
+        }
+        else if(position == 1){
+            ArrayList<Receipt> receipts = stub.getReceiptsWithWarranty();
+            addreceipts(receipts);
+        }
+        else if(position == 2){
+            ArrayList<Receipt> receipts = stub.getReceiptsWithOutWarranty();
+            addreceipts(receipts);
+        }
+        else{
+            ArrayList<Receipt> receipts = stub.getReceiptsWithTag();
+            addreceipts(receipts);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        
+    }
 
 
+    public void addreceipts(ArrayList<Receipt> receipts){
+        ListView[] list = new ListView[receipts.size()];
+        LinearLayout layout = (LinearLayout) findViewById(R.id.LinearLayoutList);
+        layout.removeAllViews();
+
+        for(int i = 0; i < receipts.size();i++){
+            list[i] = new ListView(this);
+
+            addReceiptToListView(list[i], receipts.get(i));
+
+            layout.addView(list[i]);
+            ViewGroup.LayoutParams params = list[i].getLayoutParams();
+            params.width = 600;
+            list[i].setLayoutParams(params);
+
+            GradientDrawable gradientDrawable=new GradientDrawable();
+            gradientDrawable.setStroke(4,Color.BLACK);
+            // underlines in red because it requires api 16 or higher
+            list[i].setBackground(gradientDrawable);
+            list[i].requestLayout();
+        }
+    }
 
 
+    public void addReceiptToListView(ListView list, Receipt receipt){
+        String dataString = receipt.toString().trim();
+        String[] data = dataString.split("-");
+        Log.w("tag",receipt.toString().trim());
+        for(int i = 0; i < data.length;i++){
+            Log.w("tag",data[i]);
+        }
+        final ArrayList<String> stringList = new ArrayList<String>();
+        for (int i = 0; i < data.length; ++i) {
+            String[] temp = data[i].split("\\s+");
+            if(temp.length == 6){
+                data[i] = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[5];
+            }
+        }
+        stringList.add("Store: "            + data[0]);
+        stringList.add("Purchase: "         + data[1]);
+        stringList.add("Purchase Date: "    + data[2]);
+        stringList.add("Return Date: "      + data[3]);
+
+        if(data.length > 4) {
+            stringList.add("Warranty Date: "    + data[4]);
+        }
+        else{
+            // no Warranty Date to add
+            stringList.add("Warranty Date: "    + "");
+        }
+
+        if(data.length > 5) {
+            stringList.add("Tags: " + data[5]);
+        }
+        else{
+            // no tags to add
+            stringList.add("Tags: " + "");
+        }
+
+        CustomArrayAdapter adapter = new CustomArrayAdapter(this, R.layout.activity_listview, stringList);
+        list.setAdapter(adapter);
     }
     public void buttonHomeClick(View view) {
         Intent intent = new Intent(this, MainActivityScreen.class);
@@ -123,14 +203,14 @@ public class GuiConfig1Activity extends AppCompatActivity {
 
             Log.w("tag",line  + " testing print with tag: waffle");
 
-            ArrayList<Receipt> data6 = stub.getReceiptsWithTag("waffle");
+            ArrayList<Receipt> data6 = stub.getReceiptsWithSpecificTag("waffle");
             for(int i = 0; i < data6.size();i++){
                 Receipt temp = data6.get(i);
                 Log.w("tag",temp.getStore());
             }
             Log.w("tag",line  + " testing print with tag: cheese");
 
-            ArrayList<Receipt> data7 = stub.getReceiptsWithTag("cheese");
+            ArrayList<Receipt> data7 = stub.getReceiptsWithSpecificTag("cheese");
             for(int i = 0; i < data7.size();i++){
                 Receipt temp = data7.get(i);
                 Log.w("tag",temp.getStore());

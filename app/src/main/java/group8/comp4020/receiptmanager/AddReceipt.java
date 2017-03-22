@@ -14,7 +14,8 @@ public interface AddReceipt {
     ArrayList<Receipt> getReceiptsByPurchaseDate(String startDate, String endDate);
     ArrayList<Receipt> getReceiptsByWarrantyDate(String startDate, String endDate);
     ArrayList<Receipt> getAllReceipts();
-    ArrayList<Receipt> getReceiptsWithTag(String tag);
+    ArrayList<Receipt> getReceiptsWithSpecificTag(String tag);
+    ArrayList<Receipt> getReceiptsWithTag();
     ArrayList<Receipt> getReceiptsWithWarranty();
     ArrayList<Receipt> getReceiptsWithOutWarranty();
 }

@@ -63,8 +63,28 @@ public class Receipt implements Comparable <Receipt> {
     }
 
     public Date getWarrantyDate() {
+
+
+
+
+
+
         return warrantyDate;
     }
+    private String warrentyDate(){
+        String results = "";
+        String dateFormat = "yyyy-mm-dd hh:mm:ss";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            Date d = format.parse("0000-00-00 00:00:00");
+            if(getWarrantyDate().compareTo(d) != 0){
+                results += getWarrantyDate();
+            }
+        }catch (ParseException e) {}
+        return results;
+    }
+
+
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Setters
     public String SetRid(int newRid) {
@@ -174,7 +194,15 @@ public class Receipt implements Comparable <Receipt> {
 
     @Override
     public String toString() {
-        return "";
+        String tags = "";
+        ArrayList<String> tagList = getTags();
+        for(int i = 0; i < tagList.size();i++){
+            tags += tagList.get(i) + ", ";
+        }
+        if(tags.length() > 2) {
+            tags = tags.substring(0, tags.length() - 2);
+        }
+        return getStore() + "-$" + getPurchaseAmount() + "-" + getPurchaseDate() + "-" + getReturnDate() + "-" + warrentyDate() + "-" + tags + "-";
     }
 
     @Override
@@ -185,4 +213,6 @@ public class Receipt implements Comparable <Receipt> {
     public boolean hasTag(String tag){
         return tags.contains(tag);
     }
+    public boolean hasATag(){return tags.size() > 0;}
+
 }
