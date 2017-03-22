@@ -60,7 +60,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        
+
     }
 
 
@@ -137,7 +137,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         startActivity(intent);
     }
     public void buttonNewClick(View view) {
-        Intent intent = new Intent(this, MainActivityScreen.class);
+        Intent intent = new Intent(this, SingleScreenInsert.class);
         //intent.putExtra("", "");
         startActivity(intent);
     }
