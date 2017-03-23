@@ -3,5 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_gui_config2">GuiConfig2Activity</string>
     <string name="title_activity_gui_config1">GuiConfig1</string>
+    <string name="title_activity_pick_image">PickImage</string>
     <string name="title_activity_single_screen_insert">SingleScreenInsert</string>
 </resources>
