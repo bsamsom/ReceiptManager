@@ -18,8 +18,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 public class GuiConfig1Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    public final StubDatabase stub = new StubDatabase();
-
+    private Helper help = new Helper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +29,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayList<Receipt> receipts = stub.getAllReceipts();
+        ArrayList<Receipt> receipts = help.stub.getAllReceipts();
         addreceipts(receipts);
 
         spin.setAdapter(adapter);
@@ -41,19 +40,19 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         Log.w("tag", "Get item at: " + position);
         if(position == 0){
-            ArrayList<Receipt> receipts = stub.getAllReceipts();
+            ArrayList<Receipt> receipts = help.stub.getAllReceipts();
             addreceipts(receipts);
         }
         else if(position == 1){
-            ArrayList<Receipt> receipts = stub.getReceiptsWithWarranty();
+            ArrayList<Receipt> receipts = help.stub.getReceiptsWithWarranty();
             addreceipts(receipts);
         }
         else if(position == 2){
-            ArrayList<Receipt> receipts = stub.getReceiptsWithOutWarranty();
+            ArrayList<Receipt> receipts = help.stub.getReceiptsWithOutWarranty();
             addreceipts(receipts);
         }
         else{
-            ArrayList<Receipt> receipts = stub.getReceiptsWithTag();
+            ArrayList<Receipt> receipts = help.stub.getReceiptsWithTag();
             addreceipts(receipts);
         }
     }
@@ -91,10 +90,12 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     public void addReceiptToListView(ListView list, Receipt receipt){
         String dataString = receipt.toString().trim();
         String[] data = dataString.split("-");
+        /*
         Log.w("tag",receipt.toString().trim());
         for(int i = 0; i < data.length;i++){
             Log.w("tag",data[i]);
         }
+        */
         final ArrayList<String> stringList = new ArrayList<String>();
         for (int i = 0; i < data.length; ++i) {
             String[] temp = data[i].split("\\s+");
@@ -104,8 +105,24 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         }
         stringList.add("Store: "            + data[0]);
         stringList.add("Purchase: "         + data[1]);
-        stringList.add("Purchase Date: "    + data[2]);
-        stringList.add("Return Date: "      + data[3]);
+       // stringList.add("Purchase Date: "    + data[2]);
+       // stringList.add("Return Date: "      + data[3]);
+
+        if(data.length > 2) {
+            stringList.add("Purchase Date: " + data[2]);
+        }
+        else{
+            // no Warranty Date to add
+            stringList.add("Purchase Date: " + "");
+        }
+        if(data.length > 3) {
+            stringList.add("Return Date: " + data[3]);
+        }
+        else{
+            // no Warranty Date to add
+            stringList.add("Return Date: " + "");
+        }
+
 
         if(data.length > 4) {
             stringList.add("Warranty Date: "    + data[4]);

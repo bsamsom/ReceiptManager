@@ -57,35 +57,12 @@ public class Receipt implements Comparable <Receipt> {
     public Date getPurchaseDate() {
         return purchaseDate;
     }
-
     public Date getReturnDate() {
         return returnDate;
     }
-
     public Date getWarrantyDate() {
-
-
-
-
-
-
         return warrantyDate;
     }
-    private String warrentyDate(){
-        String results = "";
-        String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        try {
-            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d = format.parse("0000-00-00 00:00:00");
-            if(getWarrantyDate().compareTo(d) != 0){
-                results += getWarrantyDate();
-            }
-        }catch (ParseException e) {}
-        return results;
-    }
-
-
-
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Setters
     public String SetRid(int newRid) {
         String results = null;
@@ -96,7 +73,6 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
-
     public String SetStore(String newStore) {
         String results = null;
         if (newStore.length() > 0 && newStore != null) {
@@ -106,7 +82,6 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
-
     public String SetPurchaseAmount(double cost) {
         String results = null;
         if (cost > 0) {
@@ -116,49 +91,51 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
-
     public String SetImage(Image img) {
         String results = null;
         image = img;
         return results;
     }
-
     public String SetPurchaseDate(String date) {
         String results = null;
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        if (date == null) {
-            results = "Purchase date cannot be null";
-        } else {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-                Date d = format.parse(date);
-                purchaseDate = d;
-            } catch (ParseException e) {
-                results = "Purchase date does not have the format: " + dateFormat;
-                Log.w("tag", results);
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            Date d;
+            if (date != null) {
+                d = format.parse(date);
             }
+            else{
+                d = format.parse("0000-00-00 00:00:00");
+            }
+            purchaseDate = d;
+        } catch (ParseException e) {
+            results = "warranty date does not have the format: " + dateFormat;
+            results += "\nCurrently: " + date;
+            Log.w("tag", results);
         }
         return results;
     }
-
     public String SetReturnDate(String date) {
         String results = null;
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        if (date == null) {
-            results = "Return date cannot be null";
-        } else {
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-                Date d = format.parse(date);
-                returnDate = d;
-            } catch (ParseException e) {
-                results = "Return date does not have the format: " + dateFormat;
-                Log.w("tag", results);
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            Date d;
+            if (date != null) {
+                d = format.parse(date);
             }
+            else{
+                d = format.parse("0000-00-00 00:00:00");
+            }
+            returnDate = d;
+        } catch (ParseException e) {
+            results = "warranty date does not have the format: " + dateFormat;
+            results += "\nCurrently: " + date;
+            Log.w("tag", results);
         }
         return results;
     }
-
     public String SetWarrantyDate(String date) {
         String results = null;
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
@@ -173,11 +150,10 @@ public class Receipt implements Comparable <Receipt> {
             }
                 warrantyDate = d;
         } catch (ParseException e) {
-            results = "Return date does not have the format: " + dateFormat;
+            results = "warranty date does not have the format: " + dateFormat;
+            results += "\nCurrently: " + date;
             Log.w("tag", results);
         }
-
-
         return results;
     }
     public String setTags(String tag){
@@ -202,7 +178,7 @@ public class Receipt implements Comparable <Receipt> {
         if(tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getStore() + "-$" + getPurchaseAmount() + "-" + getPurchaseDate() + "-" + getReturnDate() + "-" + warrentyDate() + "-" + tags + "-";
+        return getStore() + "-$" + getPurchaseAmount() + "-" + purchaseDate() + "-" + returnDate() + "-" + warrentyDate() + "-" + tags + "-";
     }
 
     @Override
@@ -214,5 +190,46 @@ public class Receipt implements Comparable <Receipt> {
         return tags.contains(tag);
     }
     public boolean hasATag(){return tags.size() > 0;}
-
+    private String warrentyDate(){
+        String results = "";
+        String dateFormat = "yyyy-mm-dd hh:mm:ss";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            Date d = format.parse("0000-00-00 00:00:00");
+            Log.w("tag","warrantyDate " + warrantyDate);
+            Log.w("tag","0000-00-00 00:00:00 " + d);
+            if(getWarrantyDate().compareTo(d) != 0){
+                results += getWarrantyDate();
+            }
+        }catch (ParseException e) {}
+        return results;
+    }
+    private String purchaseDate(){
+        String results = "";
+        String dateFormat = "yyyy-mm-dd hh:mm:ss";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            Date d = format.parse("0000-00-00 00:00:00");
+            Log.w("tag","warrantyDate " + purchaseDate);
+            Log.w("tag","0000-00-00 00:00:00 " + d);
+            if(getPurchaseDate().compareTo(d) != 0){
+                results += getPurchaseDate();
+            }
+        }catch (ParseException e) {}
+        return results;
+    }
+    private String returnDate(){
+        String results = "";
+        String dateFormat = "yyyy-mm-dd hh:mm:ss";
+        try {
+            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+            Date d = format.parse("0000-00-00 00:00:00");
+            Log.w("tag","warrantyDate " + returnDate);
+            Log.w("tag","0000-00-00 00:00:00 " + d);
+            if(getReturnDate().compareTo(d) != 0){
+                results += getReturnDate();
+            }
+        }catch (ParseException e) {}
+        return results;
+    }
 }

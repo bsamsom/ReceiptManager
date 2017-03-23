@@ -67,7 +67,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:text="0.00" />
 
             </LinearLayout>
 
@@ -91,7 +92,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:text="0000-00-00" />
 
             </LinearLayout>
 
@@ -115,7 +117,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:text="0000-00-00" />
             </LinearLayout>
 
             <LinearLayout
@@ -138,7 +141,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:inputType="date" />
+                    android:inputType="date"
+                    android:text="0000-00-00" />
             </LinearLayout>
 
             <LinearLayout
