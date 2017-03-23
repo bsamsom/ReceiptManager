@@ -178,7 +178,7 @@ public class Receipt implements Comparable <Receipt> {
         if(tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getStore() + "-$" + getPurchaseAmount() + "-" + purchaseDate() + "-" + returnDate() + "-" + warrentyDate() + "-" + tags + "-";
+        return getStore() + "-" + getPurchaseAmount() + "-" + purchaseDate() + "-" + returnDate() + "-" + warrentyDate() + "-" + tags + "-";
     }
 
     @Override
@@ -196,8 +196,8 @@ public class Receipt implements Comparable <Receipt> {
         try {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             Date d = format.parse("0000-00-00 00:00:00");
-            Log.w("tag","warrantyDate " + warrantyDate);
-            Log.w("tag","0000-00-00 00:00:00 " + d);
+            //Log.w("tag","warrantyDate " + warrantyDate);
+            //Log.w("tag","0000-00-00 00:00:00 " + d);
             if(getWarrantyDate().compareTo(d) != 0){
                 results += getWarrantyDate();
             }
@@ -210,8 +210,8 @@ public class Receipt implements Comparable <Receipt> {
         try {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             Date d = format.parse("0000-00-00 00:00:00");
-            Log.w("tag","warrantyDate " + purchaseDate);
-            Log.w("tag","0000-00-00 00:00:00 " + d);
+            //Log.w("tag","warrantyDate " + purchaseDate);
+            //Log.w("tag","0000-00-00 00:00:00 " + d);
             if(getPurchaseDate().compareTo(d) != 0){
                 results += getPurchaseDate();
             }
@@ -224,12 +224,28 @@ public class Receipt implements Comparable <Receipt> {
         try {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);
             Date d = format.parse("0000-00-00 00:00:00");
-            Log.w("tag","warrantyDate " + returnDate);
-            Log.w("tag","0000-00-00 00:00:00 " + d);
+            //Log.w("tag","warrantyDate " + returnDate);
+            //Log.w("tag","0000-00-00 00:00:00 " + d);
             if(getReturnDate().compareTo(d) != 0){
                 results += getReturnDate();
             }
         }catch (ParseException e) {}
         return results;
     }
+    public String pDate(){
+        int year = purchaseDate.getYear();
+        year += 1900;
+        return year + "-" + purchaseDate.getMonth() + "-" + purchaseDate.getDay() + " 00:00:00";
+    }
+    public String rDate(){
+        int year = returnDate.getYear();
+        year += 1900;
+        return year + "-" + returnDate.getMonth() + "-" + returnDate.getDay() + " 00:00:00";
+    }
+    public String wDate(){
+        int year = warrantyDate.getYear();
+        year += 1900;
+        return year + "-" + warrantyDate.getMonth() + "-" + warrantyDate.getDay() + " 00:00:00";
+    }
+
 }

@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.support.v4.util.LogWriter;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -17,8 +21,12 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
+import android.view.GestureDetector.OnGestureListener;
+
 public class GuiConfig1Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Helper help = new Helper();
+    private int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +43,19 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         spin.setAdapter(adapter);
         spin.setOnItemSelectedListener(this);
 
+        HorizontalScrollView hscroll = (HorizontalScrollView) findViewById(R.id.HorizontalScrollView);
+
+        hscroll.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    int s = v.getId();
+                    Log.w("tag","Clicked on: " + s);
+                    // Do stuff
+                }
+                return false;
+            }
+        });
         //testStub();
     }
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -61,32 +82,35 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
-
-
-    public void addreceipts(ArrayList<Receipt> receipts){
-        ListView[] list = new ListView[receipts.size()];
+    public void addreceipts(final ArrayList<Receipt> receipts){
+        final ListView[] list = new ListView[receipts.size()];
         LinearLayout layout = (LinearLayout) findViewById(R.id.LinearLayoutList);
         layout.removeAllViews();
-
-        for(int i = 0; i < receipts.size();i++){
+        for(i = 0; i < receipts.size();i++){
             list[i] = new ListView(this);
-
             addReceiptToListView(list[i], receipts.get(i));
-
             layout.addView(list[i]);
             ViewGroup.LayoutParams params = list[i].getLayoutParams();
             params.width = 600;
             list[i].setLayoutParams(params);
-
             GradientDrawable gradientDrawable=new GradientDrawable();
             gradientDrawable.setStroke(4,Color.BLACK);
-            // underlines in red because it requires api 16 or higher
+            list[i].setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+                    ListView l = ((ListView)arg0);
+                    for(int j = 0; j < receipts.size();j++){
+                        if(list[j].equals(l)){
+                            Helper.receipt = receipts.get(j);
+                        }
+                    }
+                }
+            });
             list[i].setBackground(gradientDrawable);
             list[i].requestLayout();
         }
     }
-
-
     public void addReceiptToListView(ListView list, Receipt receipt){
         String dataString = receipt.toString().trim();
         String[] data = dataString.split("-");
@@ -149,8 +173,11 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         startActivity(intent);
     }
     public void buttonEditClick(View view) {
-        Intent intent = new Intent(this, MainActivityScreen.class);
-        //intent.putExtra("", "");
+        //Helper.receipt = Helper.stub.getReceipt(1);
+
+
+        Intent intent = new Intent(this, SingleScreenInsert.class);
+        intent.putExtra("edit", "extraData");
         startActivity(intent);
     }
     public void buttonNewClick(View view) {

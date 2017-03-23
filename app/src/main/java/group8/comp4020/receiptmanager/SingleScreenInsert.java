@@ -10,14 +10,82 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import static android.R.attr.data;
 
 public class SingleScreenInsert extends AppCompatActivity {
-
+    public boolean edit = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_screen_insert);
+        Bundle b = getIntent().getExtras();
+        if(b != null){
+            fillData();
+            edit = true;
+        }
+        else{
+            edit = false;
+        }
+    }
+    private void fillData(){
+        String dataString = Helper.receipt.toString();
+        String[] data = dataString.split("-");
+
+        final ArrayList<String> stringList = new ArrayList<String>();
+        for (int i = 0; i < data.length; ++i) {
+            String[] temp = data[i].split("\\s+");
+            if(temp.length == 6){
+                data[i] = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[5];
+            }
+        }
+        stringList.add(data[0]);
+        stringList.add(data[1]);
+
+        if(data.length > 2) {
+            stringList.add(data[2]);
+        }
+        else{
+            // no Warranty Date to add
+            stringList.add("");
+        }
+        if(data.length > 3) {
+            stringList.add(data[3]);
+        }
+        else{
+            // no Warranty Date to add
+            stringList.add("");
+        }
+
+
+        if(data.length > 4) {
+            stringList.add(data[4]);
+        }
+        else{
+            // no Warranty Date to add
+            stringList.add("");
+        }
+
+        if(data.length > 5) {
+            stringList.add(data[5]);
+        }
+        else {
+            // no tags to add
+            stringList.add("");
+        }
+        TextView t1 = (TextView)findViewById(R.id.editTextStoreName);
+        TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
+        TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
+        TextView t4 = (TextView)findViewById(R.id.editTextReturnDate);
+        TextView t5 = (TextView)findViewById(R.id.editTextWarrantyDate);
+        TextView t6 = (TextView)findViewById(R.id.editTextTags);
+        t1.setText(stringList.get(0));
+        t2.setText(stringList.get(1));
+        t3.setText(stringList.get(2));
+        t4.setText(stringList.get(3));
+        t5.setText(stringList.get(4));
+        t6.setText(stringList.get(5));
 
     }
     public void buttonSaveClick(View view) {
@@ -54,11 +122,15 @@ public class SingleScreenInsert extends AppCompatActivity {
             warrantyDate += ending;
         }
 
-
-
-        Receipt r = new Receipt(13,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
-        Helper.stub.insertReceipt(r);
-
+        if(edit){
+            Receipt r = new Receipt(Helper.receipt.getRid(),store,Double.parseDouble(purchaseAmount),null,Helper.receipt.pDate(),Helper.receipt.rDate(),Helper.receipt.wDate());
+            //Log.w("tag",Helper.receipt.pDate() + "\n" + Helper.receipt.rDate() + "\n" + Helper.receipt.wDate());
+            Helper.stub.updateReceipt(r);
+        }
+        else {
+            Receipt r = new Receipt(13,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
+            Helper.stub.insertReceipt(r);
+        }
        // Log.w("tag",r.toString());
 
 

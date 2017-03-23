@@ -8,6 +8,7 @@ import  java.util.Collections;
 
 public class Helper {
     public static StubDatabase stub = new StubDatabase();
+    public static Receipt receipt = null;
     public ArrayList<Receipt> sortByDate(ArrayList<Receipt> input){
         Collections.sort(input);
         return input;

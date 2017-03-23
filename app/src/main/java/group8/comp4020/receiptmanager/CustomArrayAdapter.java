@@ -10,25 +10,25 @@ import java.util.List;
  */
 
 public class CustomArrayAdapter  extends ArrayAdapter<String> {
-    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+    HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
 
     public CustomArrayAdapter(Context context, int textViewResourceId, List<String> objects) {
         super(context, textViewResourceId, objects);
         for (int i = 0; i < objects.size(); ++i) {
-            mIdMap.put(objects.get(i), i);
+            hashMap.put(objects.get(i), i);
         }
     }
 
     @Override
     public long getItemId(int position) {
         String item = getItem(position);
-        return mIdMap.get(item);
+        return hashMap.get(item);
     }
-
+/*
     @Override
-    public boolean hasStableIds() {
-        return true;
+    public boolean isEnabled(int position) {
+        return false;
     }
-
+    */
 }
 

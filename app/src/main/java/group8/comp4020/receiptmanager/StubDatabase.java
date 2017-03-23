@@ -61,14 +61,29 @@ public class StubDatabase implements AddReceipt {
         }
         return results;
     }
+    private Receipt receiptWithRid(int id){
+        Receipt result = null;
+        boolean end = false;
+        for(int i = 0; i < data.size() && !end;i++){
+            Receipt temp = data.get(i);
+            if (temp.getRid() == id){
+                end = true;
+                result = temp;
+            }
+        }
+        return result;
+    }
     public String updateReceipt(Receipt receipt){
         String results = null;
-        if(data.get(receipt.getRid()) != receipt){
+        Receipt temp = receiptWithRid(receipt.getRid());
+        if(temp == null){
             results = "Item not in stub database";
         }
         else{
-            data.remove(receipt.getRid());
-            data.add(receipt.getRid(),receipt);
+            Log.w("tag",temp.toString() + "\n" + receipt.toString());
+
+            data.remove(temp);
+            data.add(receipt);
         }
         return results;
     }

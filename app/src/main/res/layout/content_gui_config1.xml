@@ -46,6 +46,7 @@
         </LinearLayout>
 
         <HorizontalScrollView
+            android:id="@+id/HorizontalScrollView"
             android:layout_width="match_parent"
             android:layout_height="382dp"
             android:layout_weight="1">
