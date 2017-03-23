@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class Receipt implements Comparable <Receipt> {
     private int rid;
+    private String name;
     private String store;
     private double purchaseAmount;
     private Image image;
@@ -21,9 +22,10 @@ public class Receipt implements Comparable <Receipt> {
     private Date warrantyDate;
     private ArrayList<String> tags;
 
-    public Receipt(int rid, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
+    public Receipt(int rid, String name, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
         this.rid = rid;
         SetRid(rid);
+        SetName(name);
         SetStore(store);
         SetPurchaseAmount(purchaseAmount);
         SetImage(image);
@@ -36,6 +38,9 @@ public class Receipt implements Comparable <Receipt> {
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Getters
     public int getRid() {
         return rid;
+    }
+    public String getName() {
+        return name;
     }
 
     public ArrayList<String> getTags() {
@@ -70,6 +75,15 @@ public class Receipt implements Comparable <Receipt> {
             results = "Negative values are not allowed";
         } else {
             rid = newRid;
+        }
+        return results;
+    }
+    public String SetName(String newname) {
+        String results = null;
+        if (newname.length() > 0 && newname != null) {
+            name = newname;
+        } else {
+            results = "Empty store or null store not allowed";
         }
         return results;
     }
@@ -178,7 +192,7 @@ public class Receipt implements Comparable <Receipt> {
         if(tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getStore() + "-" + getPurchaseAmount() + "-" + purchaseDate() + "-" + returnDate() + "-" + warrentyDate() + "-" + tags + "-";
+        return getName() + "-" + getStore() + "-"  + getPurchaseAmount() + "-" + purchaseDate() + "-" + returnDate() + "-" + warrentyDate() + "-" + tags + "-";
     }
 
     @Override

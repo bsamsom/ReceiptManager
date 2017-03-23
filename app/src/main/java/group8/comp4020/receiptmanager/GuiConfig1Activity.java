@@ -43,19 +43,8 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         spin.setAdapter(adapter);
         spin.setOnItemSelectedListener(this);
 
-        HorizontalScrollView hscroll = (HorizontalScrollView) findViewById(R.id.HorizontalScrollView);
+        Helper.receipt = receipts.get(0);
 
-        hscroll.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    int s = v.getId();
-                    Log.w("tag","Clicked on: " + s);
-                    // Do stuff
-                }
-                return false;
-            }
-        });
         //testStub();
     }
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -127,20 +116,22 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
                 data[i] = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[5];
             }
         }
-        stringList.add("Store: "            + data[0]);
-        stringList.add("Purchase: "         + data[1]);
+
+        stringList.add("Name: "             + data[0]);
+        stringList.add("Store: "            + data[1]);
+        stringList.add("Purchase: "         + data[2]);
        // stringList.add("Purchase Date: "    + data[2]);
        // stringList.add("Return Date: "      + data[3]);
 
-        if(data.length > 2) {
-            stringList.add("Purchase Date: " + data[2]);
+        if(data.length > 3) {
+            stringList.add("Purchase Date: " + data[3]);
         }
         else{
             // no Warranty Date to add
             stringList.add("Purchase Date: " + "");
         }
-        if(data.length > 3) {
-            stringList.add("Return Date: " + data[3]);
+        if(data.length > 4) {
+            stringList.add("Return Date: " + data[4]);
         }
         else{
             // no Warranty Date to add
@@ -148,16 +139,16 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         }
 
 
-        if(data.length > 4) {
-            stringList.add("Warranty Date: "    + data[4]);
+        if(data.length > 5) {
+            stringList.add("Warranty Date: " + data[5]);
         }
         else{
             // no Warranty Date to add
-            stringList.add("Warranty Date: "    + "");
+            stringList.add("Warranty Date: "  + "");
         }
 
-        if(data.length > 5) {
-            stringList.add("Tags: " + data[5]);
+        if(data.length > 6) {
+            stringList.add("Tags: " + data[6]);
         }
         else{
             // no tags to add

@@ -42,33 +42,30 @@ public class SingleScreenInsert extends AppCompatActivity {
         }
         stringList.add(data[0]);
         stringList.add(data[1]);
+        stringList.add(data[2]);
 
-        if(data.length > 2) {
-            stringList.add(data[2]);
-        }
-        else{
-            // no Warranty Date to add
-            stringList.add("");
-        }
         if(data.length > 3) {
             stringList.add(data[3]);
         }
         else{
-            // no Warranty Date to add
             stringList.add("");
         }
-
-
         if(data.length > 4) {
             stringList.add(data[4]);
         }
         else{
-            // no Warranty Date to add
             stringList.add("");
         }
 
         if(data.length > 5) {
             stringList.add(data[5]);
+        }
+        else{
+            stringList.add("");
+        }
+
+        if(data.length > 6) {
+            stringList.add(data[6]);
         }
         else {
             // no tags to add
@@ -80,12 +77,14 @@ public class SingleScreenInsert extends AppCompatActivity {
         TextView t4 = (TextView)findViewById(R.id.editTextReturnDate);
         TextView t5 = (TextView)findViewById(R.id.editTextWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
-        t1.setText(stringList.get(0));
-        t2.setText(stringList.get(1));
-        t3.setText(stringList.get(2));
-        t4.setText(stringList.get(3));
-        t5.setText(stringList.get(4));
-        t6.setText(stringList.get(5));
+        TextView t7 = (TextView)findViewById(R.id.editTextName);
+        t7.setText(stringList.get(0));
+        t1.setText(stringList.get(1));
+        t2.setText(stringList.get(2));
+        t3.setText(stringList.get(3));
+        t4.setText(stringList.get(4));
+        t5.setText(stringList.get(5));
+        t6.setText(stringList.get(6));
 
     }
     public void buttonSaveClick(View view) {
@@ -96,6 +95,7 @@ public class SingleScreenInsert extends AppCompatActivity {
         TextView t4 = (TextView)findViewById(R.id.editTextReturnDate);
         TextView t5 = (TextView)findViewById(R.id.editTextWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
+        TextView t7 = (TextView)findViewById(R.id.editTextName);
         String store            = "" + t1.getText();
         String purchaseAmount   = "" + t2.getText();
         if (purchaseAmount.length() - purchaseAmount.indexOf(".") > 2){
@@ -105,6 +105,7 @@ public class SingleScreenInsert extends AppCompatActivity {
         String returnDate       = "" + t4.getText();
         String warrantyDate     = "" + t5.getText();
         String tags             = "" + t6.getText();
+        String name             = "" + t7.getText();
         //Log.w("tag",store + "\n"+ purchaseAmount + "\n"+ purchaseDate + "\n"+ returnDate + "\n"+ warrantyDate + "\n"+ tags);
 
         //"0000-00-00 00:00:00";
@@ -123,12 +124,12 @@ public class SingleScreenInsert extends AppCompatActivity {
         }
 
         if(edit){
-            Receipt r = new Receipt(Helper.receipt.getRid(),store,Double.parseDouble(purchaseAmount),null,Helper.receipt.pDate(),Helper.receipt.rDate(),Helper.receipt.wDate());
+            Receipt r = new Receipt(Helper.receipt.getRid(),Helper.receipt.getName(),store,Double.parseDouble(purchaseAmount),null,Helper.receipt.pDate(),Helper.receipt.rDate(),Helper.receipt.wDate());
             //Log.w("tag",Helper.receipt.pDate() + "\n" + Helper.receipt.rDate() + "\n" + Helper.receipt.wDate());
             Helper.stub.updateReceipt(r);
         }
         else {
-            Receipt r = new Receipt(13,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
+            Receipt r = new Receipt(13,name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
             Helper.stub.insertReceipt(r);
         }
        // Log.w("tag",r.toString());
