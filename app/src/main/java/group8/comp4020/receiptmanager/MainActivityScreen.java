@@ -26,4 +26,10 @@ public class MainActivityScreen extends AppCompatActivity{
         //intent.putExtra("", "");
         startActivity(intent);
     }
+    public void buttonThreeClick(View view) {
+        setContentView(R.layout.activity_pick_image);
+        Intent intent = new Intent(this, PickImageActivity.class);
+        startActivity(intent);
+    }
+
 }
