@@ -20,8 +20,11 @@
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="100dp"
-        app:layout_constraintHorizontal_bias="0.509" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintVertical_bias="0.32999998" />
 
     <Button
         android:id="@+id/button"
@@ -31,6 +34,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="20dp"
         android:background="@android:color/holo_blue_dark"
+        android:onClick="click_view"
         android:text="View Receipts"
         android:textColor="?android:attr/textColorPrimaryInverse"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -45,6 +49,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="50dp"
         android:background="@android:color/holo_green_dark"
+        android:onClick="click_add"
         android:text="Add Receipt"
         android:textColor="?android:attr/textColorPrimaryInverse"
         app:layout_constraintLeft_toLeftOf="parent"

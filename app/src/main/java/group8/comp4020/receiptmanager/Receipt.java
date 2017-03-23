@@ -20,6 +20,7 @@ public class Receipt implements Comparable <Receipt> {
     private Date returnDate;
     private Date warrantyDate;
     private ArrayList<String> tags;
+    private Boolean[] hasBeenModified;
 
     public Receipt(int rid, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
         this.rid = rid;
@@ -31,6 +32,14 @@ public class Receipt implements Comparable <Receipt> {
         SetReturnDate(returnDate);
         SetWarrantyDate(warentyDate);
         tags = new ArrayList<>();
+        hasBeenModified = new Boolean[8];
+    }
+
+    public Receipt() {
+        rid = -1;
+        purchaseAmount = -1;
+        tags = new ArrayList<>();
+        hasBeenModified = new Boolean[8];
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Getters
@@ -74,6 +83,7 @@ public class Receipt implements Comparable <Receipt> {
         } else {
             rid = newRid;
         }
+        hasBeenModified[0] = true;
         return results;
     }
 
@@ -84,6 +94,7 @@ public class Receipt implements Comparable <Receipt> {
         } else {
             results = "Empty store or null store not allowed";
         }
+        hasBeenModified[1] = true;
         return results;
     }
 
@@ -94,12 +105,14 @@ public class Receipt implements Comparable <Receipt> {
         } else {
             results = "Cannot be a negative money amount";
         }
+        hasBeenModified[2] = true;
         return results;
     }
 
     public String SetImage(Image img) {
         String results = null;
         image = img;
+        hasBeenModified[3] = true;
         return results;
     }
 
@@ -118,6 +131,7 @@ public class Receipt implements Comparable <Receipt> {
                 Log.w("tag", results);
             }
         }
+        hasBeenModified[4] = true;
         return results;
     }
 
@@ -136,6 +150,7 @@ public class Receipt implements Comparable <Receipt> {
                 Log.w("tag", results);
             }
         }
+        hasBeenModified[5] = true;
         return results;
     }
 
@@ -147,27 +162,27 @@ public class Receipt implements Comparable <Receipt> {
             Date d;
             if (date != null) {
                 d = format.parse(date);
-            }
-            else{
+            } else {
                 d = format.parse("0000-00-00 00:00:00");
             }
-                warrantyDate = d;
+            warrantyDate = d;
         } catch (ParseException e) {
             results = "Return date does not have the format: " + dateFormat;
             Log.w("tag", results);
         }
 
-
+        hasBeenModified[6] = true;
         return results;
     }
-    public String setTags(String tag){
+
+    public String setTags(String tag) {
         String result = null;
-        if (tags.contains(tag)){
+        if (tags.contains(tag)) {
             result = "Already has tag";
-        }
-        else{
+        } else {
             tags.add(tag);
         }
+        hasBeenModified[7] = true;
         return result;
     }
 
@@ -182,7 +197,48 @@ public class Receipt implements Comparable <Receipt> {
         return this.getPurchaseDate().compareTo(o.getPurchaseDate());
     }
 
-    public boolean hasTag(String tag){
+    public boolean hasTag(String tag) {
         return tags.contains(tag);
     }
+
+    public boolean hasValue(String property) {
+        switch (property) {
+            case "rid":
+                if (hasBeenModified[0])
+                    return true;
+                break;
+            case "store":
+                if (hasBeenModified[1])
+                    return true;
+                break;
+            case "purchaseAmount":
+                if (hasBeenModified[2])
+                    return true;
+                break;
+            case "image":
+                if (hasBeenModified[3])
+                    return true;
+                break;
+            case "purchaseDate":
+                if (hasBeenModified[4])
+                    return true;
+                break;
+            case "returnDate":
+                if (hasBeenModified[5])
+                    return true;
+                break;
+            case "warrantyDate":
+                if (hasBeenModified[6])
+                    return true;
+                break;
+            case "tags":
+                if (hasBeenModified[7])
+                    return true;
+                break;
+        }
+
+        return false;
+    }
 }
+
+

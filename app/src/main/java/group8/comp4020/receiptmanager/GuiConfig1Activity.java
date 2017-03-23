@@ -46,21 +46,6 @@ public class GuiConfig1Activity extends AppCompatActivity {
 
 
     }
-    public void buttonHomeClick(View view) {
-        Intent intent = new Intent(this, MainActivityScreen.class);
-        //intent.putExtra("", "");
-        startActivity(intent);
-    }
-    public void buttonEditClick(View view) {
-        Intent intent = new Intent(this, MainActivityScreen.class);
-        //intent.putExtra("", "");
-        startActivity(intent);
-    }
-    public void buttonNewClick(View view) {
-        Intent intent = new Intent(this, MainActivityScreen.class);
-        //intent.putExtra("", "");
-        startActivity(intent);
-    }
     private void testStub(){
         StubDatabase stub = new StubDatabase();
         ArrayList<Receipt> data = stub.getAllReceipts();

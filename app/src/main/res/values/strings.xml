@@ -3,4 +3,10 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_gui_config2">GuiConfig2Activity</string>
     <string name="title_activity_gui_config1">GuiConfig1</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="add_receipt_title">Add Receipt</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
