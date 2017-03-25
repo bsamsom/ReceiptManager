@@ -1,22 +1,25 @@
 package group8.comp4020.receiptmanager;
 
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 
-public class AddReceipt_MultiScreen_Expiry extends Fragment implements View.OnClickListener{
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    // private static final String ARG_PARAM1 = "param1";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+public class AddReceipt_MultiScreen_Expiry extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    // fragment fields
+    private EditText editText_Amount;
+    private Spinner spinner_Units, spinner_Expiry;
 
     private OnFragmentInteractionListener mListener;
 
@@ -47,7 +50,33 @@ public class AddReceipt_MultiScreen_Expiry extends Fragment implements View.OnCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_receipt__multi_screen__expiry, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_receipt__multi_screen__expiry, container, false);
+
+
+        // gets all page controls that will be used to fill in data
+        editText_Amount = (EditText) v.findViewById(R.id.editText_Amount);
+        spinner_Expiry = (Spinner) v.findViewById(R.id.spinner_Expiry);
+        spinner_Units = (Spinner) v.findViewById(R.id.spinner_Units);
+
+        // loads the pre-formed expiry date spinner with choices
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(v.getContext(), R.array.expiry_choices, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_Expiry.setAdapter(adapter);
+        spinner_Expiry.setOnItemSelectedListener(this);
+        spinner_Expiry.setOnCreateContextMenuListener(this);
+        spinner_Expiry.setSelection(0);
+
+        // loads the units spinner with choices
+        ArrayAdapter<CharSequence> adapterUnits = ArrayAdapter.createFromResource(v.getContext(), R.array.expiry_units, android.R.layout.simple_spinner_item);
+        adapterUnits.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_Units.setAdapter(adapterUnits);
+        spinner_Units.setOnItemSelectedListener(this);
+        spinner_Units.setOnCreateContextMenuListener(this);
+        spinner_Units.setSelection(0);
+
+
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -74,8 +103,32 @@ public class AddReceipt_MultiScreen_Expiry extends Fragment implements View.OnCl
         mListener = null;
     }
 
+
     @Override
-    public void onClick(View v) {
+    public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+        Log.d("ITEM SELECTED", adapterView.getItemAtPosition(pos).toString());
+        switch (adapterView.getId()) {
+            case R.id.spinner_Expiry:
+                if (adapterView.getItemAtPosition(pos).toString().equals("Specify...")) {
+                    editText_Amount.setVisibility(View.VISIBLE);
+                    spinner_Units.setVisibility(View.VISIBLE);
+                }
+                else {
+                    editText_Amount.setVisibility(View.INVISIBLE);
+                    spinner_Units.setVisibility(View.INVISIBLE);
+                }
+                break;
+        }
+    }
+
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+//        if (adapterView.getSelectedItem().toString().equals("[Select expiry]"))
+    }
+
+    @Override
+    public void onClick(View view) {
 
     }
 

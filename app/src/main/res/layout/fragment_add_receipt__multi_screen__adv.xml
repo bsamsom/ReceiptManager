@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/F"
+        android:id="@+id/button_Scan_Finish"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,51 +36,52 @@
         app:layout_constraintBottom_toTopOf="@+id/space" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_Prog2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:editable="false"
-        app:layout_constraintRight_toLeftOf="@+id/checkBox2"
-        app:layout_constraintTop_toTopOf="@+id/checkBox3"
+        app:layout_constraintRight_toLeftOf="@+id/checkBox_Prog3"
+        app:layout_constraintTop_toTopOf="@+id/checkBox_Prog1"
         android:layout_marginEnd="8dp" />
 
     <CheckBox
-        android:id="@+id/checkBox3"
+        android:id="@+id/checkBox_Prog1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:editable="false"
-        app:layout_constraintRight_toLeftOf="@+id/checkBox"
+        app:layout_constraintRight_toLeftOf="@+id/checkBox_Prog2"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/space" />
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/checkBox_Prog3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:editable="false"
-        app:layout_constraintRight_toLeftOf="@+id/checkBox4"
-        app:layout_constraintTop_toTopOf="@+id/checkBox3"
+        app:layout_constraintRight_toLeftOf="@+id/checkBox_Prog4"
+        app:layout_constraintTop_toTopOf="@+id/checkBox_Prog1"
         android:layout_marginEnd="8dp" />
 
     <CheckBox
-        android:id="@+id/checkBox4"
+        android:id="@+id/checkBox_Prog4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="124dp"
         android:layout_marginRight="124dp"
         android:editable="false"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/checkBox3" />
+        app:layout_constraintTop_toTopOf="@+id/checkBox_Prog1" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="79dp"
         android:text="Value:"
         app:layout_constraintTop_toBottomOf="@+id/textView11"

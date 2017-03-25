@@ -2,17 +2,18 @@ package group8.comp4020.receiptmanager;
 
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -40,7 +41,7 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(this.getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -51,6 +52,7 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
 
         // creates a blank receipt that will be filled with data
         newReceipt = new Receipt();
+
     }
 
     @Override
@@ -58,6 +60,13 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
 
     }
 
+    public ViewPager getViewPager() {
+        return mViewPager;
+    }
+
+    public Receipt getReceipt() {
+        return newReceipt;
+    }
 
     /**
      * A placeholder fragment containing a simple view.
@@ -105,7 +114,7 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public android.support.v4.app.Fragment getItem(int position) {
             switch (position)
             {
                 case 0:
@@ -142,5 +151,6 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
             }
             return null;
         }
+
     }
 }
