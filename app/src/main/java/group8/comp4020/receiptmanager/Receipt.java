@@ -42,23 +42,18 @@ public class Receipt implements Comparable <Receipt> {
     public String getName() {
         return name;
     }
-
     public ArrayList<String> getTags() {
         return tags;
     }
-
     public String getStore() {
         return store;
     }
-
     public Double getPurchaseAmount() {
         return purchaseAmount;
     }
-
     public Image getImage() {
         return image;
     }
-
     public Date getPurchaseDate() {
         return purchaseDate;
     }
@@ -124,7 +119,7 @@ public class Receipt implements Comparable <Receipt> {
             }
             purchaseDate = d;
         } catch (ParseException e) {
-            results = "warranty date does not have the format: " + dateFormat;
+            results = "purchase date does not have the format: " + dateFormat;
             results += "\nCurrently: " + date;
             Log.w("tag", results);
         }
@@ -144,7 +139,7 @@ public class Receipt implements Comparable <Receipt> {
             }
             returnDate = d;
         } catch (ParseException e) {
-            results = "warranty date does not have the format: " + dateFormat;
+            results = "return date does not have the format: " + dateFormat;
             results += "\nCurrently: " + date;
             Log.w("tag", results);
         }
@@ -162,7 +157,7 @@ public class Receipt implements Comparable <Receipt> {
             else{
                 d = format.parse("0000-00-00 00:00:00");
             }
-                warrantyDate = d;
+            warrantyDate = d;
         } catch (ParseException e) {
             results = "warranty date does not have the format: " + dateFormat;
             results += "\nCurrently: " + date;
@@ -192,7 +187,7 @@ public class Receipt implements Comparable <Receipt> {
         if(tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getName() + "-" + getStore() + "-"  + getPurchaseAmount() + "-" + purchaseDate() + "-" + returnDate() + "-" + warrentyDate() + "-" + tags + "-";
+        return getName() + "--" + getStore() + "--"  + getPurchaseAmount() + "--" + pDate() + "--" + rDate() + "--" + wDate() + "--" + tags + "--";
     }
 
     @Override
@@ -209,11 +204,14 @@ public class Receipt implements Comparable <Receipt> {
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
         try {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d = format.parse("0000-00-00 00:00:00");
+            Date d = format.parse("0005-00-00 00:00:00");
             //Log.w("tag","warrantyDate " + warrantyDate);
             //Log.w("tag","0000-00-00 00:00:00 " + d);
-            if(getWarrantyDate().compareTo(d) != 0){
+            if(getWarrantyDate().after(d)){
                 results += getWarrantyDate();
+            }
+            else{
+                results = "0000-00-00";
             }
         }catch (ParseException e) {}
         return results;
@@ -223,11 +221,14 @@ public class Receipt implements Comparable <Receipt> {
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
         try {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d = format.parse("0000-00-00 00:00:00");
-            //Log.w("tag","warrantyDate " + purchaseDate);
+            Date d = format.parse("0005-00-00 00:00:00");
+           // Log.w("tag","purchase date: " + getPurchaseDate());
             //Log.w("tag","0000-00-00 00:00:00 " + d);
-            if(getPurchaseDate().compareTo(d) != 0){
+            if(getPurchaseDate().after(d)){
                 results += getPurchaseDate();
+            }
+            else{
+                results = "0000-00-00";
             }
         }catch (ParseException e) {}
         return results;
@@ -237,29 +238,50 @@ public class Receipt implements Comparable <Receipt> {
         String dateFormat = "yyyy-mm-dd hh:mm:ss";
         try {
             SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d = format.parse("0000-00-00 00:00:00");
+            Date d = format.parse("0005-00-00 00:00:00");
             //Log.w("tag","warrantyDate " + returnDate);
             //Log.w("tag","0000-00-00 00:00:00 " + d);
-            if(getReturnDate().compareTo(d) != 0){
+            if(getReturnDate().after(d)){
                 results += getReturnDate();
+            }
+            else{
+                results = "0000-00-00";
             }
         }catch (ParseException e) {}
         return results;
     }
     public String pDate(){
-        int year = purchaseDate.getYear();
-        year += 1900;
-        return year + "-" + purchaseDate.getMonth() + "-" + purchaseDate.getDay() + " 00:00:00";
+        String results = "";
+        String data =  "" + purchaseDate;
+        String[] temp = data.split("\\s+");
+        results = temp[5] + "-" + purchaseDate.getMonth() + "-" + temp[2];
+        if(Integer.parseInt(temp[5]) < 5){
+            results = "0000-00-00";
+        }
+       //Log.w("tag",results);
+        return results;
     }
     public String rDate(){
-        int year = returnDate.getYear();
-        year += 1900;
-        return year + "-" + returnDate.getMonth() + "-" + returnDate.getDay() + " 00:00:00";
+        String results = "";
+        String data =  "" + returnDate;
+        String[] temp = data.split("\\s+");
+        results = temp[5] + "-" + returnDate.getMonth() + "-" + temp[2];
+        if(Integer.parseInt(temp[5]) < 5){
+            results = "0000-00-00";
+        }
+        //Log.w("tag",results);
+        return results;
     }
     public String wDate(){
-        int year = warrantyDate.getYear();
-        year += 1900;
-        return year + "-" + warrantyDate.getMonth() + "-" + warrantyDate.getDay() + " 00:00:00";
+        String results = "";
+        String data =  "" + warrantyDate;
+        String[] temp = data.split("\\s+");
+        results = temp[5] + "-" + warrantyDate.getMonth() + "-" + temp[2];
+        if(Integer.parseInt(temp[5]) < 5){
+            results = "0000-00-00";
+        }
+       // Log.w("tag",results);
+        return results;
     }
 
 }

@@ -4,25 +4,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.support.v4.util.LogWriter;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-
 import java.util.ArrayList;
-
-import static android.provider.AlarmClock.EXTRA_MESSAGE;
-import android.view.GestureDetector.OnGestureListener;
 
 public class GuiConfig1Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Helper help = new Helper();
@@ -48,7 +40,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         //testStub();
     }
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Log.w("tag", "Get item at: " + position);
+        //Log.w("tag", "Get item at: " + position);
         if(position == 0){
             ArrayList<Receipt> receipts = help.stub.getAllReceipts();
             addreceipts(receipts);
@@ -102,18 +94,20 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     }
     public void addReceiptToListView(ListView list, Receipt receipt){
         String dataString = receipt.toString().trim();
-        String[] data = dataString.split("-");
+        String[] data = dataString.split("--");
         /*
         Log.w("tag",receipt.toString().trim());
         for(int i = 0; i < data.length;i++){
             Log.w("tag",data[i]);
         }
         */
+
         final ArrayList<String> stringList = new ArrayList<String>();
         for (int i = 0; i < data.length; ++i) {
             String[] temp = data[i].split("\\s+");
             if(temp.length == 6){
-                data[i] = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[5];
+                data[i] = temp[1] + " " + temp[2] + " " + temp[5];
+               // Log.w("tag",data[i]);
             }
         }
 
@@ -123,19 +117,20 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
        // stringList.add("Purchase Date: "    + data[2]);
        // stringList.add("Return Date: "      + data[3]);
 
+
         if(data.length > 3) {
             stringList.add("Purchase Date: " + data[3]);
         }
         else{
             // no Warranty Date to add
-            stringList.add("Purchase Date: " + "");
+            stringList.add("Purchase Date: " + "0000-00-00");
         }
         if(data.length > 4) {
             stringList.add("Return Date: " + data[4]);
         }
         else{
             // no Warranty Date to add
-            stringList.add("Return Date: " + "");
+            stringList.add("Return Date: " + "0000-00-00");
         }
 
 
@@ -144,7 +139,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         }
         else{
             // no Warranty Date to add
-            stringList.add("Warranty Date: "  + "");
+            stringList.add("Warranty Date: "  + "0000-00-00");
         }
 
         if(data.length > 6) {

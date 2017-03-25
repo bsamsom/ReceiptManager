@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ForwardingListener;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -31,13 +32,13 @@ public class SingleScreenInsert extends AppCompatActivity {
     }
     private void fillData(){
         String dataString = Helper.receipt.toString();
-        String[] data = dataString.split("-");
+        String[] data = dataString.split("--");
 
         final ArrayList<String> stringList = new ArrayList<String>();
         for (int i = 0; i < data.length; ++i) {
             String[] temp = data[i].split("\\s+");
             if(temp.length == 6){
-                data[i] = temp[0] + " " + temp[1] + " " + temp[2] + " " + temp[5];
+                data[i] = temp[1] + " " + temp[2] + " " + temp[5];
             }
         }
         stringList.add(data[0]);
@@ -48,20 +49,20 @@ public class SingleScreenInsert extends AppCompatActivity {
             stringList.add(data[3]);
         }
         else{
-            stringList.add("");
+            stringList.add("0000-00-00");
         }
         if(data.length > 4) {
             stringList.add(data[4]);
         }
         else{
-            stringList.add("");
+            stringList.add("0000-00-00");
         }
 
         if(data.length > 5) {
             stringList.add(data[5]);
         }
         else{
-            stringList.add("");
+            stringList.add("0000-00-00");
         }
 
         if(data.length > 6) {
@@ -78,6 +79,7 @@ public class SingleScreenInsert extends AppCompatActivity {
         TextView t5 = (TextView)findViewById(R.id.editTextWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
         TextView t7 = (TextView)findViewById(R.id.editTextName);
+
         t7.setText(stringList.get(0));
         t1.setText(stringList.get(1));
         t2.setText(stringList.get(2));
@@ -110,22 +112,34 @@ public class SingleScreenInsert extends AppCompatActivity {
 
         //"0000-00-00 00:00:00";
         String ending = " 00:00:00";
-        if(purchaseDate.length() >= 10){
-            purchaseDate = purchaseDate.substring(0,10);
+        if(purchaseDate.length() >= 11){
+            purchaseDate = purchaseDate.substring(0,11);
             purchaseDate += ending;
         }
-        if(returnDate.length() >= 10){
-            returnDate = returnDate.substring(0,10);
+        else if(purchaseDate.length() < 11){
+            purchaseDate += ending;
+        }
+
+        if(returnDate.length() >= 11){
+            returnDate = returnDate.substring(0,11);
             returnDate += ending;
         }
-        if(warrantyDate.length() >= 10){
-            warrantyDate = warrantyDate.substring(0,10);
+        else if(returnDate.length() < 11){
+            returnDate += ending;
+        }
+
+        if(warrantyDate.length() >= 11){
+            warrantyDate = warrantyDate.substring(0,11);
+            warrantyDate += ending;
+        }
+        else if(warrantyDate.length() < 11){
             warrantyDate += ending;
         }
 
         if(edit){
-            Receipt r = new Receipt(Helper.receipt.getRid(),Helper.receipt.getName(),store,Double.parseDouble(purchaseAmount),null,Helper.receipt.pDate(),Helper.receipt.rDate(),Helper.receipt.wDate());
-            //Log.w("tag",Helper.receipt.pDate() + "\n" + Helper.receipt.rDate() + "\n" + Helper.receipt.wDate());
+            Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
+            Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
+
             Helper.stub.updateReceipt(r);
         }
         else {
