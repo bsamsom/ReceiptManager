@@ -26,7 +26,7 @@ public class StubDatabase implements AddReceipt {
         data.add(4 , new Receipt(4 , "Textbook"         , "U of M Book Store", 365.87, null, "2013-01-24", "90 Days"   , "1 Year"));
         data.add(5 , new Receipt(5 , "Gass"             , "Shell"            , 56.65 , null, "2014-10-16", "30 Days"   , null));
         data.add(6 , new Receipt(6 , "Book"             , "Chapters"         , 12.43 , null, "2003-07-06", "60 Days"   , "5 Years"));
-        data.add(7 , new Receipt(7 , "Lumber"           , "Rona"             , 78/89 , null, "2009-12-09", "60 Days"   , "2 Years"));
+        data.add(7 , new Receipt(7 , "Lumber"           , "Rona"             , 78.89 , null, "2009-12-09", "60 Days"   , "2 Years"));
         data.add(8 , new Receipt(8 , "Drywall"          , "Home Depot"       , 43.32 , null, "2016-04-12", "90 Days"   , "1 Year"));
         data.add(9 , new Receipt(9 , "Paint"            , "Benjamin More"    , 89.43 , null, "1994-09-04", "30 Days"   , null));
         data.add(10, new Receipt(10, "Food"             , "Foodfare"         , 12.95 , null, "1990-03-01", "180 Days"  , "3 Years"));

@@ -127,6 +127,7 @@ public class Receipt implements Comparable <Receipt> {
             int rDate = Integer.parseInt(temp[0]);
             returnDate = rDate;
         } catch (Exception e) {
+            returnDate = -1;
             results += "\nCurrently: " + date;
             if(date != null) {
                 Log.w("tag", "return date: " + date + " not an integer");
@@ -143,6 +144,7 @@ public class Receipt implements Comparable <Receipt> {
             warranty = true;
             warrantyDate = wDate;
         } catch (Exception e) {
+            warrantyDate = -1;
             warranty = false;
             results += "\nCurrently: " + date;
             if(date != null) {
@@ -173,7 +175,7 @@ public class Receipt implements Comparable <Receipt> {
         if(tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getName() + "--" + getStore() + "--"  + getPurchaseAmount() + "--" + getPurchaseDate() + "--" + returnDate + "--" + warrantyDate + "--" + tags + "--";
+        return getName() + "--" + getStore() + "--"  + getPurchaseAmount() + "--" + getPurchaseDate().replaceAll(" ","-") + "--" + returnDate + "--" + warrantyDate + "--" + tags + "--";
     }
 
     @Override

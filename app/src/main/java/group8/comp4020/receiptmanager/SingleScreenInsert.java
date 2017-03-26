@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ForwardingListener;
+import android.support.v7.widget.ThemedSpinnerAdapter;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +23,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
     public boolean edit = false;
     public String returnSelection = "30 Days";
     public String warrantySelection = "1 Year";
-    private ArrayAdapter<String> warrantyAdapter;
-    private ArrayAdapter<String> dateAdapter;
+    public ArrayAdapter<String> warrantyAdapter;
+    public ArrayAdapter<String> dateAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +33,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         Bundle b = getIntent().getExtras();
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Return Date Spinner
         Spinner returnDate = (Spinner) findViewById(R.id.spinnerReturnDate);
-        String[] dates = new String[]{"30 Days", "60 Days", "90 Days", "180 Days"};
-        dateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, dates);
+
+        dateAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Helper.returnDates);
         dateAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         returnDate.setAdapter(dateAdapter);
@@ -41,8 +42,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Return Date Spinner
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Return Date Spinner
         Spinner warrantyDate = (Spinner) findViewById(R.id.spinnerWarrantyDate);
-        String[] warrantyDates = new String[]{"1 Year", "2 Year", "3 Year", "5 Year"};
-        warrantyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, warrantyDates);
+
+        warrantyAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, Helper.warrantyDates);
         warrantyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         warrantyDate.setAdapter(warrantyAdapter);
@@ -71,8 +72,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // default selection values
-        returnSelection = "30 Days";
-        warrantySelection = "1 Year";
+        returnSelection = "None";
+        warrantySelection = "None";
     }
 
 
@@ -81,48 +82,44 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         String[] data = dataString.split("--");
 
         final ArrayList<String> stringList = new ArrayList<String>();
-        for (int i = 0; i < data.length; ++i) {
-            String[] temp = data[i].split("\\s+");
-            if(temp.length == 6){
-                data[i] = temp[1] + " " + temp[2] + " " + temp[5];
-            }
-        }
         stringList.add(data[0]);
         stringList.add(data[1]);
         stringList.add(data[2]);
+        stringList.add(data[3]);
 
-        if(data.length > 3) {
-            stringList.add(data[3]);
-        }
-        else{
-            stringList.add("0000-00-00");
-        }
-        if(data.length > 4) {
-            stringList.add(data[4]);
-        }
-        else{
-            stringList.add("0000-00-00");
+        int retPos = 0;
+        int warPos = 0;
+
+        for (int i = 0; i < Helper.returnDates.length;i++){
+            String[] spinList = Helper.returnDates[i].split("\\s+");
+            if(spinList[0].equals(data[4])){
+                retPos = i;
+            }
         }
 
-        if(data.length > 5) {
-            stringList.add(data[5]);
+        if(Integer.parseInt(data[5]) > 0) {
+            for (int i = 0; i < Helper.warrantyDates.length; i++) {
+                String[] spinList = Helper.warrantyDates[i].split("\\s+");
+                if (spinList[0].equals(data[5])) {
+                    warPos = i;
+                }
+            }
         }
-        else{
-            stringList.add("0000-00-00");
-        }
+
 
         if(data.length > 6) {
             stringList.add(data[6]);
         }
-        else {
+        else{
             // no tags to add
             stringList.add("");
         }
+
         TextView t1 = (TextView)findViewById(R.id.editTextStoreName);
         TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
         TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
-        //TextView t4 = (TextView)findViewById(R.id.editTextReturnDate);
-        //TextView t5 = (TextView)findViewById(R.id.editTextWarrantyDate);
+        Spinner ret = (Spinner)findViewById(R.id.spinnerReturnDate);
+        Spinner war = (Spinner)findViewById(R.id.spinnerWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
         TextView t7 = (TextView)findViewById(R.id.editTextName);
 
@@ -130,9 +127,9 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         t1.setText(stringList.get(1));
         t2.setText(stringList.get(2));
         t3.setText(stringList.get(3));
-        //t4.setText(stringList.get(4));
-        //t5.setText(stringList.get(5));
-        t6.setText(stringList.get(6));
+        ret.setSelection(retPos);
+        war.setSelection(warPos);
+        t6.setText(stringList.get(4));
 
     }
     public void buttonSaveClick(View view) {
@@ -140,8 +137,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         TextView t1 = (TextView)findViewById(R.id.editTextStoreName);
         TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
         TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
-        //TextView t4 = (TextView)findViewById(R.id.editTextReturnDate);
-        //TextView t5 = (TextView)findViewById(R.id.editTextWarrantyDate);
+        Spinner ret = (Spinner)findViewById(R.id.spinnerReturnDate);
+        Spinner war = (Spinner)findViewById(R.id.spinnerWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
         TextView t7 = (TextView)findViewById(R.id.editTextName);
         String store            = "" + t1.getText();
@@ -150,46 +147,37 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
             purchaseAmount = purchaseAmount.substring(0,purchaseAmount.indexOf(".")+ 3);
         }
         String purchaseDate     = "" + t3.getText();
-        String returnDate       = "";// + t4.getText();
-        String warrantyDate     = "";// + t5.getText();
+        String returnDate       = "" + ret.getSelectedItem();
+        String warrantyDate     = "" + war.getSelectedItem();
         String tags             = "" + t6.getText();
         String name             = "" + t7.getText();
         //Log.w("tag",store + "\n"+ purchaseAmount + "\n"+ purchaseDate + "\n"+ returnDate + "\n"+ warrantyDate + "\n"+ tags);
 
-        //"0000-00-00 00:00:00";
-        String ending = " 00:00:00";
         if(purchaseDate.length() >= 11){
             purchaseDate = purchaseDate.substring(0,11);
-            purchaseDate += ending;
         }
-        else if(purchaseDate.length() < 11){
-            purchaseDate += ending;
-        }
-/*
-        if(returnDate.length() >= 11){
-            returnDate = returnDate.substring(0,11);
-            returnDate += ending;
-        }
-        else if(returnDate.length() < 11){
-            returnDate += ending;
-        }
+        // incase user changes the - to a space
+        purchaseDate = purchaseDate.replaceAll(" ","-");
 
-        if(warrantyDate.length() >= 11){
-            warrantyDate = warrantyDate.substring(0,11);
-            warrantyDate += ending;
-        }
-        else if(warrantyDate.length() < 11){
-            warrantyDate += ending;
-        }
-*/
         if(edit){
             Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
             Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
-
+            if(!tags.equals("")){
+                String[] temp = tags.split(",-/ ");
+                for(int i = 0; i < temp.length;i++){
+                    r.setTags(temp[i]);
+                }
+            }
             Helper.stub.updateReceipt(r);
         }
         else {
             Receipt r = new Receipt(Helper.rid,name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
+            if(!tags.equals("")){
+                String[] temp = tags.split(",-/ ");
+                for(int i = 0; i < temp.length;i++){
+                    r.setTags(temp[i]);
+                }
+            }
             Helper.rid += 1;
             Helper.stub.insertReceipt(r);
         }

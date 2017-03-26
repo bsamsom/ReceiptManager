@@ -34,6 +34,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Sort Spinner
 
         ArrayList<Receipt> receipts = help.stub.getAllReceipts();
+        receipts = help.sortByDate(receipts);
         addreceipts(receipts);
         Helper.receipt = receipts.get(0);
 
@@ -72,9 +73,10 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
             addReceiptToListView(list[i], receipts.get(i));
             layout.addView(list[i]);
             ViewGroup.LayoutParams params = list[i].getLayoutParams();
-            params.width = 600;
+            params.width = 700;
+            params.height = 1150;
             list[i].setLayoutParams(params);
-            GradientDrawable gradientDrawable=new GradientDrawable();
+            GradientDrawable gradientDrawable = new GradientDrawable();
             gradientDrawable.setStroke(4,Color.BLACK);
             list[i].setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -95,52 +97,42 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     public void addReceiptToListView(ListView list, Receipt receipt){
         String dataString = receipt.toString().trim();
         String[] data = dataString.split("--");
+        final ArrayList<String> stringList = new ArrayList<String>();
         /*
         Log.w("tag",receipt.toString().trim());
-        for(int i = 0; i < data.length;i++){
-            Log.w("tag",data[i]);
+        for(int i = 0; i < data.length;i++) {
+            Log.w("tag", data[i]);
         }
         */
-
-        final ArrayList<String> stringList = new ArrayList<String>();
-        for (int i = 0; i < data.length; ++i) {
-            String[] temp = data[i].split("\\s+");
-            if(temp.length == 6){
-                data[i] = temp[1] + " " + temp[2] + " " + temp[5];
-               // Log.w("tag",data[i]);
-            }
-        }
-
         stringList.add("Name: "             + data[0]);
         stringList.add("Store: "            + data[1]);
         stringList.add("Purchase: "         + data[2]);
-       // stringList.add("Purchase Date: "    + data[2]);
-       // stringList.add("Return Date: "      + data[3]);
+        stringList.add("Purchase Date: " + data[3]);
+
+        String addRet = "Return Date: " + data[4];
+        String addWar = "Warranty Date: " + data[5];
+        for (int i = 0; i < Helper.returnDates.length;i++){
+            String[] spinList = Helper.returnDates[i].split("\\s+");
+            if(spinList[0].equals(data[4])){
+                addRet = "Return Date: " + Helper.returnDates[i];
+            }
+        }
 
 
-        if(data.length > 3) {
-            stringList.add("Purchase Date: " + data[3]);
+        if(Integer.parseInt(data[5]) > 0) {
+            for (int i = 0; i < Helper.warrantyDates.length; i++) {
+                String[] spinList = Helper.warrantyDates[i].split("\\s+");
+                if (spinList[0].equals(data[5])) {
+                    addWar = "Warranty Date: " + Helper.warrantyDates[i];
+                }
+            }
         }
         else{
-            // no Warranty Date to add
-            stringList.add("Purchase Date: " + "0000-00-00");
-        }
-        if(data.length > 4) {
-            stringList.add("Return Date: " + data[4]);
-        }
-        else{
-            // no Warranty Date to add
-            stringList.add("Return Date: " + "0000-00-00");
+            addWar = "Warranty Date: None";
         }
 
-
-        if(data.length > 5) {
-            stringList.add("Warranty Date: " + data[5]);
-        }
-        else{
-            // no Warranty Date to add
-            stringList.add("Warranty Date: "  + "0000-00-00");
-        }
+        stringList.add(addRet);
+        stringList.add(addWar);
 
         if(data.length > 6) {
             stringList.add("Tags: " + data[6]);
