@@ -146,9 +146,9 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         list.setAdapter(adapter);
     }
     public void buttonHomeClick(View view) {
-        Intent intent = new Intent(this, MainActivityScreen.class);
+        /*Intent intent = new Intent(this, MainActivityScreen.class);
         //intent.putExtra("", "");
-        startActivity(intent);
+        startActivity(intent);*/
     }
     public void buttonEditClick(View view) {
         //Helper.receipt = Helper.stub.getReceipt(1);

@@ -23,7 +23,10 @@ public class Receipt implements Comparable <Receipt> {
     private Boolean[] hasBeenModified;
 
     public Receipt(int rid, String name, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
-        this.rid = rid;
+        hasBeenModified = new Boolean[8];
+        for (int i = 0; i < 8;i++){
+            hasBeenModified[i] = false;
+        }
         SetRid(rid);
         SetName(name);
         SetStore(store);
@@ -33,14 +36,16 @@ public class Receipt implements Comparable <Receipt> {
         SetReturnDate(returnDate);
         SetWarrantyDate(warentyDate);
         tags = new ArrayList<>();
-        hasBeenModified = new Boolean[8];
     }
 
     public Receipt() {
+        hasBeenModified = new Boolean[8];
+        for (int i = 0; i < 8;i++){
+            hasBeenModified[i] = false;
+        }
         rid = -1;
         purchaseAmount = -1;
         tags = new ArrayList<>();
-        hasBeenModified = new Boolean[8];
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Getters

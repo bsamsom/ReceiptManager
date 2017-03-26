@@ -11,7 +11,7 @@ public class MethodChoiceScreen extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_method_choice_screen);
-
+        //Helper help = new Helper();
     }
     public void buttonOneClick(View view) {
         Intent intent = new Intent(this, HomeActivity.class);
