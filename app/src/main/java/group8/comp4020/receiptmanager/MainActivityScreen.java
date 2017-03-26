@@ -16,8 +16,6 @@ public class MainActivityScreen extends AppCompatActivity{
         setContentView(R.layout.activity_main_screen);
     }
 
-
-
     public void buttonOneClick(View view) {
         setContentView(R.layout.activity_gui_config1);
         Intent intent = new Intent(this, GuiConfig1Activity.class);
@@ -25,10 +23,7 @@ public class MainActivityScreen extends AppCompatActivity{
         startActivity(intent);
     }
     public void buttonTwoClick(View view) {
-        setContentView(R.layout.activity_gui_config1);
-        Intent intent = new Intent(this, GuiConfig2Activity.class);
-        //intent.putExtra("", "");
-        startActivity(intent);
+
     }
     public void buttonThreeClick(View view) {
         setContentView(R.layout.activity_pick_image);

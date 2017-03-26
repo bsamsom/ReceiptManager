@@ -2,6 +2,8 @@ package group8.comp4020.receiptmanager;
 
 import java.util.ArrayList;
 import  java.util.Collections;
+import java.util.Comparator;
+
 /**
  * Created by ben on 21-Mar-17.
  */
@@ -14,6 +16,13 @@ public class Helper {
     public static String[] warrantyDates = new String[]{"None", "1 Year", "2 Years", "3 Years", "5 Years"};
     public ArrayList<Receipt> sortByDate(ArrayList<Receipt> input){
         Collections.sort(input);
+        return input;
+    }
+    public ArrayList<Receipt> sortByAmount(ArrayList<Receipt> input){
+        Collections.sort(input,new Comparator<Receipt>(){
+            public int compare(Receipt one,Receipt two){
+                return (int)(one.getPurchaseAmount() - two.getPurchaseAmount());
+            }});
         return input;
     }
 }

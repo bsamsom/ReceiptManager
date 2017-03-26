@@ -38,30 +38,39 @@ public class Receipt implements Comparable <Receipt> {
     public int getRid() {
         return rid;
     }
+
     public String getName() {
         return name;
     }
+
     public ArrayList<String> getTags() {
         return tags;
     }
+
     public String getStore() {
         return store;
     }
+
     public Double getPurchaseAmount() {
         return purchaseAmount;
     }
+
     public Image getImage() {
         return image;
     }
+
     public String getPurchaseDate() {
         return purchaseDay + " " + purchaseMonth + " " + purchaseYear;
     }
+
     public int getReturnDate() {
         return returnDate;
     }
+
     public int getWarrantyDate() {
         return warrantyDate;
     }
+
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Setters
     public String SetRid(int newRid) {
         String results = null;
@@ -72,6 +81,7 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
+
     public String SetName(String newname) {
         String results = null;
         if (newname.length() > 0 && newname != null) {
@@ -81,6 +91,7 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
+
     public String SetStore(String newStore) {
         String results = null;
         if (newStore.length() > 0 && newStore != null) {
@@ -90,6 +101,7 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
+
     public String SetPurchaseAmount(double cost) {
         String results = null;
         if (cost > 0) {
@@ -99,26 +111,29 @@ public class Receipt implements Comparable <Receipt> {
         }
         return results;
     }
+
     public String SetImage(Image img) {
         String results = null;
         image = img;
         return results;
     }
+
     public String SetPurchaseDate(String date) {
         String results = null;
         String[] dates = date.split("-");
-        try{
-            purchaseDay   = Integer.parseInt(dates[0]);
+        try {
+            purchaseDay = Integer.parseInt(dates[0]);
             purchaseMonth = Integer.parseInt(dates[1]);
-            purchaseYear  = Integer.parseInt(dates[2]);
+            purchaseYear = Integer.parseInt(dates[2]);
             results = purchaseDay + " " + purchaseMonth + " " + purchaseYear;
 
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.w("tag", "purchase date: one of " + date + " not an integer");
         }
 
         return results;
     }
+
     public String SetReturnDate(String date) {
         String results = null;
         try {
@@ -129,12 +144,13 @@ public class Receipt implements Comparable <Receipt> {
         } catch (Exception e) {
             returnDate = -1;
             results += "\nCurrently: " + date;
-            if(date != null) {
+            if (date != null) {
                 Log.w("tag", "return date: " + date + " not an integer");
             }
         }
         return results;
     }
+
     public String SetWarrantyDate(String date) {
         String results = null;
         try {
@@ -147,18 +163,18 @@ public class Receipt implements Comparable <Receipt> {
             warrantyDate = -1;
             warranty = false;
             results += "\nCurrently: " + date;
-            if(date != null) {
+            if (date != null) {
                 Log.w("tag", "warranty date: " + date + " not an integer");
             }
         }
         return results;
     }
-    public String setTags(String tag){
+
+    public String setTags(String tag) {
         String result = null;
-        if (tags.contains(tag)){
+        if (tags.contains(tag)) {
             result = "Already has tag";
-        }
-        else{
+        } else {
             tags.add(tag);
         }
         return result;
@@ -169,13 +185,13 @@ public class Receipt implements Comparable <Receipt> {
     public String toString() {
         String tags = "";
         ArrayList<String> tagList = getTags();
-        for(int i = 0; i < tagList.size();i++){
+        for (int i = 0; i < tagList.size(); i++) {
             tags += tagList.get(i) + ", ";
         }
-        if(tags.length() > 2) {
+        if (tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getName() + "--" + getStore() + "--"  + getPurchaseAmount() + "--" + getPurchaseDate().replaceAll(" ","-") + "--" + returnDate + "--" + warrantyDate + "--" + tags + "--";
+        return getName() + "--" + getStore() + "--" + getPurchaseAmount() + "--" + getPurchaseDate().replaceAll(" ", "-") + "--" + returnDate + "--" + warrantyDate + "--" + tags + "--";
     }
 
     @Override
@@ -183,11 +199,15 @@ public class Receipt implements Comparable <Receipt> {
         return this.getPurchaseDate().compareTo(o.getPurchaseDate());
     }
 
-    public boolean hasTag(String tag){
+    public boolean hasTag(String tag) {
         return tags.contains(tag);
     }
-    public boolean hasATag(){return tags.size() > 0;}
-    public boolean hasWarranty(){return warranty;}
 
+    public boolean hasATag() {
+        return tags.size() > 0;
+    }
 
+    public boolean hasWarranty() {
+        return warranty;
+    }
 }
