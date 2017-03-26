@@ -5,4 +5,10 @@
     <string name="title_activity_gui_config1">GuiConfig1</string>
     <string name="title_activity_pick_image">PickImage</string>
     <string name="title_activity_single_screen_insert">SingleScreenInsert</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="add_receipt_title">Add Receipt</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

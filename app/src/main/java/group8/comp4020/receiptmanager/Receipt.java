@@ -20,6 +20,7 @@ public class Receipt implements Comparable <Receipt> {
     private int warrantyDate;
     private boolean warranty;
     private ArrayList<String> tags;
+    private Boolean[] hasBeenModified;
 
     public Receipt(int rid, String name, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
         this.rid = rid;
@@ -32,6 +33,14 @@ public class Receipt implements Comparable <Receipt> {
         SetReturnDate(returnDate);
         SetWarrantyDate(warentyDate);
         tags = new ArrayList<>();
+        hasBeenModified = new Boolean[8];
+    }
+
+    public Receipt() {
+        rid = -1;
+        purchaseAmount = -1;
+        tags = new ArrayList<>();
+        hasBeenModified = new Boolean[8];
     }
 
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Getters
@@ -79,6 +88,7 @@ public class Receipt implements Comparable <Receipt> {
         } else {
             rid = newRid;
         }
+        hasBeenModified[0] = true;
         return results;
     }
 
@@ -99,6 +109,7 @@ public class Receipt implements Comparable <Receipt> {
         } else {
             results = "Empty store or null store not allowed";
         }
+        hasBeenModified[1] = true;
         return results;
     }
 
@@ -109,12 +120,14 @@ public class Receipt implements Comparable <Receipt> {
         } else {
             results = "Cannot be a negative money amount";
         }
+        hasBeenModified[2] = true;
         return results;
     }
 
     public String SetImage(Image img) {
         String results = null;
         image = img;
+        hasBeenModified[3] = true;
         return results;
     }
 
@@ -131,6 +144,7 @@ public class Receipt implements Comparable <Receipt> {
             Log.w("tag", "purchase date: one of " + date + " not an integer");
         }
 
+        hasBeenModified[4] = true;
         return results;
     }
 
@@ -148,6 +162,7 @@ public class Receipt implements Comparable <Receipt> {
                 Log.w("tag", "return date: " + date + " not an integer");
             }
         }
+        hasBeenModified[5] = true;
         return results;
     }
 
@@ -167,6 +182,8 @@ public class Receipt implements Comparable <Receipt> {
                 Log.w("tag", "warranty date: " + date + " not an integer");
             }
         }
+
+        hasBeenModified[6] = true;
         return results;
     }
 
@@ -177,6 +194,7 @@ public class Receipt implements Comparable <Receipt> {
         } else {
             tags.add(tag);
         }
+        hasBeenModified[7] = true;
         return result;
     }
 
@@ -209,5 +227,43 @@ public class Receipt implements Comparable <Receipt> {
 
     public boolean hasWarranty() {
         return warranty;
+    }
+    public boolean hasValue(String property) {
+        switch (property) {
+            case "rid":
+                if (hasBeenModified[0])
+                    return true;
+                break;
+            case "store":
+                if (hasBeenModified[1])
+                    return true;
+                break;
+            case "purchaseAmount":
+                if (hasBeenModified[2])
+                    return true;
+                break;
+            case "image":
+                if (hasBeenModified[3])
+                    return true;
+                break;
+            case "purchaseDate":
+                if (hasBeenModified[4])
+                    return true;
+                break;
+            case "returnDate":
+                if (hasBeenModified[5])
+                    return true;
+                break;
+            case "warrantyDate":
+                if (hasBeenModified[6])
+                    return true;
+                break;
+            case "tags":
+                if (hasBeenModified[7])
+                    return true;
+                break;
+        }
+
+        return false;
     }
 }
