@@ -214,7 +214,12 @@ public class Receipt implements Comparable <Receipt> {
         if (tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getName() + "--" + getStore() + "--" + getPurchaseAmount() + "--" + getPurchaseDate().replaceAll(" ", "-") + "--" + returnDate + "--" + warrantyDate + "--" + tags + "--";
+        String pDate = getPurchaseDate().replaceAll(" ", "-");
+        if(pDate.equalsIgnoreCase("0-0-0")){
+            pDate = "0000-00-00";
+        }
+
+        return getName() + "--" + getStore() + "--" + getPurchaseAmount() + "--" + pDate + "--" + returnDate + "--" + warrantyDate + "--" + tags + "--";
     }
 
     @Override

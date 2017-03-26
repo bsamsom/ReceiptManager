@@ -61,11 +61,11 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getAdapter().equals(dateAdapter)){
             returnSelection = dateAdapter.getItem(position);
-            Log.w("tag", "Return Selection: " + dateAdapter.getItem(position));
+            //Log.w("tag", "Return Selection: " + dateAdapter.getItem(position));
         }
         else{
             warrantySelection = warrantyAdapter.getItem(position);
-            Log.w("tag", "Warranty Selection: " + warrantyAdapter.getItem(position));
+            //Log.w("tag", "Warranty Selection: " + warrantyAdapter.getItem(position));
         }
     }
 
@@ -156,11 +156,11 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         if(purchaseDate.length() >= 11){
             purchaseDate = purchaseDate.substring(0,11);
         }
-        // incase user changes the - to a space
-        purchaseDate = purchaseDate.replaceAll(" ","-");
+        // incase user changes the - to a /
+        purchaseDate = purchaseDate.replaceAll("/","-");
 
         if(edit){
-            Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
+           // Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
             Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
@@ -171,6 +171,13 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
             Helper.stub.updateReceipt(r);
         }
         else {
+            if(returnDate.equalsIgnoreCase("None")){
+                returnDate = "" + -1;
+            }
+            if(warrantyDate.equalsIgnoreCase("None")){
+                warrantyDate = "" + -1;
+            }
+
             Receipt r = new Receipt(Helper.rid,name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");

@@ -109,15 +109,16 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         stringList.add("Purchase: "         + data[2]);
         stringList.add("Purchase Date: " + data[3]);
 
-        String addRet = "Return Date: " + data[4];
-        String addWar = "Warranty Date: " + data[5];
-        for (int i = 0; i < Helper.returnDates.length;i++){
-            String[] spinList = Helper.returnDates[i].split("\\s+");
-            if(spinList[0].equals(data[4])){
-                addRet = "Return Date: " + Helper.returnDates[i];
+        String addRet = "Return Date: None";
+        String addWar = "Warranty Date: None";
+        if(Integer.parseInt(data[5]) > 0) {
+            for (int i = 0; i < Helper.returnDates.length; i++) {
+                String[] spinList = Helper.returnDates[i].split("\\s+");
+                if (spinList[0].equals(data[4])) {
+                    addRet = "Return Date: " + Helper.returnDates[i];
+                }
             }
         }
-
 
         if(Integer.parseInt(data[5]) > 0) {
             for (int i = 0; i < Helper.warrantyDates.length; i++) {
@@ -126,9 +127,6 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
                     addWar = "Warranty Date: " + Helper.warrantyDates[i];
                 }
             }
-        }
-        else{
-            addWar = "Warranty Date: None";
         }
 
         stringList.add(addRet);
@@ -146,9 +144,9 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         list.setAdapter(adapter);
     }
     public void buttonHomeClick(View view) {
-        /*Intent intent = new Intent(this, MainActivityScreen.class);
+        Intent intent = new Intent(this, MethodChoiceScreen.class);
         //intent.putExtra("", "");
-        startActivity(intent);*/
+        startActivity(intent);
     }
     public void buttonEditClick(View view) {
         //Helper.receipt = Helper.stub.getReceipt(1);

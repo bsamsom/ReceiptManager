@@ -25,7 +25,7 @@ public class HomeActivity extends AppCompatActivity {
         if (RunSettings.getInstance().getMethod() == 2)
             intent = new Intent(this, AddReceipt_MultiScreenActivity.class);
         else if (RunSettings.getInstance().getMethod() == 1)
-            intent = new Intent(this, GuiConfig1Activity.class);
+            intent = new Intent(this, SingleScreenInsert.class);
         else {
             intent = null;
             Log.d("HomeActivity", "UNABLE TO START NEW ACTIVITY: experiment method is " +
@@ -37,6 +37,21 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void click_view(View view) {
-        Log.d("HomeActivity", "MADE IT!!");
+        Intent intent;
+        if (RunSettings.getInstance().getMethod() == 2) {
+            intent = null;
+            Log.d("HomeActivity", "MADE IT!!, UNABLE TO START NEW ACTIVITY: experiment method is " +
+                    RunSettings.getInstance().getMethod());
+            return;
+        }
+        else if (RunSettings.getInstance().getMethod() == 1)
+            intent = new Intent(this, GuiConfig1Activity.class);
+        else {
+            intent = null;
+            Log.d("HomeActivity", "MADE IT!!, UNABLE TO START NEW ACTIVITY: experiment method is " +
+                    RunSettings.getInstance().getMethod());
+            return;
+        }
+        startActivity(intent);
     }
 }
