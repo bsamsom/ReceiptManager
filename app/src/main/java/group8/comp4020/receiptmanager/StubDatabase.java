@@ -19,17 +19,17 @@ public class StubDatabase implements AddReceipt {
     public StubDatabase(){
 
 
-        data.add(0 , new Receipt(0 , "Food"             , "Super Store"      , 50.00 , null, "1980-12-31 18:35:24", "2017-01-30 18:35:24", null));
-        data.add(1 , new Receipt(1 , "Kitchen Stuff"    , "Walmart"          , 15.98 , null, "2016-05-15 18:35:24", "2017-01-30 18:35:24", "1993-10-05 18:35:24"));
-        data.add(2 , new Receipt(2 , "Computer Parts"   , "Memory Express"   , 150.24, null, "2010-04-23 18:35:24", "2017-01-30 18:35:24", "1998-02-09 18:35:24"));
-        data.add(3 , new Receipt(3 , "Tires"            , "Canadian Tire"    , 49.83 , null, "2012-10-26 18:35:24", "2017-01-30 18:35:24", "2011-09-04 18:35:24"));
-        data.add(4 , new Receipt(4 , "Textbook"         , "U of M Book Store", 365.87, null, "2013-01-24 18:35:24", "2017-01-30 18:35:24", "2001-05-01 18:35:24"));
-        data.add(5 , new Receipt(5 , "Gass"             , "Shell"            , 56.65 , null, "2014-10-16 18:35:24", "2017-01-30 18:35:24", null));
-        data.add(6 , new Receipt(6 , "Book"             , "Chapters"         , 12.43 , null, "2003-07-06 18:35:24", "2017-01-30 18:35:24", "2020-04-15 18:35:24"));
-        data.add(7 , new Receipt(7 , "Lumber"           , "Rona"             , 78/89 , null, "2009-12-09 18:35:24", "2017-01-30 18:35:24", "2002-12-19 18:35:24"));
-        data.add(8 , new Receipt(8 , "Drywall"          , "Home Depot"       , 43.32 , null, "2016-04-12 18:35:24", "2017-01-30 18:35:24", "1960-02-12 18:35:24"));
-        data.add(9 , new Receipt(9 , "Paint"            , "Benjamin More"    , 89.43 , null, "1994-09-04 18:35:24", "2017-01-30 18:35:24", null));
-        data.add(10, new Receipt(10, "Food"             , "Foodfare"         , 12.95 , null, "1990-03-01 18:35:24", "2017-01-30 18:35:24", "2021-06-23 18:35:24"));
+        data.add(0 , new Receipt(0 , "Food"             , "Super Store"      , 50.00 , null, "1980-12-31", "30 Days"   , null));
+        data.add(1 , new Receipt(1 , "Kitchen Stuff"    , "Walmart"          , 15.98 , null, "2016-05-15", "60 Days"   , "1 Year"));
+        data.add(2 , new Receipt(2 , "Computer Parts"   , "Memory Express"   , 150.24, null, "2010-04-23", "180 Days"  , "3 Years"));
+        data.add(3 , new Receipt(3 , "Tires"            , "Canadian Tire"    , 49.83 , null, "2012-10-26", "60 Days"   , "5 Years"));
+        data.add(4 , new Receipt(4 , "Textbook"         , "U of M Book Store", 365.87, null, "2013-01-24", "90 Days"   , "1 Year"));
+        data.add(5 , new Receipt(5 , "Gass"             , "Shell"            , 56.65 , null, "2014-10-16", "30 Days"   , null));
+        data.add(6 , new Receipt(6 , "Book"             , "Chapters"         , 12.43 , null, "2003-07-06", "60 Days"   , "5 Years"));
+        data.add(7 , new Receipt(7 , "Lumber"           , "Rona"             , 78/89 , null, "2009-12-09", "60 Days"   , "2 Years"));
+        data.add(8 , new Receipt(8 , "Drywall"          , "Home Depot"       , 43.32 , null, "2016-04-12", "90 Days"   , "1 Year"));
+        data.add(9 , new Receipt(9 , "Paint"            , "Benjamin More"    , 89.43 , null, "1994-09-04", "30 Days"   , null));
+        data.add(10, new Receipt(10, "Food"             , "Foodfare"         , 12.95 , null, "1990-03-01", "180 Days"  , "3 Years"));
 
         data.get(5).setTags("waffle");
         data.get(2).setTags("waffle");
@@ -128,12 +128,18 @@ public class StubDatabase implements AddReceipt {
                 for(int i = 0; i < data.size();i++){
                     Receipt temp = data.get(i);
                     if(purchase) {
-                        if (start.before(temp.getPurchaseDate()) && end.after(temp.getPurchaseDate())) {
+                        String[] split = temp.getPurchaseDate().split("\\s+");
+                        Date d = format.parse(split[3] + "-" + split[2] + "-" + split[0]);
+                        if (start.before(d) && end.after(d)) {
                             results.add(temp);
                         }
                     }
                     else {
-                        if (start.before(temp.getWarrantyDate()) && end.after(temp.getWarrantyDate())) {
+                        String[] split = temp.getPurchaseDate().split("\\s+");
+                        Date d = format.parse(split[3] + "-" + split[2] + "-" + split[0]);
+                        d.setYear(temp.getWarrantyDate());
+
+                        if (start.before(d) && end.after(d)) {
                             results.add(temp);
                         }
                     }
@@ -176,14 +182,9 @@ public class StubDatabase implements AddReceipt {
         ArrayList<Receipt> result = new ArrayList();
         for (int i = 0; i < data.size();i++){
             Receipt temp = data.get(i);
-            String dateFormat = "yyyy-mm-dd hh:mm:ss";
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-                Date d = format.parse("0000-00-00 00:00:00");
-                if(temp.getWarrantyDate().after(d)){
-                    result.add(temp);
-                }
-            }catch (ParseException e) {}
+            if(temp.hasWarranty()){
+                result.add(temp);
+            }
         }
         return result;
     }
@@ -191,14 +192,9 @@ public class StubDatabase implements AddReceipt {
         ArrayList<Receipt> result = new ArrayList();
         for (int i = 0; i < data.size();i++){
             Receipt temp = data.get(i);
-            String dateFormat = "yyyy-mm-dd hh:mm:ss";
-            try {
-                SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-                Date d = format.parse("0000-00-00 00:00:00");
-                if(temp.getWarrantyDate().compareTo(d) == 0){
-                    result.add(temp);
-                }
-            }catch (ParseException e) {}
+            if(!temp.hasWarranty()){
+                result.add(temp);
+            }
         }
         return result;
     }

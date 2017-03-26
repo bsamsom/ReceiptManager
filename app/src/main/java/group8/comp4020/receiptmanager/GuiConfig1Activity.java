@@ -23,18 +23,18 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gui_config1);
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Sort Spinner
         Spinner spin = (Spinner) findViewById(R.id.spinner);
-
         String[] items = new String[]{"All", "With Warranty", "Without Warranty", "With Tags"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        ArrayList<Receipt> receipts = help.stub.getAllReceipts();
-        addreceipts(receipts);
-
         spin.setAdapter(adapter);
         spin.setOnItemSelectedListener(this);
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Sort Spinner
 
+        ArrayList<Receipt> receipts = help.stub.getAllReceipts();
+        addreceipts(receipts);
         Helper.receipt = receipts.get(0);
 
         //testStub();

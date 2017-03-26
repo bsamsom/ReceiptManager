@@ -138,14 +138,12 @@
                     android:text="Return Date:"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editTextReturnDate"
+                <Spinner
+                    android:id="@+id/spinnerReturnDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="date"
-                    android:text="0000-00-00" />
+                    android:layout_weight="1" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -162,14 +160,12 @@
                     android:text="Warranty Date:"
                     android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editTextWarrantyDate"
+                <Spinner
+                    android:id="@+id/spinnerWarrantyDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="date"
-                    android:text="0000-00-00" />
+                    android:layout_weight="1" />
+
             </LinearLayout>
 
             <LinearLayout

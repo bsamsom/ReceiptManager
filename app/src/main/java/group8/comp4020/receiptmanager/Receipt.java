@@ -1,11 +1,7 @@
 package group8.comp4020.receiptmanager;
 
 import android.media.Image;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.ParseException;
 import android.util.Log;
 /**
  * Created by ben on 20-Mar-17.
@@ -17,9 +13,12 @@ public class Receipt implements Comparable <Receipt> {
     private String store;
     private double purchaseAmount;
     private Image image;
-    private Date purchaseDate;
-    private Date returnDate;
-    private Date warrantyDate;
+    private int purchaseDay;
+    private int purchaseMonth;
+    private int purchaseYear;
+    private int returnDate;
+    private int warrantyDate;
+    private boolean warranty;
     private ArrayList<String> tags;
 
     public Receipt(int rid, String name, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
@@ -54,13 +53,13 @@ public class Receipt implements Comparable <Receipt> {
     public Image getImage() {
         return image;
     }
-    public Date getPurchaseDate() {
-        return purchaseDate;
+    public String getPurchaseDate() {
+        return purchaseDay + " " + purchaseMonth + " " + purchaseYear;
     }
-    public Date getReturnDate() {
+    public int getReturnDate() {
         return returnDate;
     }
-    public Date getWarrantyDate() {
+    public int getWarrantyDate() {
         return warrantyDate;
     }
     //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Setters
@@ -107,61 +106,48 @@ public class Receipt implements Comparable <Receipt> {
     }
     public String SetPurchaseDate(String date) {
         String results = null;
-        String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        try {
-            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d;
-            if (date != null) {
-                d = format.parse(date);
-            }
-            else{
-                d = format.parse("0000-00-00 00:00:00");
-            }
-            purchaseDate = d;
-        } catch (ParseException e) {
-            results = "purchase date does not have the format: " + dateFormat;
-            results += "\nCurrently: " + date;
-            Log.w("tag", results);
+        String[] dates = date.split("-");
+        try{
+            purchaseDay   = Integer.parseInt(dates[0]);
+            purchaseMonth = Integer.parseInt(dates[1]);
+            purchaseYear  = Integer.parseInt(dates[2]);
+            results = purchaseDay + " " + purchaseMonth + " " + purchaseYear;
+
+        }catch (Exception e){
+            Log.w("tag", "purchase date: one of " + date + " not an integer");
         }
+
         return results;
     }
     public String SetReturnDate(String date) {
         String results = null;
-        String dateFormat = "yyyy-mm-dd hh:mm:ss";
         try {
-            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d;
-            if (date != null) {
-                d = format.parse(date);
-            }
-            else{
-                d = format.parse("0000-00-00 00:00:00");
-            }
-            returnDate = d;
-        } catch (ParseException e) {
-            results = "return date does not have the format: " + dateFormat;
+            date = date.trim();
+            String[] temp = date.split("\\s+");
+            int rDate = Integer.parseInt(temp[0]);
+            returnDate = rDate;
+        } catch (Exception e) {
             results += "\nCurrently: " + date;
-            Log.w("tag", results);
+            if(date != null) {
+                Log.w("tag", "return date: " + date + " not an integer");
+            }
         }
         return results;
     }
     public String SetWarrantyDate(String date) {
         String results = null;
-        String dateFormat = "yyyy-mm-dd hh:mm:ss";
         try {
-            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d;
-            if (date != null) {
-                d = format.parse(date);
-            }
-            else{
-                d = format.parse("0000-00-00 00:00:00");
-            }
-            warrantyDate = d;
-        } catch (ParseException e) {
-            results = "warranty date does not have the format: " + dateFormat;
+            date = date.trim();
+            String[] temp = date.split("\\s+");
+            int wDate = Integer.parseInt(temp[0]);
+            warranty = true;
+            warrantyDate = wDate;
+        } catch (Exception e) {
+            warranty = false;
             results += "\nCurrently: " + date;
-            Log.w("tag", results);
+            if(date != null) {
+                Log.w("tag", "warranty date: " + date + " not an integer");
+            }
         }
         return results;
     }
@@ -187,7 +173,7 @@ public class Receipt implements Comparable <Receipt> {
         if(tags.length() > 2) {
             tags = tags.substring(0, tags.length() - 2);
         }
-        return getName() + "--" + getStore() + "--"  + getPurchaseAmount() + "--" + pDate() + "--" + rDate() + "--" + wDate() + "--" + tags + "--";
+        return getName() + "--" + getStore() + "--"  + getPurchaseAmount() + "--" + getPurchaseDate() + "--" + returnDate + "--" + warrantyDate + "--" + tags + "--";
     }
 
     @Override
@@ -199,89 +185,7 @@ public class Receipt implements Comparable <Receipt> {
         return tags.contains(tag);
     }
     public boolean hasATag(){return tags.size() > 0;}
-    private String warrentyDate(){
-        String results = "";
-        String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        try {
-            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d = format.parse("0005-00-00 00:00:00");
-            //Log.w("tag","warrantyDate " + warrantyDate);
-            //Log.w("tag","0000-00-00 00:00:00 " + d);
-            if(getWarrantyDate().after(d)){
-                results += getWarrantyDate();
-            }
-            else{
-                results = "0000-00-00";
-            }
-        }catch (ParseException e) {}
-        return results;
-    }
-    private String purchaseDate(){
-        String results = "";
-        String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        try {
-            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d = format.parse("0005-00-00 00:00:00");
-           // Log.w("tag","purchase date: " + getPurchaseDate());
-            //Log.w("tag","0000-00-00 00:00:00 " + d);
-            if(getPurchaseDate().after(d)){
-                results += getPurchaseDate();
-            }
-            else{
-                results = "0000-00-00";
-            }
-        }catch (ParseException e) {}
-        return results;
-    }
-    private String returnDate(){
-        String results = "";
-        String dateFormat = "yyyy-mm-dd hh:mm:ss";
-        try {
-            SimpleDateFormat format = new SimpleDateFormat(dateFormat);
-            Date d = format.parse("0005-00-00 00:00:00");
-            //Log.w("tag","warrantyDate " + returnDate);
-            //Log.w("tag","0000-00-00 00:00:00 " + d);
-            if(getReturnDate().after(d)){
-                results += getReturnDate();
-            }
-            else{
-                results = "0000-00-00";
-            }
-        }catch (ParseException e) {}
-        return results;
-    }
-    public String pDate(){
-        String results = "";
-        String data =  "" + purchaseDate;
-        String[] temp = data.split("\\s+");
-        results = temp[5] + "-" + purchaseDate.getMonth() + "-" + temp[2];
-        if(Integer.parseInt(temp[5]) < 5){
-            results = "0000-00-00";
-        }
-       //Log.w("tag",results);
-        return results;
-    }
-    public String rDate(){
-        String results = "";
-        String data =  "" + returnDate;
-        String[] temp = data.split("\\s+");
-        results = temp[5] + "-" + returnDate.getMonth() + "-" + temp[2];
-        if(Integer.parseInt(temp[5]) < 5){
-            results = "0000-00-00";
-        }
-        //Log.w("tag",results);
-        return results;
-    }
-    public String wDate(){
-        String results = "";
-        String data =  "" + warrantyDate;
-        String[] temp = data.split("\\s+");
-        results = temp[5] + "-" + warrantyDate.getMonth() + "-" + temp[2];
-        if(Integer.parseInt(temp[5]) < 5){
-            results = "0000-00-00";
-        }
-       // Log.w("tag",results);
-        return results;
-    }
+    public boolean hasWarranty(){return warranty;}
+
 
 }
