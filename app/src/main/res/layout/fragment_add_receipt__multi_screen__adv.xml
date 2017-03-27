@@ -36,45 +36,45 @@
         app:layout_constraintBottom_toTopOf="@+id/space" />
 
     <CheckBox
-        android:id="@+id/checkBox_Prog2"
+        android:id="@+id/checkBox_Scan_Prog2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:editable="false"
-        app:layout_constraintRight_toLeftOf="@+id/checkBox_Prog3"
-        app:layout_constraintTop_toTopOf="@+id/checkBox_Prog1"
+        app:layout_constraintRight_toLeftOf="@+id/checkBox_Scan_Prog3"
+        app:layout_constraintTop_toTopOf="@+id/checkBox_Scan_Prog1"
         android:layout_marginEnd="8dp" />
 
     <CheckBox
-        android:id="@+id/checkBox_Prog1"
+        android:id="@+id/checkBox_Scan_Prog1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:editable="false"
-        app:layout_constraintRight_toLeftOf="@+id/checkBox_Prog2"
+        app:layout_constraintRight_toLeftOf="@+id/checkBox_Scan_Prog2"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/space" />
 
     <CheckBox
-        android:id="@+id/checkBox_Prog3"
+        android:id="@+id/checkBox_Scan_Prog3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="8dp"
         android:editable="false"
-        app:layout_constraintRight_toLeftOf="@+id/checkBox_Prog4"
-        app:layout_constraintTop_toTopOf="@+id/checkBox_Prog1"
+        app:layout_constraintRight_toLeftOf="@+id/checkBox_Scan_Prog4"
+        app:layout_constraintTop_toTopOf="@+id/checkBox_Scan_Prog1"
         android:layout_marginEnd="8dp" />
 
     <CheckBox
-        android:id="@+id/checkBox_Prog4"
+        android:id="@+id/checkBox_Scan_Prog4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="124dp"
         android:layout_marginRight="124dp"
         android:editable="false"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/checkBox_Prog1" />
+        app:layout_constraintTop_toTopOf="@+id/checkBox_Scan_Prog1" />
 
     <TextView
         android:id="@+id/textView8"
@@ -114,7 +114,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView12" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editText_Basic_ReceiptName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp"
@@ -164,7 +164,7 @@
         android:layout_height="46dp"
         android:text="+"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@+id/editText5"
+        app:layout_constraintTop_toBottomOf="@+id/editText_Basic_ReceiptName"
         android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="@+id/textView12" />
 

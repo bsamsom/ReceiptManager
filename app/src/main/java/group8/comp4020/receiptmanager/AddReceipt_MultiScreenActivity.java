@@ -68,6 +68,18 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
         return newReceipt;
     }
 
+
+    public void submitReceipt() {
+        // todo: implement method
+    }
+
+
+
+
+
+
+
+
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -103,6 +115,15 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
         }
     }
 
+
+
+
+
+
+
+
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -133,7 +154,6 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 4;
         }
 
