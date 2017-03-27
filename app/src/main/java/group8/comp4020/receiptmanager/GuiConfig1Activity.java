@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -67,14 +68,31 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     public void addreceipts(final ArrayList<Receipt> receipts){
         final ListView[] list = new ListView[receipts.size()];
         LinearLayout layout = (LinearLayout) findViewById(R.id.LinearLayoutList);
+
+
         layout.removeAllViews();
         for(i = 0; i < receipts.size();i++){
+            LinearLayout layout1 = new LinearLayout(this);
+            layout1.setOrientation(LinearLayout.VERTICAL);
+
             list[i] = new ListView(this);
             addReceiptToListView(list[i], receipts.get(i));
-            layout.addView(list[i]);
-            ViewGroup.LayoutParams params = list[i].getLayoutParams();
+            layout1.addView(list[i]);
+
+            ImageView img = new ImageView(this);
+            img.setImageResource(R.drawable.ic_action_name);
+
+
+            int width = 700;
+            int height = 350;
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(width,height);
+            img.setLayoutParams(params);
+            layout1.addView(img);
+
+            params = list[i].getLayoutParams();
             params.width = 700;
-            params.height = 1150;
+            params.height = 850;
+            //params.height = 1150;
             list[i].setLayoutParams(params);
             GradientDrawable gradientDrawable = new GradientDrawable();
             gradientDrawable.setStroke(4,Color.BLACK);
@@ -90,9 +108,11 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
                     }
                 }
             });
-            list[i].setBackground(gradientDrawable);
-            list[i].requestLayout();
+            layout1.setBackground(gradientDrawable);
+            layout1.requestLayout();
+            layout.addView(layout1);
         }
+
     }
     public void addReceiptToListView(ListView list, Receipt receipt){
         String dataString = receipt.toString().trim();
