@@ -17,13 +17,13 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class GuiConfig1Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Search_MultiScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Helper help = new Helper();
     private int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gui_config1);
+        setContentView(R.layout.activity_search_multi_screen);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Sort Spinner
         Spinner spin = (Spinner) findViewById(R.id.spinner);
         String[] items = new String[]{"All", "With Warranty", "Without Warranty", "With Tags"};
@@ -80,9 +80,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
 
             params = layout.getLayoutParams();
             params.height = params.height - height;
-
             params.width = width;
-
 
             layout1.setOrientation(LinearLayout.VERTICAL);
             layout1.setLayoutParams(params);
@@ -101,7 +99,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
             params = list[i].getLayoutParams();
             params.width = width;
             //params.height = maxHeight -height;
-            Log.w("tag","MAX HEIGHT: " + maxHeight);
+            //Log.w("tag","MAX HEIGHT: " + maxHeight);
             params.height = 750;
 
 

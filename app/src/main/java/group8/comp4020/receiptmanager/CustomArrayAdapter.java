@@ -21,8 +21,14 @@ public class CustomArrayAdapter  extends ArrayAdapter<String> {
 
     @Override
     public long getItemId(int position) {
-        String item = getItem(position);
-        return hashMap.get(item);
+        if(position < hashMap.size()) {
+            String item = getItem(position);
+            return hashMap.get(item);
+        }
+        else{
+            String item = getItem(0);
+            return hashMap.get(item);
+        }
     }
 /*
     @Override

@@ -40,7 +40,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GuiConfig1Activity"
+            android:name=".Search_MultiScreen"
             android:label="@string/title_activity_gui_config1"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -52,15 +52,15 @@
         <activity
             android:name=".SingleScreenInsert"
             android:label="@string/title_activity_single_screen_insert"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".PickImageActivity"
             android:label="@string/title_activity_pick_image"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Search_SingleScreen"
+            android:label="@string/title_activity_search__single_screen"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

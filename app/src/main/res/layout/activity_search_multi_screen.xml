@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="group8.comp4020.receiptmanager.GuiConfig1Activity">
+    tools:context="group8.comp4020.receiptmanager.Search_MultiScreen">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -15,6 +15,6 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/content_gui_config1" />
+        layout="@layout/content_search_multi_screen" />
 
 </android.support.design.widget.CoordinatorLayout>
