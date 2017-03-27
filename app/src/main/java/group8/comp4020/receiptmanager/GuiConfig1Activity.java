@@ -80,7 +80,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
             layout1.addView(list[i]);
 
             ImageView img = new ImageView(this);
-            img.setImageResource(R.drawable.ic_action_name);
+            //img.setImageResource(R.drawable.ic_action_name);
 
 
             int width = 700;
