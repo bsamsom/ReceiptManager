@@ -21,6 +21,7 @@ public class Receipt implements Comparable <Receipt> {
     private int returnDate;
     private int warrantyDate;
     private boolean warranty;
+    private boolean returnable;
     private ArrayList<String> tags;
     private Boolean[] hasBeenModified;
 
@@ -194,6 +195,32 @@ public class Receipt implements Comparable <Receipt> {
         return results;
     }
 
+    public void SetWarrantyDate_Simple(int index) {
+        if (index == 0) {
+            warranty = false;
+            warrantyDate = 0;
+        }
+        else {
+            warranty = true;
+            warrantyDate = index;
+        }
+
+        hasBeenModified[6] = true;
+    }
+
+    public void SetReturnDate_Simple (int index) {
+        if (index == 0) {
+            returnable = false;
+            warrantyDate = 0;
+        }
+        else {
+            returnable = true;
+            warrantyDate = index;
+        }
+
+        hasBeenModified[5] = true;
+    }
+
     public String setTags(String tag) {
         String result = null;
         if (tags.contains(tag)) {
@@ -240,6 +267,7 @@ public class Receipt implements Comparable <Receipt> {
     public boolean hasWarranty() {
         return warranty;
     }
+
     public boolean hasValue(String property) {
         switch (property) {
             case "rid":

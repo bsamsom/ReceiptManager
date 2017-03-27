@@ -23,17 +23,17 @@
         android:layout_marginTop="16dp" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/button_Basic_Next"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onClick"
         android:text="Next Section"
-        app:layout_constraintBottom_toTopOf="@+id/button_Scan_Finish"
-        app:layout_constraintRight_toRightOf="@+id/button_Scan_Finish" />
+        app:layout_constraintBottom_toTopOf="@+id/button_Basic_Finish"
+        app:layout_constraintRight_toRightOf="@+id/button_Basic_Finish" />
 
     <Button
-        android:id="@+id/button_Scan_Finish"
+        android:id="@+id/button_Basic_Finish"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

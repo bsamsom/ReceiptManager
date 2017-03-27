@@ -185,6 +185,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
                     r.setTags(temp[i]);
                 }
             }
+
             Helper.rid += 1;
             Helper.stub.insertReceipt(r);
         }

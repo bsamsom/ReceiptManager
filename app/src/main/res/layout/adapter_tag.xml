@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="Tag Name:"
+        android:textAppearance="@android:style/TextAppearance.Holo.Medium"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editText_Adapter_TagName"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/editText_Adapter_TagName"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Name"
+        app:layout_constraintRight_toLeftOf="@+id/button_Adapter_Remove"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/textView16"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/button_Adapter_Remove"
+        style="@android:style/Widget.Holo.Light.Button.Small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/button_Adapter_Add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/holo_green_dark"
+        android:elevation="12dp"
+        android:text="+"
+        app:layout_constraintTop_toBottomOf="@+id/button_Adapter_Remove"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/textView16" />
+
+    <TextView
+        android:id="@+id/textView_Adapter_AddText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="Add another tag..."
+        app:layout_constraintBaseline_toBaselineOf="@+id/button_Adapter_Add"
+        app:layout_constraintLeft_toRightOf="@+id/button_Adapter_Add" />
+</android.support.constraint.ConstraintLayout>

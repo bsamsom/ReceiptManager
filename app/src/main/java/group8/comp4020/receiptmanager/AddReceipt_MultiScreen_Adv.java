@@ -8,10 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
 
 public class AddReceipt_MultiScreen_Adv extends Fragment implements View.OnClickListener{
     // private static final String ARG_PARAM1 = "param1";
 
+    private Adapter_Tag adapter;
+    private ArrayList<String> tags;
 
     private OnFragmentInteractionListener mListener;
 
@@ -37,6 +41,7 @@ public class AddReceipt_MultiScreen_Adv extends Fragment implements View.OnClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        tags = new ArrayList<String>();
     }
 
     @Override
@@ -44,6 +49,12 @@ public class AddReceipt_MultiScreen_Adv extends Fragment implements View.OnClick
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_add_receipt__multi_screen__adv, container, false);
+
+        // sets up the adapter area
+        // todo: figure out why this isn't working
+        // adapter = new Adapter_Tag(getActivity().getApplicationContext(), tags);
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

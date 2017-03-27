@@ -17,8 +17,8 @@ public class AddReceipt_MultiScreen_Basic extends Fragment implements View.OnCli
     private EditText editText_ReceiptName,  editText_PurchaseCategory, editText_PurchasedAt;
     private EditText editText_DateOfPurchase_Day, editText_DateOfPurchase_Month, editText_DateOfPurchase_Year;
     private Button button_Basic_Next, button_Basic_Finish;
-    CheckBox cb_Prog1, cb_Prog2, cb_Prog3, cb_Prog4;
-    Receipt newReceipt;
+    private CheckBox cb_Prog1, cb_Prog2, cb_Prog3, cb_Prog4;
+    private Receipt newReceipt;
 
     private OnFragmentInteractionListener mListener;
 
@@ -50,11 +50,11 @@ public class AddReceipt_MultiScreen_Basic extends Fragment implements View.OnCli
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_add_receipt__multi_screen__scan, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_receipt__multi_screen__basic, container, false);
 
         // add all interaction controls that need to be accessed in the fragment
-        button_Basic_Next = (Button)v.findViewById(R.id.button_Scan_Next);
-        button_Basic_Finish = (Button)v.findViewById(R.id.button_Scan_Finish);
+        button_Basic_Next = (Button)v.findViewById(R.id.button_Basic_Next);
+        button_Basic_Finish = (Button)v.findViewById(R.id.button_Basic_Finish);
         cb_Prog1 = (CheckBox) v.findViewById(R.id.checkBox_Basic_Prog1);
         cb_Prog2 = (CheckBox) v.findViewById(R.id.checkBox_Basic_Prog2);
         cb_Prog3 = (CheckBox) v.findViewById(R.id.checkBox_Basic_Prog3);
@@ -137,9 +137,6 @@ public class AddReceipt_MultiScreen_Basic extends Fragment implements View.OnCli
             }
         }
     }
-
-//    private EditText editText_ReceiptName, editText_DateOfPurchase, editText_PurchaseCategory, editText_PurchasedAt;
-
 
     private void setupBasicEvents(LayoutInflater inflater, View v) {
         // button clicks

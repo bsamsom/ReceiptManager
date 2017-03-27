@@ -48,7 +48,7 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
         imageView_Scan_Camera = (ImageView)v.findViewById(R.id.imageView_Scan_Camera);
         imageView_Scan_Gallery = (ImageView)v.findViewById(R.id.imageView_Scan_Gallery);
         button_Scan_Next = (Button)v.findViewById(R.id.button_Scan_Next);
-        button_Scan_Finish = (Button)v.findViewById(R.id.button_Scan_Finish);
+        button_Scan_Finish = (Button)v.findViewById(R.id.button_Basic_Finish);
         cb_Prog1 = (CheckBox) v.findViewById(R.id.checkBox_Scan_Prog1);
         cb_Prog2 = (CheckBox) v.findViewById(R.id.checkBox_Scan_Prog2);
         cb_Prog3 = (CheckBox) v.findViewById(R.id.checkBox_Scan_Prog3);
