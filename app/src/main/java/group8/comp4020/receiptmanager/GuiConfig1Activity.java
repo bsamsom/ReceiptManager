@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -67,14 +68,43 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
     public void addreceipts(final ArrayList<Receipt> receipts){
         final ListView[] list = new ListView[receipts.size()];
         LinearLayout layout = (LinearLayout) findViewById(R.id.LinearLayoutList);
+        //layout.setLayoutParams(layout.getParent().getLayoutParams());
+        int width = 700;
+        int height = 400;
+
         layout.removeAllViews();
+        ViewGroup.LayoutParams params = layout.getLayoutParams();
+        int maxHeight =  params.height;
         for(i = 0; i < receipts.size();i++){
+            LinearLayout layout1 = new LinearLayout(this);
+
+            params = layout.getLayoutParams();
+            params.height = params.height - height;
+
+            params.width = width;
+
+
+            layout1.setOrientation(LinearLayout.VERTICAL);
+            layout1.setLayoutParams(params);
+
             list[i] = new ListView(this);
             addReceiptToListView(list[i], receipts.get(i));
-            layout.addView(list[i]);
-            ViewGroup.LayoutParams params = list[i].getLayoutParams();
-            params.width = 700;
-            params.height = 1150;
+            layout1.addView(list[i]);
+
+            ImageView img = new ImageView(this);
+            img.setImageResource(R.mipmap.ic_launcher);
+
+            params = new ViewGroup.LayoutParams(width,height);
+            img.setLayoutParams(params);
+            layout1.addView(img);
+
+            params = list[i].getLayoutParams();
+            params.width = width;
+            //params.height = maxHeight -height;
+            Log.w("tag","MAX HEIGHT: " + maxHeight);
+            params.height = 750;
+
+
             list[i].setLayoutParams(params);
             GradientDrawable gradientDrawable = new GradientDrawable();
             gradientDrawable.setStroke(4,Color.BLACK);
@@ -90,9 +120,11 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
                     }
                 }
             });
-            list[i].setBackground(gradientDrawable);
-            list[i].requestLayout();
+            layout1.setBackground(gradientDrawable);
+            layout1.requestLayout();
+            layout.addView(layout1);
         }
+
     }
     public void addReceiptToListView(ListView list, Receipt receipt){
         String dataString = receipt.toString().trim();
@@ -106,7 +138,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         */
         stringList.add("Name: "             + data[0]);
         stringList.add("Store: "            + data[1]);
-        stringList.add("Purchase: "         + data[2]);
+        //stringList.add("Purchase: "         + data[2]);
         stringList.add("Purchase Date: " + data[3]);
 
         String addRet = "Return Date: None";
@@ -143,10 +175,11 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         CustomArrayAdapter adapter = new CustomArrayAdapter(this, R.layout.activity_listview, stringList);
         list.setAdapter(adapter);
     }
-    public void buttonHomeClick(View view) {
-        Intent intent = new Intent(this, MethodChoiceScreen.class);
-        //intent.putExtra("", "");
-        startActivity(intent);
+    public void buttonDeleteClick(View view) {
+        Helper.stub.deleteReceipt(Helper.receipt);
+        ArrayList<Receipt> list = Helper.stub.getAllReceipts();
+        addreceipts(list);
+        Helper.receipt = list.get(0);
     }
     public void buttonEditClick(View view) {
         //Helper.receipt = Helper.stub.getReceipt(1);
