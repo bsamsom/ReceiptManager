@@ -15,12 +15,11 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 
 
-public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClickListener{
+public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
     // interaction controls for the fragment
     ImageView imageView_Scan_Camera, imageView_Scan_Gallery;
     Button button_Scan_Next, button_Scan_Finish;
     CheckBox cb_Prog1, cb_Prog2, cb_Prog3, cb_Prog4;
-    TabHost host;
 
     private OnFragmentInteractionListener mListener;
 
@@ -50,10 +49,10 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
         imageView_Scan_Gallery = (ImageView)v.findViewById(R.id.imageView_Scan_Gallery);
         button_Scan_Next = (Button)v.findViewById(R.id.button_Scan_Next);
         button_Scan_Finish = (Button)v.findViewById(R.id.button_Scan_Finish);
-        cb_Prog1 = (CheckBox) v.findViewById(R.id.checkBox_Prog1);
-        cb_Prog2 = (CheckBox) v.findViewById(R.id.checkBox_Prog2);
-        cb_Prog3 = (CheckBox) v.findViewById(R.id.checkBox_Prog3);
-        cb_Prog4 = (CheckBox) v.findViewById(R.id.checkBox_Prog4);
+        cb_Prog1 = (CheckBox) v.findViewById(R.id.checkBox_Scan_Prog1);
+        cb_Prog2 = (CheckBox) v.findViewById(R.id.checkBox_Scan_Prog2);
+        cb_Prog3 = (CheckBox) v.findViewById(R.id.checkBox_Scan_Prog3);
+        cb_Prog4 = (CheckBox) v.findViewById(R.id.checkBox_Scan_Prog4);
 
 
         // sets up click listeners for the buttons (as they would otherwise have to be regsitered in the activity, not the fragment)
@@ -119,19 +118,28 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
         void onFragmentInteraction(Uri uri);
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    // todo: is this needed? (does focus change make sense for image storing)
+    @Override
+    public void onFocusChange (View v, boolean hasFocus) {
+        // records data only on loss of focus
+        if (!hasFocus) {
+            switch (v.getId()) {
+
+                //
+            }
+        }
+    }
+
 
     private void setupScanEvents(LayoutInflater inflater, View v) {
         // button clicks
-        imageView_Scan_Camera = (ImageView)v.findViewById(R.id.imageView_Scan_Camera);
-        imageView_Scan_Gallery = (ImageView)v.findViewById(R.id.imageView_Scan_Gallery);
-        button_Scan_Next = (Button)v.findViewById(R.id.button_Scan_Next);
-        button_Scan_Finish = (Button)v.findViewById(R.id.button_Scan_Finish);
-        host = (TabHost) getActivity().findViewById(android.R.id.tabhost);
-
-        imageView_Scan_Camera.setOnClickListener(click_Camera);
-        imageView_Scan_Gallery.setOnClickListener(click_Gallery);
         button_Scan_Next.setOnClickListener(click_Next);
         button_Scan_Finish.setOnClickListener(click_Finish);
+
+        // image area clicks
+        imageView_Scan_Camera.setOnClickListener(click_Camera);
+        imageView_Scan_Gallery.setOnClickListener(click_Gallery);
     }
 
     private boolean hasPicture()
@@ -164,7 +172,7 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
 
     View.OnClickListener click_Finish = new View.OnClickListener() {
         @Override
-            public void onClick(View view) {
+        public void onClick(View view) {
             if (hasPicture()) {
                 // todo: save picture into application
             }
