@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Search_SingleScreen extends AppCompatActivity {
     private int i;
@@ -29,6 +30,8 @@ public class Search_SingleScreen extends AppCompatActivity {
     private void fillData(){
         //final ArrayList<String> stringList = new ArrayList<String>();
         ArrayList<Receipt> receipts = Helper.stub.getAllReceipts();
+        Collections.sort(receipts);
+
         final ListView[] list = new ListView[receipts.size()];
         LinearLayout layout = (LinearLayout) findViewById(R.id.LinearSingleSearch);
         layout.setShowDividers(LinearLayout.SHOW_DIVIDER_END);
