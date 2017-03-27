@@ -150,8 +150,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         }
         */
         String purchaseDate     = "" + t3.getText();
-        String returnDate       = "" + ret.getSelectedItem();
-        String warrantyDate     = "" + war.getSelectedItem();
+        int returnDate          = ret.getSelectedItemPosition();
+        int warrantyDate        = war.getSelectedItemPosition();
         String tags             = "" + t6.getText();
         String name             = "" + t7.getText();
         //Log.w("tag",store + "\n"+ purchaseAmount + "\n"+ purchaseDate + "\n"+ returnDate + "\n"+ warrantyDate + "\n"+ tags);
@@ -174,12 +174,6 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
             Helper.stub.updateReceipt(r);
         }
         else {
-            if(returnDate.equalsIgnoreCase("None")){
-                returnDate = "" + -1;
-            }
-            if(warrantyDate.equalsIgnoreCase("None")){
-                warrantyDate = "" + -1;
-            }
             Receipt r = new Receipt(Helper.rid,name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
