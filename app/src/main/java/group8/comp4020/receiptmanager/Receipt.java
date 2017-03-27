@@ -2,6 +2,8 @@ package group8.comp4020.receiptmanager;
 
 import android.media.Image;
 import java.util.ArrayList;
+import java.util.Date;
+
 import android.util.Log;
 /**
  * Created by ben on 20-Mar-17.
@@ -275,5 +277,76 @@ public class Receipt implements Comparable <Receipt> {
         }
 
         return false;
+    }
+
+    public boolean setPurchaseDate_Date (int date)
+    {
+        if (checkValid_Date(date)) {
+            purchaseDay = date;
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public boolean setPurchaseDate_Month (int month)
+    {
+        if (checkValid_Month(month)) {
+            purchaseMonth = month;
+
+        return true;
+        }
+
+        else
+            return false;
+
+
+    }
+
+    public boolean setPurchaseDate_Year (int year)
+    {
+        if (checkValid_Year(year, true)) {
+            purchaseYear = year;
+            return true;
+        }
+
+        else
+            return false;
+
+
+    }
+
+    private boolean checkValid_Date (int date)
+    {
+        if (date > 0)
+            return true;
+        else
+            return false;
+    }
+
+    private boolean checkValid_Month (int month)
+    {
+        if (month < 1 || month > 12)
+            return false;
+        else
+            return true;
+    }
+
+    private boolean checkValid_Year (int year, boolean mustBeLessThanCurrentYear) {
+        // if the year is further in the future than this date
+        if (mustBeLessThanCurrentYear){
+            if (year > new Date().getYear() + 1900 || year < 0)
+                return false;
+            else
+                return true;
+        }
+
+        // year can be any value greater than 0
+        else {
+            if (year < 0)
+                return false;
+            else
+                return true;
+        }
     }
 }
