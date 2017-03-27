@@ -53,11 +53,13 @@ public class StubDatabase implements AddReceipt {
     }
     public String deleteReceipt(Receipt receipt){
         String results = null;
-        if(data.get(receipt.getRid()) != receipt){
+        Receipt r = receiptWithRid(receipt.getRid());
+
+        if(r == null || receipt == null){
             results = "Item not in stub database";
         }
         else{
-            data.remove(receipt.getRid());
+            data.remove(r);
         }
         return results;
     }

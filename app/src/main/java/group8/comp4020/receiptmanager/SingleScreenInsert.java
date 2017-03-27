@@ -116,7 +116,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         }
 
         TextView t1 = (TextView)findViewById(R.id.editTextStoreName);
-        TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
+       // TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
         TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
         Spinner ret = (Spinner)findViewById(R.id.spinnerReturnDate);
         Spinner war = (Spinner)findViewById(R.id.spinnerWarrantyDate);
@@ -125,7 +125,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
 
         t7.setText(stringList.get(0));
         t1.setText(stringList.get(1));
-        t2.setText(stringList.get(2));
+        //t2.setText(stringList.get(2));
         t3.setText(stringList.get(3));
         ret.setSelection(retPos);
         war.setSelection(warPos);
@@ -135,17 +135,20 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
     public void buttonSaveClick(View view) {
         //Helper.stub;
         TextView t1 = (TextView)findViewById(R.id.editTextStoreName);
-        TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
+        //TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
         TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
         Spinner ret = (Spinner)findViewById(R.id.spinnerReturnDate);
         Spinner war = (Spinner)findViewById(R.id.spinnerWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
         TextView t7 = (TextView)findViewById(R.id.editTextName);
         String store            = "" + t1.getText();
-        String purchaseAmount   = "" + t2.getText();
+        //String purchaseAmount   = "" + t2.getText();
+        String purchaseAmount   = "" + 0;
+        /*
         if (purchaseAmount.length() - purchaseAmount.indexOf(".") > 2){
             purchaseAmount = purchaseAmount.substring(0,purchaseAmount.indexOf(".")+ 3);
         }
+        */
         String purchaseDate     = "" + t3.getText();
         String returnDate       = "" + ret.getSelectedItem();
         String warrantyDate     = "" + war.getSelectedItem();
@@ -177,7 +180,6 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
             if(warrantyDate.equalsIgnoreCase("None")){
                 warrantyDate = "" + -1;
             }
-
             Receipt r = new Receipt(Helper.rid,name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
