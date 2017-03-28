@@ -24,13 +24,13 @@ public class Search_SingleScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search__single_screen);
-        Helper.receipt = Helper.stub.getAllReceipts().get(0);
         fillData();
     }
     private void fillData(){
         //final ArrayList<String> stringList = new ArrayList<String>();
         ArrayList<Receipt> receipts = Helper.stub.getAllReceipts();
         Collections.sort(receipts);
+        Helper.receipt = receipts.get(0);
 
         final ListView[] list = new ListView[receipts.size()];
         LinearLayout layout = (LinearLayout) findViewById(R.id.LinearSingleSearch);
@@ -87,6 +87,11 @@ public class Search_SingleScreen extends AppCompatActivity {
         Intent intent = new Intent(this, SingleScreenInsert.class);
         intent.putExtra("edit", "extraData");
 
+        startActivity(intent);
+    }
+    public void buttonNewReceipt(View view) {
+        // Helper.receipt = Helper.stub.getAllReceipts().get(position);
+        Intent intent = new Intent(this, SingleScreenInsert.class);
         startActivity(intent);
     }
 
