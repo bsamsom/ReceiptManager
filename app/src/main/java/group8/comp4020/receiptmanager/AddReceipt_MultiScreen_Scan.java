@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 
 public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
@@ -151,6 +154,14 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
     View.OnClickListener click_Camera = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Intent intent;
+            intent = new Intent(getActivity(), PickPhotoActivity.class);
+            startActivity(intent);
+            if(intent.hasExtra("byteArray")) {
+                Bitmap photo = BitmapFactory.decodeByteArray(
+                        intent.getByteArrayExtra("byteArray"),0,intent.getByteArrayExtra("byteArray").length);
+                imageView_Scan_Camera.setImageBitmap(photo);
+            }
             return;
         }
     };
@@ -158,6 +169,9 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
     View.OnClickListener click_Gallery = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Intent intent;
+            intent = new Intent(getActivity(), PickImageActivity.class);
+            startActivity(intent);
             return;
         }
     };

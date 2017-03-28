@@ -189,6 +189,9 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         startActivity(intent);
     }
     public void buttonPictureSelect(View view) {
-        Log.w("tag","Picture selection button pressed");
+        Intent intent;
+        intent = new Intent(this,PickImageActivity.class);
+        startActivity(intent);
+        return;
     }
 }

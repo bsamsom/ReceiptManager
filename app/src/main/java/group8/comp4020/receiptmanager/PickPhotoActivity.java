@@ -5,43 +5,36 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.widget.ImageView;
-import android.database.Cursor;
-import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
+import android.graphics.Bitmap;
+import java.io.ByteArrayOutputStream;
 import android.support.annotation.NonNull;
 
 
-
-
-public class PickImageActivity extends AppCompatActivity {
-    private static int RESULT_LOAD_IMAGE = 1;
+public class PickPhotoActivity extends AppCompatActivity {
+    private static final int CAMERA_REQUEST = 1888;
     private int STORAGE_PERMISSION_CODE = 23;
-
+    Bitmap photo;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_pick_image);
-        Button buttonLoadImage = (Button) findViewById(R.id.LoadPictures);
+        setContentView(R.layout.activity_pick_photo);
+        Button buttonLoadImage = (Button) findViewById(R.id.TakePhoto);
         Button finnishLoadImage = (Button) findViewById(R.id.Finnish);
         buttonLoadImage.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View arg0) {
                 if(isReadStorageAllowed()){
-                    Intent i = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                    startActivityForResult(i, RESULT_LOAD_IMAGE);
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
                     return;
                 }
                 requestStoragePermission();
@@ -51,7 +44,16 @@ public class PickImageActivity extends AppCompatActivity {
         finnishLoadImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
-                finish();
+                if(photo == null){
+                   finish();
+                }
+                else {
+                    Intent intent = new Intent();
+                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
+                    photo.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                    intent.putExtra("byteArray", bs.toByteArray());
+                    finish();
+                }
             }
         });
     }
@@ -105,22 +107,10 @@ public class PickImageActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = { MediaStore.Images.Media.DATA };
-
-            Cursor cursor = getContentResolver().query(selectedImage,
-                    filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             ImageView imageView = (ImageView) findViewById(R.id.imgView);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-
+            photo = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(photo);
         }
 
     }
