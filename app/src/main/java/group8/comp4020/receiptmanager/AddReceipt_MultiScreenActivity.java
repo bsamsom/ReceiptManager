@@ -70,6 +70,7 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
 
 
     public void submitReceipt() {
+        Helper.stub.insertReceipt(newReceipt);
         // todo: implement method
     }
 
