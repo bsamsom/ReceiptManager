@@ -124,14 +124,29 @@ public class AddReceipt_MultiScreen_Basic extends Fragment implements View.OnCli
                 case R.id.editText_Basic_ReceiptName:
                     newReceipt.SetName(editText_ReceiptName.getText().toString().trim());
                     break;
+
+                // Purchased at
+                case R.id.editText_Basic_PurchasedAt:
+                    newReceipt.setPurchasedAt(editText_PurchasedAt.getText().toString().trim());
+                    break;
+
+                // category
+                case R.id.editText_Basic_PurchaseCategory:
+                    newReceipt.setPurchaseCategory(editText_PurchaseCategory.getText().toString().trim());
+                    break;
+
+                // purchase date
                 case R.id.editText_Basic_DateOfPurchase_Day:
-                    newReceipt.setPurchaseDate_Date (Integer.parseInt (editText_DateOfPurchase_Day.getText().toString().trim()));
+                    if (!editText_DateOfPurchase_Day.getText().toString().trim().equals(""))
+                        newReceipt.setPurchaseDate_Date (Integer.parseInt (editText_DateOfPurchase_Day.getText().toString().trim()));
                     break;
                 case R.id.editText_Basic_DateOfPurchase_Month:
-                    newReceipt.setPurchaseDate_Month (Integer.parseInt (editText_DateOfPurchase_Month.getText().toString().trim()));
+                    if (!editText_DateOfPurchase_Month.getText().toString().trim().equals(""))
+                        newReceipt.setPurchaseDate_Month (Integer.parseInt (editText_DateOfPurchase_Month.getText().toString().trim()));
                     break;
                 case R.id.editText_Basic_DateOfPurchase_Year:
-                    newReceipt.setPurchaseDate_Year (Integer.parseInt (editText_DateOfPurchase_Year.getText().toString().trim()));
+                    if (!editText_DateOfPurchase_Year.getText().toString().trim().equals(""))
+                        newReceipt.setPurchaseDate_Year (Integer.parseInt (editText_DateOfPurchase_Year.getText().toString().trim()));
                     break;
 
             }
@@ -164,6 +179,7 @@ public class AddReceipt_MultiScreen_Basic extends Fragment implements View.OnCli
         @Override
         public void onClick(View view) {
              ((AddReceipt_MultiScreenActivity)getActivity()).submitReceipt();
+            getActivity().finish();
         }
     };
 

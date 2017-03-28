@@ -235,6 +235,7 @@ public class AddReceipt_MultiScreen_Expiry extends Fragment implements View.OnCl
         @Override
         public void onClick(View view) {
             ((AddReceipt_MultiScreenActivity)getActivity()).submitReceipt();
+            getActivity().finish();
         }
     };
 

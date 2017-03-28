@@ -176,7 +176,9 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
             if (hasPicture()) {
                 // todo: save picture into application
             }
-            // ((AddReceipt_MultiScreenActivity)getActivity()).submitReceipt();
+
+            ((AddReceipt_MultiScreenActivity)getActivity()).submitReceipt();
+            getActivity().finish();
         }
     };
 
