@@ -1,6 +1,8 @@
 package group8.comp4020.receiptmanager;
 
 import android.media.Image;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -139,9 +141,9 @@ public class Receipt implements Comparable <Receipt> {
         String results = null;
         String[] dates = date.split("-");
         try {
-            purchaseDay = Integer.parseInt(dates[2]);
-            purchaseMonth = Integer.parseInt(dates[1]);
-            purchaseYear = Integer.parseInt(dates[0]);
+            setPurchaseDate_Year(Integer.parseInt(dates[0]));
+            setPurchaseDate_Month(Integer.parseInt(dates[1]));
+            setPurchaseDate_Date(Integer.parseInt(dates[2]));
             results = purchaseYear + " " + purchaseMonth + " " + purchaseDay;
 
         } catch (Exception e) {
@@ -223,7 +225,28 @@ public class Receipt implements Comparable <Receipt> {
 
     @Override
     public int compareTo(Receipt o) {
-        return this.getPurchaseDate().compareTo(o.getPurchaseDate());
+        String dateFormat = "yyyy-mm-dd hh:mm:ss";
+        SimpleDateFormat format = new SimpleDateFormat(dateFormat);
+        String date1 = getPurchaseDate().replaceAll(" ","-") + " 00:00:00";
+        String date2 = o.getPurchaseDate().replaceAll(" ","-") + " 00:00:00";
+        try {
+            Date t = format.parse(date1);
+            Date t1 = format.parse(date2);
+           //Log.w("tag", "t\t" + getPurchaseDate() + "\nt1\t" + o.getPurchaseDate());
+           //Log.w("tag", "t\t" + t + "\nt1\t" + t1);
+            if(t.before(t1)){
+                return 1;
+            }
+            else{
+                return -1;
+            }
+        }catch(Exception e){
+            return date1.compareTo(date2);
+        }
+
+
+
+        //return t.compareTo(t1);
     }
 
     public boolean hasTag(String tag) {

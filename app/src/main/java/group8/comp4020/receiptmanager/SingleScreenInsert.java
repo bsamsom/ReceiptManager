@@ -151,11 +151,15 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         String name             = "" + t7.getText();
         //Log.w("tag",store + "\n"+ purchaseAmount + "\n"+ purchaseDate + "\n"+ returnDate + "\n"+ warrantyDate + "\n"+ tags);
 
-        if(purchaseDate.length() >= 11){
-            purchaseDate = purchaseDate.substring(0,11);
+        if(purchaseDate.length() > 10){
+            purchaseDate = purchaseDate.substring(0,10);
         }
-        // incase user changes the - to a /
-        purchaseDate = purchaseDate.replaceAll("/","-");
+        if(purchaseDate.length() == 10) {
+            String year  = purchaseDate.substring(0, 4);
+            String month = purchaseDate.substring(5, 7);
+            String day   = purchaseDate.substring(8, 10);
+            purchaseDate = year + "-" + month + "-" + day;
+        }
 
         if(edit){
            // Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
