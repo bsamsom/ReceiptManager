@@ -1,8 +1,11 @@
 package group8.comp4020.receiptmanager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class Search_MultiScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -90,7 +94,17 @@ public class Search_MultiScreen extends AppCompatActivity implements AdapterView
             layout1.addView(list[i]);
 
             ImageView img = new ImageView(this);
-            img.setImageResource(R.mipmap.ic_launcher);
+            if (receipts.get(i).getImage() == null) {
+                img.setImageResource(R.mipmap.ic_launcher);
+            }
+            else{
+                Image image = receipts.get(i).getImage();
+                ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                byte[] bytes = new byte[buffer.capacity()];
+                buffer.get(bytes);
+                Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
+                img.setImageBitmap(bitmapImage);
+            }
 
             params = new ViewGroup.LayoutParams(width,height);
             img.setLayoutParams(params);

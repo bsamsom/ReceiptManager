@@ -1,5 +1,13 @@
 package group8.comp4020.receiptmanager;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.media.Image;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.widget.ImageView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,14 +19,8 @@ import java.util.Date;
  */
 
 public class StubDatabase implements AddReceipt {
-
-
     ArrayList<Receipt> data = new ArrayList();
-
-
     public StubDatabase(){
-
-
         data.add(0 , new Receipt(0 , "Food"             , "Super Store"      , 50.00 , null, "1980-12-31", 1, 0));
         data.add(1 , new Receipt(1 , "Kitchen Stuff"    , "Walmart"          , 15.98 , null, "2016-05-15", 2, 5));
         data.add(2 , new Receipt(2 , "Computer Parts"   , "Memory Express"   , 150.24, null, "2010-04-23", 4, 7));
