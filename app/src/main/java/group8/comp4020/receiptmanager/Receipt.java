@@ -1,5 +1,6 @@
 package group8.comp4020.receiptmanager;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.text.SimpleDateFormat;
@@ -16,7 +17,7 @@ public class Receipt implements Comparable <Receipt> {
     private String name;
     private String store;
     private double purchaseAmount;
-    private Image image;
+    private Bitmap image;
     private int purchaseDay;
     private int purchaseMonth;
     private int purchaseYear;
@@ -27,7 +28,7 @@ public class Receipt implements Comparable <Receipt> {
     private ArrayList<String> tags;
     private Boolean[] hasBeenModified;
 
-    public Receipt(int rid, String name, String store, double purchaseAmount, Image image, String purchaseDate, int returnDate, int warentyDate) {
+    public Receipt(int rid, String name, String store, double purchaseAmount, Bitmap image, String purchaseDate, int returnDate, int warentyDate) {
         hasBeenModified = new Boolean[8];
         for (int i = 0; i < 8;i++){
             hasBeenModified[i] = false;
@@ -74,7 +75,7 @@ public class Receipt implements Comparable <Receipt> {
         return purchaseAmount;
     }
 
-    public Image getImage() {
+    public Bitmap getImage() {
         return image;
     }
 
@@ -130,7 +131,7 @@ public class Receipt implements Comparable <Receipt> {
         return results;
     }
 
-    public String SetImage(Image img) {
+    public String SetImage(Bitmap img) {
         String results = null;
         image = img;
         hasBeenModified[3] = true;

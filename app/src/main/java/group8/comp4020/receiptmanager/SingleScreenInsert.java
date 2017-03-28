@@ -1,6 +1,7 @@
 package group8.comp4020.receiptmanager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +20,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
     public String warrantySelection = "1 Year";
     public ArrayAdapter<String> warrantyAdapter;
     public ArrayAdapter<String> dateAdapter;
-    public Image image = null;
+    public Bitmap image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,7 +165,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         if(edit){
            // Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
             //image = Helper.receipt.getImage();
-           //image = Helper.img;
+           image = Helper.img;
             Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),image,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");

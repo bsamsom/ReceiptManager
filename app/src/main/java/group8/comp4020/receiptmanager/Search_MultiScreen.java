@@ -107,11 +107,11 @@ public class Search_MultiScreen extends AppCompatActivity implements AdapterView
                 img.setImageBitmap(bitmapImage);
             }
             */
-            if (Helper.img == null) {
+            if (receipts.get(i).getImage() == null) {
                 img.setImageResource(R.mipmap.ic_launcher);
             }
             else{
-                img.setImageBitmap(Helper.img);
+                img.setImageBitmap(receipts.get(i).getImage());
             }
 
             params = new ViewGroup.LayoutParams(width,height);
