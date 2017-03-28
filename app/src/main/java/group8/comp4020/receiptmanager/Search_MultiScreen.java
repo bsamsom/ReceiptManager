@@ -20,9 +20,9 @@ import android.widget.Spinner;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Search_MultiScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Helper help = new Helper();
     private int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class Search_MultiScreen extends AppCompatActivity implements AdapterView
         spin.setOnItemSelectedListener(this);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Sort Spinner
 
-        ArrayList<Receipt> receipts = help.stub.getAllReceipts();
-        receipts = help.sortByDate(receipts);
+        ArrayList<Receipt> receipts = Helper.stub.getAllReceipts();
+        Collections.sort(receipts);
         addreceipts(receipts);
         Helper.receipt = receipts.get(0);
 
@@ -48,19 +48,19 @@ public class Search_MultiScreen extends AppCompatActivity implements AdapterView
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         //Log.w("tag", "Get item at: " + position);
         if(position == 0){
-            ArrayList<Receipt> receipts = help.stub.getAllReceipts();
+            ArrayList<Receipt> receipts = Helper.stub.getAllReceipts();
             addreceipts(receipts);
         }
         else if(position == 1){
-            ArrayList<Receipt> receipts = help.stub.getReceiptsWithWarranty();
+            ArrayList<Receipt> receipts = Helper.stub.getReceiptsWithWarranty();
             addreceipts(receipts);
         }
         else if(position == 2){
-            ArrayList<Receipt> receipts = help.stub.getReceiptsWithOutWarranty();
+            ArrayList<Receipt> receipts = Helper.stub.getReceiptsWithOutWarranty();
             addreceipts(receipts);
         }
         else{
-            ArrayList<Receipt> receipts = help.stub.getReceiptsWithTag();
+            ArrayList<Receipt> receipts = Helper.stub.getReceiptsWithTag();
             addreceipts(receipts);
         }
     }

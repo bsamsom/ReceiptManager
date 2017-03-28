@@ -76,10 +76,6 @@ public class Receipt implements Comparable <Receipt> {
         return image;
     }
 
-    public String getPurchaseDate() {
-        return purchaseDay + " " + purchaseMonth + " " + purchaseYear;
-    }
-
     public int getReturnDate() {
         return returnDate;
     }
@@ -143,10 +139,10 @@ public class Receipt implements Comparable <Receipt> {
         String results = null;
         String[] dates = date.split("-");
         try {
-            purchaseDay = Integer.parseInt(dates[0]);
+            purchaseDay = Integer.parseInt(dates[2]);
             purchaseMonth = Integer.parseInt(dates[1]);
-            purchaseYear = Integer.parseInt(dates[2]);
-            results = purchaseDay + " " + purchaseMonth + " " + purchaseYear;
+            purchaseYear = Integer.parseInt(dates[0]);
+            results = purchaseYear + " " + purchaseMonth + " " + purchaseDay;
 
         } catch (Exception e) {
             Log.w("tag", "purchase date: one of " + date + " not an integer");
@@ -154,6 +150,9 @@ public class Receipt implements Comparable <Receipt> {
 
         hasBeenModified[4] = true;
         return results;
+    }
+    public String getPurchaseDate() {
+        return  purchaseYear + " " + purchaseMonth + " " + purchaseDay;
     }
 
     public void SetWarrantyDate_Simple(int index) {
