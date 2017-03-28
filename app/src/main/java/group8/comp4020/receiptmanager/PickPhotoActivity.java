@@ -27,7 +27,7 @@ public class PickPhotoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_pick_photo);
         Button buttonLoadImage = (Button) findViewById(R.id.TakePhoto);
-        Button finnishLoadImage = (Button) findViewById(R.id.Finish);
+        Button finishLoadImage = (Button) findViewById(R.id.Finish);
         buttonLoadImage.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -41,7 +41,7 @@ public class PickPhotoActivity extends AppCompatActivity {
             }
         });
 
-        finnishLoadImage.setOnClickListener(new View.OnClickListener(){
+        finishLoadImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
                 if(photo == null){
