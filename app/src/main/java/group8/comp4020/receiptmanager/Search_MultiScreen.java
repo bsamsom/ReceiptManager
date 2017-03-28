@@ -94,6 +94,7 @@ public class Search_MultiScreen extends AppCompatActivity implements AdapterView
             layout1.addView(list[i]);
 
             ImageView img = new ImageView(this);
+            /*
             if (receipts.get(i).getImage() == null) {
                 img.setImageResource(R.mipmap.ic_launcher);
             }
@@ -104,6 +105,13 @@ public class Search_MultiScreen extends AppCompatActivity implements AdapterView
                 buffer.get(bytes);
                 Bitmap bitmapImage = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, null);
                 img.setImageBitmap(bitmapImage);
+            }
+            */
+            if (Helper.img == null) {
+                img.setImageResource(R.mipmap.ic_launcher);
+            }
+            else{
+                img.setImageBitmap(Helper.img);
             }
 
             params = new ViewGroup.LayoutParams(width,height);

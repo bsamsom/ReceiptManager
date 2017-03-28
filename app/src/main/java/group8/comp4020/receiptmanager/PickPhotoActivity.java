@@ -111,6 +111,7 @@ public class PickPhotoActivity extends AppCompatActivity {
             ImageView imageView = (ImageView) findViewById(R.id.imgView);
             photo = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(photo);
+            Helper.img = photo;
         }
 
     }

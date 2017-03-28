@@ -120,6 +120,9 @@ public class PickImageActivity extends AppCompatActivity {
 
             ImageView imageView = (ImageView) findViewById(R.id.imgView);
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            Helper.img = BitmapFactory.decodeFile(picturePath);
+
+
 
         }
 

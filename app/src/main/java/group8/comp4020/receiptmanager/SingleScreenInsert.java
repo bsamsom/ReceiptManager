@@ -163,7 +163,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
 
         if(edit){
            // Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
-            image = Helper.receipt.getImage();
+            //image = Helper.receipt.getImage();
+           //image = Helper.img;
             Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),image,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
@@ -174,7 +175,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
             Helper.stub.updateReceipt(r);
         }
         else {
-            Receipt r = new Receipt(Helper.rid,name,store,Double.parseDouble(purchaseAmount),image,purchaseDate,returnDate,warrantyDate);
+            Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),image,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
                 for(int i = 0; i < temp.length;i++){
