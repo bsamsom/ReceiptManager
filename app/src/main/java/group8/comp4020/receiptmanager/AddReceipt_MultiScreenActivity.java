@@ -173,4 +173,6 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
         }
 
     }
+
+
 }

@@ -193,6 +193,16 @@ public class Receipt implements Comparable <Receipt> {
         return result;
     }
 
+    public String setPurchasedAt (String location)
+    {
+        return "Not implemented";
+    }
+
+    public String setPurchaseCategory (String category)
+    {
+        return "Not implemented";
+    }
+
 
     @Override
     public String toString() {

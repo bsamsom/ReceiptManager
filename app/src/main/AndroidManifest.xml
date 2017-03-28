@@ -35,6 +35,7 @@
         <activity
             android:name=".AddReceipt_MultiScreenActivity"
             android:label="@string/add_receipt_title"
+            android:windowSoftInputMode="adjustPan"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
