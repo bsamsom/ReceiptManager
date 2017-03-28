@@ -17,13 +17,13 @@ import android.widget.Spinner;
 
 import java.util.ArrayList;
 
-public class GuiConfig1Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Search_MultiScreen extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private Helper help = new Helper();
     private int i;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_gui_config1);
+        setContentView(R.layout.activity_search_multi_screen);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Sort Spinner
         Spinner spin = (Spinner) findViewById(R.id.spinner);
         String[] items = new String[]{"All", "With Warranty", "Without Warranty", "With Tags"};
@@ -80,9 +80,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
 
             params = layout.getLayoutParams();
             params.height = params.height - height;
-
             params.width = width;
-
 
             layout1.setOrientation(LinearLayout.VERTICAL);
             layout1.setLayoutParams(params);
@@ -101,7 +99,7 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
             params = list[i].getLayoutParams();
             params.width = width;
             //params.height = maxHeight -height;
-            Log.w("tag","MAX HEIGHT: " + maxHeight);
+            //Log.w("tag","MAX HEIGHT: " + maxHeight);
             params.height = 750;
 
 
@@ -139,27 +137,9 @@ public class GuiConfig1Activity extends AppCompatActivity implements AdapterView
         stringList.add("Name: "             + data[0]);
         stringList.add("Store: "            + data[1]);
         //stringList.add("Purchase: "         + data[2]);
-        stringList.add("Purchase Date: " + data[3]);
-
-        String addRet = "Return Date: None";
-        String addWar = "Warranty Date: None";
-        if(Integer.parseInt(data[5]) > 0) {
-            for (int i = 0; i < Helper.returnDates.length; i++) {
-                String[] spinList = Helper.returnDates[i].split("\\s+");
-                if (spinList[0].equals(data[4])) {
-                    addRet = "Return Date: " + Helper.returnDates[i];
-                }
-            }
-        }
-
-        if(Integer.parseInt(data[5]) > 0) {
-            for (int i = 0; i < Helper.warrantyDates.length; i++) {
-                String[] spinList = Helper.warrantyDates[i].split("\\s+");
-                if (spinList[0].equals(data[5])) {
-                    addWar = "Warranty Date: " + Helper.warrantyDates[i];
-                }
-            }
-        }
+        stringList.add("Purchase Date: "    + data[3]);
+        String addRet = "Return Date: "     + Helper.returnDates[Integer.parseInt(data[4])];
+        String addWar = "Warranty Date: "   + Helper.warrantyDates[Integer.parseInt(data[5])];
 
         stringList.add(addRet);
         stringList.add(addWar);

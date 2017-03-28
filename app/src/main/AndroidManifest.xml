@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="group8.comp4020.receiptmanager">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,7 +44,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GuiConfig1Activity"
+            android:name=".Search_MultiScreen"
             android:label="@string/title_activity_gui_config1"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -53,15 +56,16 @@
         <activity
             android:name=".SingleScreenInsert"
             android:label="@string/title_activity_single_screen_insert"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".PickImageActivity"
             android:label="@string/title_activity_pick_image"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Search_SingleScreen"
+            android:label="@string/title_activity_search__single_screen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".PickPhotoActivity"></activity>
     </application>
 
 </manifest>

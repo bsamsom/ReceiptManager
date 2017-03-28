@@ -14,6 +14,7 @@ public class Helper {
     public static int rid = 13;
     public static String[] returnDates = new String[]{"None", "30 Days", "60 Days", "90 Days", "180 Days", "1 Year", "2 Years", "3 Years", "5 Years" };
     public static String[] warrantyDates = new String[]{"None", "30 Days", "60 Days", "90 Days", "180 Days", "1 Year", "2 Years", "3 Years", "5 Years" };
+
     public ArrayList<Receipt> sortByDate(ArrayList<Receipt> input){
         Collections.sort(input);
         return input;

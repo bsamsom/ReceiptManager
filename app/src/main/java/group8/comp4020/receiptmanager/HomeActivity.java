@@ -39,13 +39,10 @@ public class HomeActivity extends AppCompatActivity {
     public void click_view(View view) {
         Intent intent;
         if (RunSettings.getInstance().getMethod() == 2) {
-            intent = null;
-            Log.d("HomeActivity", "MADE IT!!, UNABLE TO START NEW ACTIVITY: experiment method is " +
-                    RunSettings.getInstance().getMethod());
-            return;
+            intent = new Intent(this, Search_MultiScreen.class);
         }
         else if (RunSettings.getInstance().getMethod() == 1)
-            intent = new Intent(this, GuiConfig1Activity.class);
+            intent = new Intent(this, Search_SingleScreen.class);
         else {
             intent = null;
             Log.d("HomeActivity", "MADE IT!!, UNABLE TO START NEW ACTIVITY: experiment method is " +

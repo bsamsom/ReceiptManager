@@ -1,13 +1,9 @@
 package group8.comp4020.receiptmanager;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ForwardingListener;
-import android.support.v7.widget.ThemedSpinnerAdapter;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,14 +13,13 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import static android.R.attr.data;
-
 public class SingleScreenInsert extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public boolean edit = false;
     public String returnSelection = "30 Days";
     public String warrantySelection = "1 Year";
     public ArrayAdapter<String> warrantyAdapter;
     public ArrayAdapter<String> dateAdapter;
+    public Image image = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,8 +145,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         }
         */
         String purchaseDate     = "" + t3.getText();
-        String returnDate       = "" + ret.getSelectedItem();
-        String warrantyDate     = "" + war.getSelectedItem();
+        int returnDate          = ret.getSelectedItemPosition();
+        int warrantyDate        = war.getSelectedItemPosition();
         String tags             = "" + t6.getText();
         String name             = "" + t7.getText();
         //Log.w("tag",store + "\n"+ purchaseAmount + "\n"+ purchaseDate + "\n"+ returnDate + "\n"+ warrantyDate + "\n"+ tags);
@@ -164,7 +159,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
 
         if(edit){
            // Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
-            Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
+            image = Helper.receipt.getImage();
+            Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),image,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
                 for(int i = 0; i < temp.length;i++){
@@ -174,13 +170,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
             Helper.stub.updateReceipt(r);
         }
         else {
-            if(returnDate.equalsIgnoreCase("None")){
-                returnDate = "" + -1;
-            }
-            if(warrantyDate.equalsIgnoreCase("None")){
-                warrantyDate = "" + -1;
-            }
-            Receipt r = new Receipt(Helper.rid,name,store,Double.parseDouble(purchaseAmount),null,purchaseDate,returnDate,warrantyDate);
+            Receipt r = new Receipt(Helper.rid,name,store,Double.parseDouble(purchaseAmount),image,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
                 for(int i = 0; i < temp.length;i++){
@@ -194,8 +184,14 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
        // Log.w("tag",r.toString());
 
 
-        Intent intent = new Intent(this, GuiConfig1Activity.class);
+        Intent intent = new Intent(this, Search_SingleScreen.class);
         //intent.putExtra("", "");
         startActivity(intent);
+    }
+    public void buttonPictureSelect(View view) {
+        Intent intent;
+        intent = new Intent(this,PickImageActivity.class);
+        startActivity(intent);
+        return;
     }
 }

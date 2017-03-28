@@ -19,17 +19,17 @@ public class StubDatabase implements AddReceipt {
     public StubDatabase(){
 
 
-        data.add(0 , new Receipt(0 , "Food"             , "Super Store"      , 50.00 , null, "1980-12-31", "30 Days"   , null));
-        data.add(1 , new Receipt(1 , "Kitchen Stuff"    , "Walmart"          , 15.98 , null, "2016-05-15", "60 Days"   , "1 Year"));
-        data.add(2 , new Receipt(2 , "Computer Parts"   , "Memory Express"   , 150.24, null, "2010-04-23", "180 Days"  , "3 Years"));
-        data.add(3 , new Receipt(3 , "Tires"            , "Canadian Tire"    , 49.83 , null, "2012-10-26", "60 Days"   , "5 Years"));
-        data.add(4 , new Receipt(4 , "Textbook"         , "U of M Book Store", 365.87, null, "2013-01-24", "90 Days"   , "1 Year"));
-        data.add(5 , new Receipt(5 , "Gass"             , "Shell"            , 56.65 , null, "2014-10-16", "30 Days"   , null));
-        data.add(6 , new Receipt(6 , "Book"             , "Chapters"         , 12.43 , null, "2003-07-06", "60 Days"   , "5 Years"));
-        data.add(7 , new Receipt(7 , "Lumber"           , "Rona"             , 78.89 , null, "2009-12-09", "60 Days"   , "2 Years"));
-        data.add(8 , new Receipt(8 , "Drywall"          , "Home Depot"       , 43.32 , null, "2016-04-12", "90 Days"   , "1 Year"));
-        data.add(9 , new Receipt(9 , "Paint"            , "Benjamin More"    , 89.43 , null, "1994-09-04", "30 Days"   , null));
-        data.add(10, new Receipt(10, "Food"             , "Foodfare"         , 12.95 , null, "1990-03-01", "180 Days"  , "3 Years"));
+        data.add(0 , new Receipt(0 , "Food"             , "Super Store"      , 50.00 , null, "1980-12-31", 1, 0));
+        data.add(1 , new Receipt(1 , "Kitchen Stuff"    , "Walmart"          , 15.98 , null, "2016-05-15", 2, 5));
+        data.add(2 , new Receipt(2 , "Computer Parts"   , "Memory Express"   , 150.24, null, "2010-04-23", 4, 7));
+        data.add(3 , new Receipt(3 , "Tires"            , "Canadian Tire"    , 49.83 , null, "2012-10-26", 2, 8));
+        data.add(4 , new Receipt(4 , "Textbook"         , "U of M Book Store", 365.87, null, "2013-01-24", 3, 5));
+        data.add(5 , new Receipt(5 , "Gass"             , "Shell"            , 56.65 , null, "2014-10-16", 1, 0));
+        data.add(6 , new Receipt(6 , "Book"             , "Chapters"         , 12.43 , null, "2003-07-06", 2, 8));
+        data.add(7 , new Receipt(7 , "Lumber"           , "Rona"             , 78.89 , null, "2009-12-09", 2, 6));
+        data.add(8 , new Receipt(8 , "Drywall"          , "Home Depot"       , 43.32 , null, "2016-04-12", 3, 5));
+        data.add(9 , new Receipt(9 , "Paint"            , "Benjamin More"    , 89.43 , null, "1994-09-04", 1, 0));
+        data.add(10, new Receipt(10, "Food"             , "Foodfare"         , 12.95 , null, "1990-03-01", 4, 7));
 
         data.get(5).setTags("waffle");
         data.get(2).setTags("waffle");

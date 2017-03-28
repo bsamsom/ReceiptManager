@@ -25,7 +25,7 @@ public class Receipt implements Comparable <Receipt> {
     private ArrayList<String> tags;
     private Boolean[] hasBeenModified;
 
-    public Receipt(int rid, String name, String store, double purchaseAmount, Image image, String purchaseDate, String returnDate, String warentyDate) {
+    public Receipt(int rid, String name, String store, double purchaseAmount, Image image, String purchaseDate, int returnDate, int warentyDate) {
         hasBeenModified = new Boolean[8];
         for (int i = 0; i < 8;i++){
             hasBeenModified[i] = false;
@@ -36,8 +36,8 @@ public class Receipt implements Comparable <Receipt> {
         SetPurchaseAmount(purchaseAmount);
         SetImage(image);
         SetPurchaseDate(purchaseDate);
-        SetReturnDate(returnDate);
-        SetWarrantyDate(warentyDate);
+        SetReturnDate_Simple(returnDate);
+        SetWarrantyDate_Simple(warentyDate);
         tags = new ArrayList<>();
     }
 
@@ -156,45 +156,6 @@ public class Receipt implements Comparable <Receipt> {
         return results;
     }
 
-    public String SetReturnDate(String date) {
-        String results = null;
-        try {
-            date = date.trim();
-            String[] temp = date.split("\\s+");
-            int rDate = Integer.parseInt(temp[0]);
-            returnDate = rDate;
-        } catch (Exception e) {
-            returnDate = -1;
-            results += "\nCurrently: " + date;
-            if (date != null) {
-                Log.w("tag", "return date: " + date + " not an integer");
-            }
-        }
-        hasBeenModified[5] = true;
-        return results;
-    }
-
-    public String SetWarrantyDate(String date) {
-        String results = null;
-        try {
-            date = date.trim();
-            String[] temp = date.split("\\s+");
-            int wDate = Integer.parseInt(temp[0]);
-            warranty = true;
-            warrantyDate = wDate;
-        } catch (Exception e) {
-            warrantyDate = -1;
-            warranty = false;
-            results += "\nCurrently: " + date;
-            if (date != null) {
-                Log.w("tag", "warranty date: " + date + " not an integer");
-            }
-        }
-
-        hasBeenModified[6] = true;
-        return results;
-    }
-
     public void SetWarrantyDate_Simple(int index) {
         if (index == 0) {
             warranty = false;
@@ -211,11 +172,11 @@ public class Receipt implements Comparable <Receipt> {
     public void SetReturnDate_Simple (int index) {
         if (index == 0) {
             returnable = false;
-            warrantyDate = 0;
+            returnDate = 0;
         }
         else {
             returnable = true;
-            warrantyDate = index;
+            returnDate = index;
         }
 
         hasBeenModified[5] = true;
