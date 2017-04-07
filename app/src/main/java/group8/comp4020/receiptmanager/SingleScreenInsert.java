@@ -46,6 +46,8 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         warrantyDate.setOnItemSelectedListener(this);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~End Return Date Spinner
 
+
+
         if(b != null){
             fillData();
             edit = true;

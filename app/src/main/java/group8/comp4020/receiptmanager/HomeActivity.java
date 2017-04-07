@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
     private RunSettings runSettings;
 
@@ -13,6 +15,8 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ArrayList<Receipt> receipts = Helper.stub.getAllReceipts();
+        Helper.receipt = receipts.get(0);
 
         // get intent (only if it is coming from method choice screen)
         int methodType = getIntent().getExtras().getInt("method_type", -1);
