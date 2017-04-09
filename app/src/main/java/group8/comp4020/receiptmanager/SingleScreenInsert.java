@@ -204,9 +204,10 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
        // Log.w("tag",r.toString());
 
 
-        Intent intent = new Intent(this, Search_MultiScreen.class);
+//        Intent intent = new Intent(this, Search_MultiScreen.class);
         //intent.putExtra("", "");
-        startActivity(intent);
+//        startActivity(intent);
+        finish();
     }
     public void buttonPictureSelect(View view) {
         Intent intent;

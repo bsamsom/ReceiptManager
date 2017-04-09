@@ -46,7 +46,8 @@ public class HomeActivity extends AppCompatActivity {
             intent = new Intent(this, Search_MultiScreen.class);
         }
         else if (RunSettings.getInstance().getMethod() == 1)
-            intent = new Intent(this, Search_SingleScreen.class);
+//            intent = new Intent(this, Search_SingleScreen.class);
+            intent = new Intent(this, Search_MultiScreen.class);
         else {
             intent = null;
             Log.d("HomeActivity", "MADE IT!!, UNABLE TO START NEW ACTIVITY: experiment method is " +
