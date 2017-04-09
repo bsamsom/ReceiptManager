@@ -1,8 +1,10 @@
 package group8.comp4020.receiptmanager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.graphics.BitmapFactory;
@@ -17,12 +19,13 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 import android.support.annotation.NonNull;
 
-
+import java.io.ByteArrayOutputStream;
 
 
 public class PickImageActivity extends AppCompatActivity {
     private static int RESULT_LOAD_IMAGE = 1;
     private int STORAGE_PERMISSION_CODE = 23;
+    private Bitmap image;
 
 
     @Override
@@ -44,14 +47,46 @@ public class PickImageActivity extends AppCompatActivity {
                     startActivityForResult(i, RESULT_LOAD_IMAGE);
                     return;
                 }
-                requestStoragePermission();
+                else {
+                    requestStoragePermission();
+                    if (isReadStorageAllowed()) {
+                        Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(i, RESULT_LOAD_IMAGE);
+                        return;
+                    }
+                }
             }
         });
 
         finnishLoadImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View arg0) {
-                finish();
+                if(image == null){
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent();
+                    ByteArrayOutputStream bs;
+
+                    // prevent large size issues
+
+                    double i = 1;
+                    Log.d("My message", "Size of image: " + image.getWidth() + " x " + image.getHeight());
+                    do {
+                        bs = new ByteArrayOutputStream();
+                        image.compress(Bitmap.CompressFormat.JPEG, (int)(50.0/i), bs);
+                        Log.d("My message", "BS.size: " + bs.size() + ", Quality: " + (int)(50/i));
+                        if (bs.size() > 1000000)
+                            i += 1;
+                        else
+                            i += .3;
+                    } while (bs.size() >= 500000);
+
+                    intent.putExtra("byteArray", bs.toByteArray());
+                    setResult(RESULT_OK, intent);
+
+                    finish();
+                }
             }
         });
     }
@@ -118,8 +153,10 @@ public class PickImageActivity extends AppCompatActivity {
             String picturePath = cursor.getString(columnIndex);
             cursor.close();
 
+            image = BitmapFactory.decodeFile(picturePath);
+
             ImageView imageView = (ImageView) findViewById(R.id.imgView);
-            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            imageView.setImageBitmap(image);
             Helper.img = BitmapFactory.decodeFile(picturePath);
 
 

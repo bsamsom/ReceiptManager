@@ -17,12 +17,16 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import static android.app.Activity.RESULT_OK;
 
-public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClickListener, View.OnFocusChangeListener {
+
+public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClickListener{
     // interaction controls for the fragment
     ImageView imageView_Scan_Camera, imageView_Scan_Gallery;
     Button button_Scan_Next, button_Scan_Finish;
     CheckBox cb_Prog1, cb_Prog2, cb_Prog3, cb_Prog4;
+    Intent pickPhotoIntent;
+    Bitmap photo, image;
 
     private OnFragmentInteractionListener mListener;
 
@@ -122,19 +126,6 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
-    // todo: is this needed? (does focus change make sense for image storing)
-    @Override
-    public void onFocusChange (View v, boolean hasFocus) {
-        // records data only on loss of focus
-        if (!hasFocus) {
-            switch (v.getId()) {
-
-                //
-            }
-        }
-    }
-
-
     private void setupScanEvents(LayoutInflater inflater, View v) {
         // button clicks
         button_Scan_Next.setOnClickListener(click_Next);
@@ -145,24 +136,11 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
         imageView_Scan_Gallery.setOnClickListener(click_Gallery);
     }
 
-    private boolean hasPicture()
-    {
-        // TODO: implement once pictures can be obtained for file
-        return false;
-    }
-
     View.OnClickListener click_Camera = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent;
-            intent = new Intent(getActivity(), PickPhotoActivity.class);
-            startActivity(intent);
-            if(intent.hasExtra("byteArray")) {
-                Bitmap photo = BitmapFactory.decodeByteArray(
-                        intent.getByteArrayExtra("byteArray"),0,intent.getByteArrayExtra("byteArray").length);
-                imageView_Scan_Camera.setImageBitmap(photo);
-            }
-            return;
+            pickPhotoIntent = new Intent(getActivity(), PickPhotoActivity.class);
+            startActivityForResult(pickPhotoIntent, 1);
         }
     };
 
@@ -171,7 +149,7 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
         public void onClick(View view) {
             Intent intent;
             intent = new Intent(getActivity(), PickImageActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, 2);
             return;
         }
     };
@@ -187,13 +165,38 @@ public class AddReceipt_MultiScreen_Scan extends Fragment implements View.OnClic
     View.OnClickListener click_Finish = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            if (hasPicture()) {
-                // todo: save picture into application
-            }
+            Receipt receipt = ((AddReceipt_MultiScreenActivity)getActivity()).getReceipt();
+            if (photo != null) { receipt.SetImage(photo); }
+            else if (image != null) { receipt.SetImage(image); }
 
             ((AddReceipt_MultiScreenActivity)getActivity()).submitReceipt();
             getActivity().finish();
         }
     };
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Log.d("My message", "Picture taken");
+            if(data.hasExtra("byteArray")) {
+                photo = BitmapFactory.decodeByteArray(
+                        data.getByteArrayExtra("byteArray"),0,data.getByteArrayExtra("byteArray").length);
+                imageView_Scan_Camera.setImageBitmap(photo);
+                imageView_Scan_Gallery.setImageResource(android.R.drawable.ic_menu_report_image);
+                image = null;
+            }
+        }
+
+        else if (requestCode == 2 && resultCode == RESULT_OK) {
+            Log.d("My message", "Image from gallery chosen");
+            if(data.hasExtra("byteArray")) {
+                image = BitmapFactory.decodeByteArray(
+                        data.getByteArrayExtra("byteArray"),0,data.getByteArrayExtra("byteArray").length);
+                imageView_Scan_Gallery.setImageBitmap(image);
+                imageView_Scan_Camera.setImageResource(android.R.drawable.ic_menu_camera);
+                photo = null;
+            }
+        }
+    }
 }

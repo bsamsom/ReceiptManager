@@ -1,8 +1,15 @@
 package group8.comp4020.receiptmanager;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Matrix;
+import android.graphics.Path;
+import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,6 +21,9 @@ import android.widget.Toast;
 import android.graphics.Bitmap;
 import java.io.ByteArrayOutputStream;
 import android.support.annotation.NonNull;
+
+import static android.R.attr.enabled;
+import static android.R.attr.path;
 
 
 public class PickPhotoActivity extends AppCompatActivity {
@@ -37,7 +47,14 @@ public class PickPhotoActivity extends AppCompatActivity {
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                     return;
                 }
-                requestStoragePermission();
+                else {
+                    requestStoragePermission();
+                    if (isReadStorageAllowed()) {
+                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                        return;
+                    }
+                }
             }
         });
 
@@ -49,9 +66,21 @@ public class PickPhotoActivity extends AppCompatActivity {
                 }
                 else {
                     Intent intent = new Intent();
-                    ByteArrayOutputStream bs = new ByteArrayOutputStream();
-                    photo.compress(Bitmap.CompressFormat.PNG, 50, bs);
+                    ByteArrayOutputStream bs;
+
+                    // prevent large size issues
+                    double i = 1;
+                    Log.d("My message", "Size of image: " + photo.getWidth() + " x " + photo.getHeight());
+                    do {
+                        bs = new ByteArrayOutputStream();
+                        photo.compress(Bitmap.CompressFormat.JPEG, (int)(100.0/i), bs);
+                        Log.d("My message", "BS.size: " + bs.size() + ", Quality: " + (int)(100/i));
+                        i += .2;
+                    } while (bs.size() >= 500000);
+
                     intent.putExtra("byteArray", bs.toByteArray());
+                    setResult(RESULT_OK, intent);
+
                     finish();
                 }
             }
@@ -107,12 +136,30 @@ public class PickPhotoActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        int degreeRotation = -1;
         if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
             ImageView imageView = (ImageView) findViewById(R.id.imgView);
             photo = (Bitmap) data.getExtras().get("data");
+            Uri path = data.getData();
+            try {
+                String[] orientationColumn = {MediaStore.Images.Media.ORIENTATION};
+                Cursor cur = managedQuery(path, orientationColumn, null, null, null);
+                if (cur != null && cur.moveToFirst()) {
+                    degreeRotation = cur.getInt(cur.getColumnIndex(orientationColumn[0]));
+                }
+            } catch (Exception e) {}
+
+            if (degreeRotation != 0) {
+                Matrix matrix = new Matrix();
+                matrix.preRotate(degreeRotation);
+                photo = Bitmap.createBitmap(photo, 0, 0, photo.getWidth(), photo.getHeight(), matrix, true);
+            }
+
             imageView.setImageBitmap(photo);
             Helper.img = photo;
+            // findViewById(R.id.Finish).setEnabled(true);
         }
 
     }
+
 }

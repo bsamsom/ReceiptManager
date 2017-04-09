@@ -68,12 +68,23 @@ public class AddReceipt_MultiScreenActivity extends AppCompatActivity implements
         return newReceipt;
     }
 
-
     public void submitReceipt() {
+        // populate receipt
+
         Helper.stub.insertReceipt(newReceipt);
+        Log.d("My message:", "Receipt inserted:\n" +
+                "\trID: " + newReceipt.getRid() + "\n" +
+                "\tName: " + newReceipt.getName() + "\n" +
+                "\tStore: " + newReceipt.getStore() + "\n" +
+                "\tPurchase Amount: " + newReceipt.getPurchaseAmount() + "\n" +
+                "\tImage: " + newReceipt.getImage() + "\n" +
+                "\tPurchase Date: " + newReceipt.getPurchaseDate() + "\n" +
+                "\tReturn Date: " + newReceipt.getReturnDate() + "\n" +
+                "\tWarranty Date: " + newReceipt.getWarrantyDate() + "\n" +
+                "\tTags: " + newReceipt.getTags().toString() + "\n"
+        );
         //Log.w("tag",newReceipt.getPurchaseDate());
     }
-
 
 
 
