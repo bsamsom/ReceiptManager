@@ -192,7 +192,12 @@ public class Search_MultiScreen extends AppCompatActivity implements AdapterView
         startActivity(intent);
     }
     public void buttonNewClick(View view) {
-        Intent intent = new Intent(this, AddReceipt_MultiScreenActivity.class);
+        Intent intent = new Intent();
+        if (RunSettings.getInstance().getMethod() == 2)
+            intent = new Intent(this, AddReceipt_MultiScreenActivity.class);
+        else if (RunSettings.getInstance().getMethod() == 1)
+            intent = new Intent(this, SingleScreenInsert.class);
+        // Intent intent = new Intent(this, AddReceipt_MultiScreenActivity.class);
         //intent.putExtra("", "");
         startActivity(intent);
     }
