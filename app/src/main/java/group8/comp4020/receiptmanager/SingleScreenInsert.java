@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class SingleScreenInsert extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -115,16 +116,22 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
 
         TextView t1 = (TextView)findViewById(R.id.editTextStoreName);
        // TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
-        TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
+        TextView t3_day = (TextView) findViewById(R.id.editText_Single_Date);
+        TextView t3_month = (TextView) findViewById(R.id.editText_Single_Month);
+        TextView t3_year = (TextView) findViewById(R.id.editText_Single_Year);
         Spinner ret = (Spinner)findViewById(R.id.spinnerReturnDate);
         Spinner war = (Spinner)findViewById(R.id.spinnerWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
         TextView t7 = (TextView)findViewById(R.id.editTextName);
 
+        String[] dateFields = stringList.get(3).split("-");
+
         t7.setText(stringList.get(0));
         t1.setText(stringList.get(1));
+        t3_day.setText(dateFields[2]);
+        t3_month.setText(dateFields[1]);
+        t3_year.setText(dateFields[0]);
         //t2.setText(stringList.get(2));
-        t3.setText(stringList.get(3));
         ret.setSelection(retPos);
         war.setSelection(warPos);
         t6.setText(stringList.get(4));
@@ -133,36 +140,41 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
     public void buttonSaveClick(View view) {
         //Helper.stub;
         TextView t1 = (TextView)findViewById(R.id.editTextStoreName);
-        //TextView t2 = (TextView)findViewById(R.id.editTextPurchaseAmount);
-        TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
+//        TextView t3 = (TextView)findViewById(R.id.editTextPurchaseDate);
+        TextView t3_day = (TextView) findViewById(R.id.editText_Single_Date);
+        TextView t3_month = (TextView) findViewById(R.id.editText_Single_Month);
+        TextView t3_year = (TextView) findViewById(R.id.editText_Single_Year);
         Spinner ret = (Spinner)findViewById(R.id.spinnerReturnDate);
         Spinner war = (Spinner)findViewById(R.id.spinnerWarrantyDate);
         TextView t6 = (TextView)findViewById(R.id.editTextTags);
         TextView t7 = (TextView)findViewById(R.id.editTextName);
         String store            = "" + t1.getText();
-        //String purchaseAmount   = "" + t2.getText();
         String purchaseAmount   = "" + 0;
         /*
         if (purchaseAmount.length() - purchaseAmount.indexOf(".") > 2){
             purchaseAmount = purchaseAmount.substring(0,purchaseAmount.indexOf(".")+ 3);
         }
         */
-        String purchaseDate     = "" + t3.getText();
+
+        String purchaseDate = "";
         int returnDate          = ret.getSelectedItemPosition();
         int warrantyDate        = war.getSelectedItemPosition();
         String tags             = "" + t6.getText();
         String name             = "" + t7.getText();
         //Log.w("tag",store + "\n"+ purchaseAmount + "\n"+ purchaseDate + "\n"+ returnDate + "\n"+ warrantyDate + "\n"+ tags);
 
-        if(purchaseDate.length() > 10){
-            purchaseDate = purchaseDate.substring(0,10);
-        }
-        if(purchaseDate.length() == 10) {
-            String year  = purchaseDate.substring(0, 4);
-            String month = purchaseDate.substring(5, 7);
-            String day   = purchaseDate.substring(8, 10);
-            purchaseDate = year + "-" + month + "-" + day;
-        }
+        String day = "00";
+        String month = "00";
+        String year = "0000";
+        // purchase date
+        if (!t3_day.getText().toString().trim().equals(""))
+            day = new DecimalFormat("00").format(Integer.parseInt(t3_day.getText().toString().trim()));
+        if (!t3_month.getText().toString().trim().equals(""))
+            month = new DecimalFormat("00").format(Integer.parseInt(t3_month.getText().toString().trim()));
+        if (!t3_year.getText().toString().trim().equals(""))
+            year = new DecimalFormat("0000").format(Integer.parseInt(t3_year.getText().toString().trim()));
+
+        purchaseDate = year + "-" + month + "-" + day;
 
         if(edit){
            // Log.w("tag","" + purchaseDate + "\n" + returnDate + "\n" + warrantyDate);
@@ -178,7 +190,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
             Helper.stub.updateReceipt(r);
         }
         else {
-            Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),image,purchaseDate,returnDate,warrantyDate);
+            Receipt r = new Receipt(Helper.receipt.getRid(),name,store,Double.parseDouble(purchaseAmount),Helper.img,purchaseDate,returnDate,warrantyDate);
             if(!tags.equals("")){
                 String[] temp = tags.split(",-/ ");
                 for(int i = 0; i < temp.length;i++){
@@ -192,7 +204,7 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
        // Log.w("tag",r.toString());
 
 
-        Intent intent = new Intent(this, Search_SingleScreen.class);
+        Intent intent = new Intent(this, Search_MultiScreen.class);
         //intent.putExtra("", "");
         startActivity(intent);
     }
@@ -200,6 +212,5 @@ public class SingleScreenInsert extends AppCompatActivity implements AdapterView
         Intent intent;
         intent = new Intent(this,PickImageActivity.class);
         startActivity(intent);
-        return;
     }
 }
